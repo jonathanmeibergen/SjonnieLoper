@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace MainApplication.Data
+namespace SjonnieLoper.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

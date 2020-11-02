@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-MainApplication-F06BDEE2-DC96-46EE-B105-A8426DA309B1</UserSecretsId>
+    <UserSecretsId>aspnet-SjonnieLoper-F06BDEE2-DC96-46EE-B105-A8426DA309B1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
