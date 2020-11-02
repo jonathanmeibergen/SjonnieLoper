@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace SjonnieLoper.Core
     {
         public int Id { get; set; }
         public DateTime Orderdate { get; set; }
+        public Whiskey whiskey { get; set; }
         public Customer Customer { get; set; }
     }
 }
