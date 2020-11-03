@@ -10,8 +10,5 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SjonnieLoper.Global\SjonnieLoper.Global.csproj" />
-  </ItemGroup>
 
 </Project>
