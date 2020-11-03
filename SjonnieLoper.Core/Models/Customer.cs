@@ -1,12 +1,9 @@
-﻿namespace SjonnieLoper.Core
-{
-    public class Customer
-    {
-        public string  name { get; set; }
+﻿using Microsoft.AspNetCore.Identity;
 
-        public Customer(string name)
-        {
-            this.name = name;
-        }
+namespace SjonnieLoper.Core
+{
+    public class Customer : IdentityUser
+    {
+
     }
 }
