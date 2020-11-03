@@ -29,7 +29,7 @@ namespace SjonnieLoper.Core.Models
 
         public Reservation ReservationCustomerId(int id)
         {
-            return _reservations.FirstOrDefault(w =. whiskey.)
+            return _reservations.FirstOrDefault(w => w.Id == id);
         }
     }
 }
