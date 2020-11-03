@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SjonnieLoper", "MainApplica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SjonnieLoper.Core", "SjonnieLoper.Core\SjonnieLoper.Core.csproj", "{30EAD0E9-9A87-4F00-A75C-A2E1F144A09A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SjonnieLoper.Global", "SjonnieLoper.Global\SjonnieLoper.Global.csproj", "{7EEECA79-FA28-4163-899D-8AAC159F3B19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SjonnieLoper.Services", "SjonnieLoper.Services\SjonnieLoper.Services.csproj", "{2A9014B9-8FE8-4B1D-AC86-221FE891575B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{30EAD0E9-9A87-4F00-A75C-A2E1F144A09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30EAD0E9-9A87-4F00-A75C-A2E1F144A09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30EAD0E9-9A87-4F00-A75C-A2E1F144A09A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7EEECA79-FA28-4163-899D-8AAC159F3B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EEECA79-FA28-4163-899D-8AAC159F3B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EEECA79-FA28-4163-899D-8AAC159F3B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EEECA79-FA28-4163-899D-8AAC159F3B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A9014B9-8FE8-4B1D-AC86-221FE891575B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A9014B9-8FE8-4B1D-AC86-221FE891575B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A9014B9-8FE8-4B1D-AC86-221FE891575B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A9014B9-8FE8-4B1D-AC86-221FE891575B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

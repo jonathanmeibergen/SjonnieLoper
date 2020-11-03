@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SjonnieLoper.Core\SjonnieLoper.Core.csproj" />
     <ProjectReference Include="..\SjonnieLoper.Global\SjonnieLoper.Global.csproj" />
+    <ProjectReference Include="..\SjonnieLoper.Services\SjonnieLoper.Services.csproj" />
   </ItemGroup>
 
 </Project>
