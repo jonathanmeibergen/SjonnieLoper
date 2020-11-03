@@ -18,7 +18,7 @@ namespace SjonnieLoper.Core.Models
         {
             _reservations = new List<Reservation>()
             {
-                new Reservation( 5, DateTime.Now, (new Customer("Vera")))
+                //new Reservation( 5, DateTime.Now, (new Customer("Vera")))
             };
         }
 

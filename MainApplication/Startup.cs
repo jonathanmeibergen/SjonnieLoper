@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services;
 
 namespace SjonnieLoper
 {
