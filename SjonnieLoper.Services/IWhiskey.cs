@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Core
+namespace SjonieLoper.Services
 {
     public interface IWhiskeys
     {

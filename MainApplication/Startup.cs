@@ -11,9 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SjonnieLoper.Core;
-using SjonnieLoper.Core.Models;
-using SjonnieLoper.Services;
+using SjonieLoper.Services;
 
 namespace SjonnieLoper
 {
@@ -30,13 +28,14 @@ namespace SjonnieLoper
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton<IReservations, Mock_Reservations>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+            
+            services.AddSingleton<IReservations, Mock_Reservations>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
