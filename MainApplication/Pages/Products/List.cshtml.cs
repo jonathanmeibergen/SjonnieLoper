@@ -5,27 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonieLoper.Services;
-using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Pages.Reservations
+namespace SjonnieLoper.Pages.Products
 {
     public class ListModel : PageModel
     {
-        private readonly IReservations _reservationsDb;
+        private readonly IWhiskeys _whiskeyDb;
 
-        public ListModel(IReservations reservations)
+        public ListModel(IWhiskeys whiskeys)
         {
-            _reservationsDb = reservations;
+            _whiskeyDb = _whiskeyDb;
         }
 
         [BindProperty] 
-        public IEnumerable<Reservation> Reservations => _reservationsDb.AllReservations();
+        public IEnumerable<Whiskey> whiskeys => _whiskeyDb.AllWhiskeys();
         
         public void OnGet()
         {
-            
-        }
 
+        }
     }
 }
