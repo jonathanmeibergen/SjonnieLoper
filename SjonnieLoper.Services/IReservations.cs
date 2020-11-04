@@ -30,17 +30,17 @@ namespace SjonieLoper.Services
                 new Reservation( 1, DateTime.Now, new Customer("Mohammed"))
             };
         }
-
+        
         /*public IEnumerable<string> ReservationWhiskeyTypes => 
             _reservations.Select(r => r.Whiskey.WhiskeyType.Name)
             .Distinct();*/
 
         // TODO: Change double null check and/or type accessors.
         public IEnumerable<string> ReservationWhiskeyTypes() => 
-            _reservations.Where(o => o.Whiskey is object 
+            _reservations.Where(o => o.Whiskey != null 
                                      && !string.IsNullOrEmpty(o.Whiskey.WhiskeyType.Name)).GroupBy(s => s.Whiskey.WhiskeyType)
-                                        .Distinct()
-                                        .Where(t => t != null)
+                                       // .Distinct()
+                                       // .Where(t => t != null)
                                         .Select(productType => productType.Key.Name);
 
         public IEnumerable<Reservation> AllReservations() => _reservations;

@@ -29,7 +29,8 @@ namespace SjonnieLoper.Pages.Reservations
         public string SearchValue { get; set; }
         //[BindProperty] 
         public IEnumerable<Reservation> RetrievedReservations { get; set; }
-        
+
+
         public void OnGet()
         {
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
