@@ -9,7 +9,7 @@ namespace SjonieLoper.Services
     {
         IEnumerable<Whiskey> AllWhiskeys();
         Whiskey WhiskeyById(int ond);
-        IEnumerable<Whiskey> WhiskeyByType();
+        IEnumerable<Whiskey> WhiskeyByType(string typeName);
         Whiskey Update(Whiskey updatedWhiskey);
         Whiskey Create(Whiskey newWhiskey);
         int Commit();
@@ -35,24 +35,28 @@ namespace SjonieLoper.Services
         }
 
         public IEnumerable<Whiskey> AllWhiskeys() => _whiskeys;
-        public Whiskey WhiskeyById(int ond)
-        {
-            throw new NotImplementedException();
-        }
+        public Whiskey WhiskeyById(int id) => 
+            _whiskeys.FirstOrDefault(w => w.WhiskeyId == id);
 
-        public IEnumerable<Whiskey> WhiskeyByType()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
+            _whiskeys.Select(w => w)
+                .Where(t => t.WhiskeyType.Name == typeName);
 
         public Whiskey Update(Whiskey updatedWhiskey)
         {
-            throw new NotImplementedException();
+            var reservation = 
+                _whiskeys.SingleOrDefault(r => r.WhiskeyId == updatedWhiskey.WhiskeyId);
+            return reservation != null
+                ? updatedWhiskey
+                : null;
         }
 
         public Whiskey Create(Whiskey newWhiskey)
         {
-            throw new NotImplementedException();
+            _whiskeys.Add(newWhiskey);
+            newWhiskey.WhiskeyId = 
+                _whiskeys.Max(e => e.WhiskeyId) + 1;
+            return newWhiskey;
         }
 
         public int Commit()
