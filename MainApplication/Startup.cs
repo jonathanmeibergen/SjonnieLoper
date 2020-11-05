@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace SjonnieLoper
 {
@@ -32,11 +34,24 @@ namespace SjonnieLoper
 
             services.AddSingleton<IReservations, Mock_Reservations>();
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+                                                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<ApplicationUser>(options => 
+                                                         options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthorization(options =>
+                                      options.AddPolicy("EmployeeOnly", policy =>
+                                                                        policy.RequireClaim("EmployeeNumber")));
+
+            //[Authorize(Policy = "IsSpeaker")]
+
+            //.AddRoles<IdentityRole>()
+            //.AddRoleManager<RoleManager<IdentityRole>>();
+
+            // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //         .AddCookie();
+
+            services.AddRazorPages().AddMvcOptions( o => o.Filters.Add(new AuthorizeFilter() ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,14 +82,14 @@ namespace SjonnieLoper
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider);
+            //CreateRoles(serviceProvider);
         }
 
         private void CreateRoles(IServiceProvider serviceProvider)
         {
-
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             Task<IdentityResult> roleResult;
             string email = "someone@somewhere.com";
 
