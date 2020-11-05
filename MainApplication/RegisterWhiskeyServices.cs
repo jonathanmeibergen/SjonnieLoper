@@ -9,7 +9,7 @@ namespace SjonnieLoper
         {
             return services
                 .AddSingleton<IReservations, Mock_Reservations>()
-                .AddSingleton<IWhiskeys, Mock_Whiskey>();
+                .AddSingleton<IWhiskeys, MockWhiskey>();
         }
     }
 }
