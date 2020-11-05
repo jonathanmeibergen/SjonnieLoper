@@ -36,6 +36,7 @@ namespace SjonnieLoper
             services.AddRazorPages();
             
             services.AddSingleton<IReservations, Mock_Reservations>();
+            services.AddSingleton<IWhiskeys, Mock_Whiskey>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

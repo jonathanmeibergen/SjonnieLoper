@@ -8,49 +8,73 @@ namespace SjonieLoper.Services
 {
     public interface IReservations
     {
-        IEnumerable<string> ReservationWhiskeyTypes();
+        //IEnumerable<string> ReservationWhiskeyTypes();
         IEnumerable<Reservation> AllReservations();
         Reservation ReservationCustomerId(int id);
+        Reservation ReservationById(int id);
         IEnumerable<Reservation> ReservationsCustomerName(string name);
+        Reservation Update(Reservation updatedReservation);
+        Reservation Create(Reservation newReservation);
+        int Commit();
+        
     }
 
     public class Mock_Reservations : IReservations
     {
-        private IEnumerable<Reservation> _reservations;
+        private List<Reservation> _reservations;
         
         public Mock_Reservations()
         {
             _reservations = new List<Reservation>()
             {
-                new Reservation( 6, DateTime.Now, new Customer("Iris")),
-                new Reservation( 5, DateTime.Now, new Customer("Vera")),
-                new Reservation( 4, DateTime.Now, new Customer("John")),
-                new Reservation( 3, DateTime.Now, new Customer("Erik")),
-                new Reservation( 2, DateTime.Now, new Customer("Phoebe")),
-                new Reservation( 1, DateTime.Now, new Customer("Mohammed"))
+                // Using development constructor for whiskey here, not intended for db use later.
+                new Reservation( 6, DateTime.Now, new Customer("Iris"), new Whiskey("Old Foo")),
+                new Reservation( 5, DateTime.Now, new Customer("Vera"), new Whiskey("Jack Bar")),
+                new Reservation( 4, DateTime.Now, new Customer("John"), new Whiskey("Golden Goose")),
+                new Reservation( 3, DateTime.Now, new Customer("Erik"), new Whiskey("Monkey Handles")),
+                new Reservation( 2, DateTime.Now, new Customer("Phoebe"), new Whiskey("Fizz Buzz")),
+                new Reservation( 1, DateTime.Now, new Customer("Mohammed"), new Whiskey("Monkey Handles"))
             };
         }
-        
-        /*public IEnumerable<string> ReservationWhiskeyTypes => 
-            _reservations.Select(r => r.Whiskey.WhiskeyType.Name)
-            .Distinct();*/
-
-        // TODO: Change double null check and/or type accessors.
-        public IEnumerable<string> ReservationWhiskeyTypes() => 
-            _reservations.Where(o => o.Whiskey != null 
-                                     && !string.IsNullOrEmpty(o.Whiskey.WhiskeyType.Name)).GroupBy(s => s.Whiskey.WhiskeyType)
-                                       // .Distinct()
-                                       // .Where(t => t != null)
-                                        .Select(productType => productType.Key.Name);
 
         public IEnumerable<Reservation> AllReservations() => _reservations;
 
         public Reservation ReservationCustomerId(int id) =>
             _reservations.FirstOrDefault(w => w.Id == id);
 
+        public Reservation ReservationById(int id) =>
+            _reservations.SingleOrDefault(r => r.Id == id);
+
         public IEnumerable<Reservation> ReservationsCustomerName(string name) =>
                 _reservations.Select(r => r)
                 .Where(entry => entry.CustomerOrder.UserName == name)
                 .Select(x => x);
+
+        public Reservation Update(Reservation updatedReservation)
+        {
+            var reservation = 
+                _reservations.SingleOrDefault(r => r.Id == updatedReservation.Id);
+            return reservation != null
+                ? updatedReservation
+                : null;
+            // if (reservation != null)
+            // {
+            //     reservation.Id = updatedReservation.Id;
+            //     reservation.Orderdate = updatedReservation.Orderdate;
+            //     reservation.User.UserName = updatedReservation.User.UserName;
+            //     reservation.Whiskey = updatedReservation.Whiskey;
+            // }
+            // return reservation;
+        }
+
+        public Reservation Create(Reservation newReservation)
+        {
+            _reservations.Add(newReservation);
+            newReservation.Id = 
+                _reservations.Max(e => e.Id) + 1;
+            return newReservation;
+        }
+
+        public int Commit() => 0;
     }
 }

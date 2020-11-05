@@ -37,7 +37,7 @@ namespace SjonnieLoper.Pages.Reservations
                 ? _reservationsDb.AllReservations()
                 : _reservationsDb.ReservationsCustomerName(SearchValue);
             
-            ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
+           // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
         }
 
     }
