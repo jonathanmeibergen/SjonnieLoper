@@ -1,0 +1,22 @@
+@page
+@model SjonnieLoper.Pages.Products.ListModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<table class="table">
+    @foreach (var prod in Model.RetrievedWhiskeys)
+    {
+        <tr>
+            <td>@prod.Name</td>
+            <td>@prod.WhiskeyType</td>
+            <td>@prod.Age</td>
+            <td>@prod.AlcoholPercentage</td>
+            <td>@prod.Origin</td>
+            @* TODO: Replace ImagePath with actual image. *@
+            <td>@prod.ImagePath</td>
+        </tr>
+    }
+</table>
