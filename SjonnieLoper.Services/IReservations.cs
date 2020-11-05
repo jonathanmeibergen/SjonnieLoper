@@ -10,9 +10,9 @@ namespace SjonieLoper.Services
     {
         //IEnumerable<string> ReservationWhiskeyTypes();
         IEnumerable<Reservation> AllReservations();
-        Reservation ReservationCustomerId(int id);
+        Reservation ReservationByCustomerId(int id);
         Reservation ReservationById(int id);
-        IEnumerable<Reservation> ReservationsCustomerName(string name);
+        IEnumerable<Reservation> ReservationByCustomerName(string name);
         Reservation Update(Reservation updatedReservation);
         Reservation Create(Reservation newReservation);
         int Commit();
@@ -39,16 +39,15 @@ namespace SjonieLoper.Services
 
         public IEnumerable<Reservation> AllReservations() => _reservations;
 
-        public Reservation ReservationCustomerId(int id) =>
+        public Reservation ReservationByCustomerId(int id) =>
             _reservations.FirstOrDefault(w => w.Id == id);
 
         public Reservation ReservationById(int id) =>
             _reservations.SingleOrDefault(r => r.Id == id);
 
-        public IEnumerable<Reservation> ReservationsCustomerName(string name) =>
-                _reservations.Select(r => r)
-                .Where(entry => entry.CustomerOrder.UserName == name)
-                .Select(x => x);
+        public IEnumerable<Reservation> ReservationByCustomerName(string name) =>
+            _reservations.Where(r => r.User.UserName == name)
+                .Select(r => r);
 
         public Reservation Update(Reservation updatedReservation)
         {
@@ -57,14 +56,6 @@ namespace SjonieLoper.Services
             return reservation != null
                 ? updatedReservation
                 : null;
-            // if (reservation != null)
-            // {
-            //     reservation.Id = updatedReservation.Id;
-            //     reservation.Orderdate = updatedReservation.Orderdate;
-            //     reservation.User.UserName = updatedReservation.User.UserName;
-            //     reservation.Whiskey = updatedReservation.Whiskey;
-            // }
-            // return reservation;
         }
 
         public Reservation Create(Reservation newReservation)

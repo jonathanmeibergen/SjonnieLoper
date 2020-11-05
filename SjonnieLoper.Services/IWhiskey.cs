@@ -8,6 +8,11 @@ namespace SjonieLoper.Services
     public interface IWhiskeys
     {
         IEnumerable<Whiskey> AllWhiskeys();
+        Whiskey WhiskeyById(int ond);
+        IEnumerable<Whiskey> WhiskeyByType();
+        Whiskey Update(Whiskey updatedWhiskey);
+        Whiskey Create(Whiskey newWhiskey);
+        int Commit();
     }
 
     public class Mock_Whiskey : IWhiskeys
@@ -30,5 +35,29 @@ namespace SjonieLoper.Services
         }
 
         public IEnumerable<Whiskey> AllWhiskeys() => _whiskeys;
+        public Whiskey WhiskeyById(int ond)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Whiskey> WhiskeyByType()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Whiskey Update(Whiskey updatedWhiskey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Whiskey Create(Whiskey newWhiskey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Commit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
