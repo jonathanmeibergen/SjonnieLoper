@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Services;
+using SjonnieLoper.Services;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Pages.Reservations

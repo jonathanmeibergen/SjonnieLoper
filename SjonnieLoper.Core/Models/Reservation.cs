@@ -10,15 +10,13 @@ namespace SjonnieLoper.Core.Models
         public DateTime Orderdate { get; set; }
         [Required]
         public Whiskey Whiskey { get; set; }
-        //TODO: Choose single of two derived classes.
-        public ApplicationUser User { get; set; }
-        public Customer CustomerOrder { get; set; }
-        
-        public Reservation(int id, DateTime time, Customer customer, Whiskey whiskey)
+        //TODO: Retrieve UserName from ApplicationUser
+        public ApplicationUser Customer { get; set; }        
+        public Reservation(int id, DateTime time, ApplicationUser customer, Whiskey whiskey)
         {
             Id = id;
             Orderdate = time;
-            CustomerOrder = customer;
+            Customer = customer;
             Whiskey = whiskey;
         }
 

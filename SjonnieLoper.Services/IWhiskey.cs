@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SjonnieLoper.Core.Models;
 
-namespace SjonieLoper.Services
+namespace SjonnieLoper.Services
 {
     public interface IWhiskeys
     {

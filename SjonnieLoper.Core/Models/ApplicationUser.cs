@@ -4,6 +4,13 @@ namespace SjonnieLoper.Core
 {
     public class ApplicationUser : IdentityUser
     {
-        //public int EmployeeNumber { get; set; }
+        public ApplicationUser()
+        {
+
+        }
+        public ApplicationUser(string name)
+        {
+            base.UserName = name;
+        }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SjonnieLoper.Services;
 
-namespace SjonieLoper.Services.Migrations
+namespace SjonnieLoper.Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201105123550_AppUser")]

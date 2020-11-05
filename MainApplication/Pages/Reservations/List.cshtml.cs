@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Services;
+using SjonnieLoper.Services;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 
@@ -35,7 +35,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
-                : _reservationsDb.ReservationByCustomerName(SearchValue);
+                : _reservationsDb.ReservationByUserName(SearchValue);
             
            // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
         }

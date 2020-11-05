@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
@@ -17,6 +18,8 @@ namespace SjonnieLoper.Services
 
         public DbSet<Whiskey> Whiskeys { get; set; }
         public DbSet<WhiskeyType> WhiskeyTypes { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Storage> Storage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

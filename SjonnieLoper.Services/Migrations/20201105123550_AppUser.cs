@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SjonieLoper.Services.Migrations
+namespace SjonnieLoper.Services.Migrations
 {
     public partial class AppUser : Migration
     {
