@@ -41,7 +41,7 @@ namespace SjonnieLoper
 
             services.AddAuthorization(options =>
                                       options.AddPolicy("EmployeeOnly", policy =>
-                                                                        policy.RequireClaim("EmployeeNumber")));
+                                                                        policy.RequireClaim("Role")));
 
             //[Authorize(Policy = "IsSpeaker")]
 

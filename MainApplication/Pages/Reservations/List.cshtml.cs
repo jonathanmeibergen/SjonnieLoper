@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Services;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SjonnieLoper.Pages.Reservations
 {
+    [Authorize(Policy = "EmployeeOnly")]
+    //[AllowAnonymous]
     public class ListModel : PageModel
     {
         private readonly IReservations _reservationsDb;
