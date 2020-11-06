@@ -6,8 +6,23 @@
 
 <h1>Reservations</h1>
 
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchValue">
+            <span class="input-group-btn">
+                <select asp-for="ProductType" asp-items="Model.ResTypes">
+                    <option value="">All</option>
+                </select>
+                <button class="btn btn-danger">
+                    <i class="btn-outline-info"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
 <table class="table">
-    @foreach (var order in Model.Reservations)
+    @foreach (var order in Model.RetrievedReservations)
     {
         <tr>
             <td>@order.Id</td>

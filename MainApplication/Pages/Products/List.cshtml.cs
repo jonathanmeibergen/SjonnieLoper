@@ -15,11 +15,12 @@ namespace SjonnieLoper.Pages.Products
 
         public ListModel(IWhiskeys whiskeys)
         {
-            _whiskeyDb = _whiskeyDb;
+            _whiskeyDb = whiskeys;
         }
 
         [BindProperty] 
-        public IEnumerable<Whiskey> whiskeys => _whiskeyDb.AllWhiskeys();
+        public IEnumerable<Whiskey> RetrievedWhiskeys 
+            => _whiskeyDb.AllWhiskeys();
         
         public void OnGet()
         {
