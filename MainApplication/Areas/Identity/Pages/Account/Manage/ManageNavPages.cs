@@ -24,8 +24,7 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
-        //Customization
-        public static string CreateEmployee => "CreateEmployee";
+        public static string AddEmployee => "AddEmployee";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -43,7 +42,8 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
-        public static string CreateEmployeeNavClass(ViewContext viewContext) => PageNavClass(viewContext, CreateEmployee);
+        public static string AddEmployeeNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddEmployee);
+
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

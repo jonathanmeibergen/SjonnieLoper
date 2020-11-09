@@ -19,27 +19,33 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Areas.Identity.Pages.Account
+namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
 {
     [AllowAnonymous]
-    public class AddEmployee : PageModel
+    public class AddEmployeeModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<AddEmployee> _logger;
+        private readonly ILogger<AddEmployeeModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IHtmlHelper _htmlHelper;
 
-        public AddEmployee(
+        private IEnumerable<Claim> _claims => Enumerable.Empty<Claim>();//(IEnumerable<Claim>)claims;
+
+        public AddEmployeeModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<AddEmployee> logger,
-            IEmailSender emailSender)
+            ILogger<AddEmployeeModel> logger,
+            IEmailSender emailSender,
+            IHtmlHelper htmlHelper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _htmlHelper = htmlHelper;
         }
 
         [BindProperty]
@@ -47,7 +53,10 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        public IEnumerable<SelectListItem> Claim { get; set; }
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public Claim ClaimToCheck { get; set; }
 
         public class InputModel
         {
@@ -66,12 +75,29 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Authorization level")]
+            public string ClaimForRole { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            Claim = _htmlHelper.GetEnumSelectList<RolesClaim>();
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            ClaimToCheck = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Role");
+
+            /*var authState = await authenticationStateTask;
+            var user = authState.User;
+
+            if (user.Identity.IsAuthenticated)
+            {
+                //_authMessage = $"{user.Identity.Name} is authenticated.";
+                //_claims = user.Claims;
+                //_surnameMessage = $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
+            }*/
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -89,13 +115,15 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
+                        "/Account/Manage/EmployeeCreated",
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _userManager.AddClaimAsync(user, new Claim("Role", Input.ClaimForRole));
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
