@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonnieLoper.Services.DataModels.Core.Models;
-using SjonnieLoper.Services.DataModels.Services;
+using SjonieLoper.Services;
+using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services;
 
-namespace SjonnieLoper.Services.DataModels.Pages.Products
+namespace SjonnieLoper.Pages.Products
 {
     public class EditModel : PageModel
     {

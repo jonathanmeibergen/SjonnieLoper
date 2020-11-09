@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SjonieLoper.Core.Models;
 using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Services
+namespace SjonieLoper.Services
 {
     public interface IReservations
     {
