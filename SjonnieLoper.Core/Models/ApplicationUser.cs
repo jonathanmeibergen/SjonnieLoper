@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SjonnieLoper.Services.DataModels.Core
+namespace SjonnieLoper.Core
 {
     public class ApplicationUser : IdentityUser
     {

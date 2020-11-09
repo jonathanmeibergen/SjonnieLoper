@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Services.DataModels
+namespace SjonnieLoper.Services
 {
     public static class MyServices
     {

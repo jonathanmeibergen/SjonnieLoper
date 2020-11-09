@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SjonnieLoper.Services.DataModels.Core.Models;
+using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Services.DataModels.Services
+namespace SjonnieLoper.Services
 {
     public interface IReservations
     {

@@ -1,10 +1,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using SjonnieLoper.Services.DataModels.Core.Models;
+using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Services.DataModels.Pages.Products.ViewModels
+namespace SjonnieLoper.Products.ViewModels
 {
-    public class ProductViewModel
+    public class ProductViewModel : Whiskey 
     {
             [ScaffoldColumn(false)]
             [DisplayName("Whiskey #")]
@@ -37,18 +37,14 @@ namespace SjonnieLoper.Services.DataModels.Pages.Products.ViewModels
             }
 
             // Development constructor for Mock_reservations.
-            public Whiskey(string name)
+            public ProductViewModel(string name)
             {
                 Name = Name;
             }
         
-            public Whiskey()
+            public ProductViewModel()
             {
             }
         
-        public ProductViewModel
-        {
-
-        } 
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SjonnieLoper.Services.DataModels.Core.Models
+namespace SjonnieLoper.Core.Models
 {
-    public class NewerWhiskey
+    public class Whiskey
     {
         [ScaffoldColumn(false)]
         [DisplayName("Whiskey #")]
@@ -24,7 +24,7 @@ namespace SjonnieLoper.Services.DataModels.Core.Models
         [DisplayName("Type of whiskey ")]
         public WhiskeyType WhiskeyType { get; }
 
-        public NewerWhiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
+        public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {
             WhiskeyId = whiskeyId;
             Name = name;
@@ -36,12 +36,12 @@ namespace SjonnieLoper.Services.DataModels.Core.Models
         }
 
         // Development constructor for Mock_reservations.
-        public NewerWhiskey(string name)
+        public Whiskey(string name)
         {
             Name = Name;
         }
         
-        public NewerWhiskey()
+        public Whiskey()
         {
         }
         

@@ -8,7 +8,7 @@ using SjonnieLoper.Services.DataModels.Core.Models;
 using SjonnieLoper.Services.DataModels.Pages.Products.ViewModels;
 using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Services.DataModels.Pages.Products
+namespace SjonnieLoper.Pages.Products
 {
     public class ListModel : PageModel
     {

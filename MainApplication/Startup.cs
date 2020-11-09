@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 using SjonieLoper.Services;
 using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Services.DataModels
+namespace SjonnieLoper.Services
 {
     public partial class Startup
     {

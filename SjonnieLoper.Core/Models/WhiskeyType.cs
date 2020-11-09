@@ -1,4 +1,4 @@
-﻿namespace SjonnieLoper.Services.DataModels.Core.Models
+﻿namespace SjonnieLoper.Core.Models
 {
     
     public class WhiskeyType
