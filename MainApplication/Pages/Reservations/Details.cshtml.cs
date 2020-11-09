@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonieLoper.Core.Models;
 using SjonieLoper.Services;
-using SjonnieLoper.Pages.ViewModels;
 
 namespace SjonnieLoper.Pages.Reservations
 {
@@ -19,7 +18,6 @@ namespace SjonnieLoper.Pages.Reservations
         
         public Reservation Reservation;
         
-        public ReservationViewModel ReservationVM;
         [TempData]
         public string Message { get; set; }
 
@@ -30,8 +28,7 @@ namespace SjonnieLoper.Pages.Reservations
         public IActionResult OnGet(int reservationId)
         {
             Reservation = _reservationsDb.ReservationById(reservationId);
-            ReservationVM = new ReservationViewModel(Reservation);
-            if (ReservationVM == null)
+            if (Reservation == null)
                 return RedirectToPage("./NotFound");
             return Page();
         }

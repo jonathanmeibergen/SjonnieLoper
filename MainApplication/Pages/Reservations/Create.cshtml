@@ -1,14 +1,14 @@
 @page "{reservationId:int}"
 @*@model SjonnieLoper.Pages.Reservations.CreateModel*@
-@model SjonnieLoper.Pages.ViewModels.ReservationViewModel
+@model SjonnieLoper.Pages.Reservations.CreateModel
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Edit order #@Model.Id</h1>
+<h1>Edit order #@Model.Reservation.Id</h1>
 
 <form method="post">
-    <input type="hidden" asp-for="@Model.Id">
+    <input type="hidden" asp-for="@Model.Reservation.Id">
    @* TODO: Create select list of available whiskey. 
     <div class="form-group">
         <label asp-for="Reservation.Whiskey.Name"></label>
@@ -17,8 +17,8 @@
         </select>
     </div>*@
     <div class="form-group">
-        <label asp-for="@Model.ClientName"></label>
-        <input asp-for="@Model.ClientName" class="form-control"/>
+        <label asp-for="@Model.Reservation.Id"></label>
+        <input asp-for="@Model.Reservation.Id" class="form-control"/>
     </div>
 
     <button type="submit" class="btn btn-outline-primary">Confirm</button>

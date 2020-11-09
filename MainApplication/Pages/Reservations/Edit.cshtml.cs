@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonieLoper.Core.Models;
 using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
-using SjonnieLoper.Pages.ViewModels;
 using SjonnieLoper.Services;
-using SjonnieLoper.Services.DataModels.Services;
 
 namespace SjonnieLoper.Pages.Reservations
 {
@@ -20,7 +18,7 @@ namespace SjonnieLoper.Pages.Reservations
         private readonly IWhiskeys _whiskeysDb;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
         [BindProperty]
-        public ReservationViewModel Reservation { get; set; }
+        public Reservation Reservation { get; set; }
         
         public EditModel(IReservations reservations,
                         IWhiskeys whiskeysDb,
@@ -34,8 +32,7 @@ namespace SjonnieLoper.Pages.Reservations
         }
         public IActionResult OnGet(int reservationId)
         {
-            Reservation = new ReservationViewModel(
-                _reservationsDb.ReservationById(reservationId));
+            Reservation = _reservationsDb.ReservationById(reservationId);
             if (Reservation == null)
                 return RedirectToPage("./NotFound");
             return Page();
@@ -46,7 +43,7 @@ namespace SjonnieLoper.Pages.Reservations
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new reservation.";
-                _reservationsDb.Update(new Reservation(Reservation));
+                _reservationsDb.Update(Reservation);
                 _reservationsDb.Commit();
                 //BUG: Redirect to details not showing. 
                 return RedirectToPage("Reservations/Details", 

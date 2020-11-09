@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonieLoper.Core.Models;
 using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
-using SjonnieLoper.Pages.ViewModels;
 using SjonnieLoper.Services;
 
 namespace SjonnieLoper.Pages.Reservations
@@ -31,7 +30,7 @@ namespace SjonnieLoper.Pages.Reservations
 
         public void OnGet(int reservationId)
         {
-            Reservation = new ReservationViewModel();
+            Reservation = new Reservation();
         }
 
         public IActionResult OnPost()

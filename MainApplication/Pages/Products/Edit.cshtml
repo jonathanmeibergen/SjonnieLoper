@@ -1,8 +1,8 @@
-@page
-@using System.Reflection
-@using SjonnieLoper.Pages.ViewModels
- @*@model sjonnieloper.pages.products.editmodel *@
-@model =  WhiskeyViewModel;                                                       
+@page "{whiskeyId:int}"
+ @model SjonnieLoper.Pages.Products.EditModel 
+@*
+@Model =  Sjonnieloper.Pages.Products.Editmodel;                                                       
+*@
 
 @*
 @{
@@ -10,23 +10,23 @@
 }
 *@
 
-<h1>Edit @Model.WhiskeyId</h1>
+<h1>Edit </h1>
 
 <form method="post">
-    <input type="hidden" asp-for="Whiskey.WhiskeyId">
+    <input type="hidden" asp-for="Product.WhiskeyId">
 }
     <div class="form-group">
-        <label asp-for="Whiskey.Age"></label>
-        <input asp-for="Whiskey.Age" class="form-control"/>
-        <label asp-for="Whiskey.WhiskeyType"></label>
-        <input asp-for="Whiskey.WhiskeyType" class="form-control"/>
-        <label asp-for="Whiskey.Name"></label>
-        <input asp-for="Whiskey.Name" class="form-control">
-        <label asp-for="Whiskey.AlcoholPercentage"></label>
-        <input asp-for="Whiskey.AlcoholPercentage" class="form-control"/>
-        <label asp-for="Whiskey.Origin"></label>
-        <input asp-for="Whiskey.Origin" class="form-control"/>
-        <span class="text-danger" asp-validation-for=Whiskey.Name></span>
+        <label asp-for="Product.Age"></label>
+        <input asp-for="Product.Age" class="form-control"/>
+        <label asp-for="Product.WhiskeyType"></label>
+        <input asp-for="Product.WhiskeyType" class="form-control"/>
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" class="form-control">
+        <label asp-for="Product.AlcoholPercentage"></label>
+        <input asp-for="Product.AlcoholPercentage" class="form-control"/>
+        <label asp-for="Product.Origin"></label>
+        <input asp-for="Product.Origin" class="form-control"/>
+        <span class="text-danger" asp-validation-for=Product.Name></span>
     </div>
 
     <button type="submit" class="btn btn-outline-primary">Confirm</button>

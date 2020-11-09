@@ -21,12 +21,12 @@ namespace SjonnieLoper.Core.Models
             set => _name = value;
         } 
 
-        private int Age { get; }
-        private string Origin { get; }
+        public int Age { get; }
+        public string Origin { get; }
         [Required]
-        private float AlcoholPercentage { get; }
+        public float AlcoholPercentage { get; }
         //[Required]
-        private string ImagePath { get; }
+        public string ImagePath { get; }
         [Required] public WhiskeyType WhiskeyType { get; }
 
         public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)

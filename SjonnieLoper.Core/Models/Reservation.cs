@@ -8,14 +8,14 @@ namespace SjonieLoper.Core.Models
     public class Reservation 
     {
 
-        public virtual int Id { get; set; }
-        public virtual DateTime Orderdate { get; set; }
+        public int Id { get; set; }
+        public DateTime Orderdate { get; set; }
         
-        public virtual Whiskey Whiskey { get; set; }
+        public Whiskey Whiskey { get; set; }
         [ScaffoldColumn(false)]
-        public virtual Customer Customer { get; set; }
+        public Customer Customer { get; set; }
         [DisplayName("Name of client ")]
-        public virtual string ClientName
+        public string ClientName
         
         {
             get => Customer.UserName;
@@ -26,7 +26,7 @@ namespace SjonieLoper.Core.Models
         {
             Id = id;
             Orderdate = time;
-            customer = customer;
+            Customer = customer;
             Whiskey = whiskey;
         }
 
