@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SjonnieLoper.Core;
-using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services.DataModels;
 
 namespace SjonieLoper.Services
 {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace SjonnieLoper
+namespace SjonnieLoper.Services.DataModels
 {
     public class Program
     {

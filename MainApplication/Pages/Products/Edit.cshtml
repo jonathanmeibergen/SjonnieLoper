@@ -1,8 +1,30 @@
 @page
-@model SjonnieLoper.Pages.Products.EditModel
+@using System.Reflection
+@* @model sjonnieloper.pages.products.editmodel *@
+@model = sjonnieloper.
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit product #@Model.  .Id</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Whiskey.WhiskeyId">
+}
+    <div class="form-group">
+        <label asp-for="Whiskey.Age"></label>
+        <input asp-for="Whiskey.Age" class="form-control"/>
+        <label asp-for="Whiskey.WhiskeyType"></label>
+        <input asp-for="Whiskey.WhiskeyType" class="form-control"/>
+        <label asp-for="Whiskey.Name"></label>
+        <input asp-for="Whiskey.Name" class="form-control">
+        <label asp-for="Whiskey.AlcoholPercentage"></label>
+        <input asp-for="Whiskey.AlcoholPercentage" class="form-control"/>
+        <label asp-for="Whiskey.Origin"></label>
+        <input asp-for="Whiskey.Origin" class="form-control"/>
+        <span class="text-danger" asp-validation-for=Whiskey.Name></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-primary">Confirm</button>
+</form>
 

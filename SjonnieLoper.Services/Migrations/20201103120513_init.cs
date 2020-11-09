@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SjonieLoper.Services.Migrations
+namespace SjonnieLoper.Services.DataModels.Services.Migrations
 {
     public partial class init : Migration
     {

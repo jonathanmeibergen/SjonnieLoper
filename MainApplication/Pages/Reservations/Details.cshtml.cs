@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SjonieLoper.Services;
-using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services.DataModels.Core.Models;
+using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Pages.Reservations
+namespace SjonnieLoper.Services.DataModels.Pages.Reservations
 {
     public class DetailsModel : PageModel
     {
@@ -23,6 +23,7 @@ namespace SjonnieLoper.Pages.Reservations
         public IActionResult OnGet(int reservationId)
         {
             Reservation = _reservationsDb.ReservationById(reservationId);
+            
             if (Reservation == null)
                 return RedirectToPage("./NotFound");
             return Page();

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SjonnieLoper.Core;
-using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services.DataModels.Core.Models;
 
-namespace SjonieLoper.Services
+namespace SjonnieLoper.Services.DataModels.Services
 {
     public interface IReservations
     {
         //IEnumerable<string> ReservationWhiskeyTypes();
         IEnumerable<Reservation> AllReservations();
-        Reservation ReservationCustomerId(int id);
+        Reservation ReservationByCustId(int id);
         Reservation ReservationById(int id);
         IEnumerable<Reservation> ReservationsCustomerName(string name);
         Reservation Update(Reservation updatedReservation);
@@ -39,7 +38,7 @@ namespace SjonieLoper.Services
 
         public IEnumerable<Reservation> AllReservations() => _reservations;
 
-        public Reservation ReservationCustomerId(int id) =>
+        public Reservation ReservationByCustId(int id) =>
             _reservations.FirstOrDefault(w => w.Id == id);
 
         public Reservation ReservationById(int id) =>
@@ -52,19 +51,11 @@ namespace SjonieLoper.Services
 
         public Reservation Update(Reservation updatedReservation)
         {
-            var reservation = 
+            var checkReservation = 
                 _reservations.SingleOrDefault(r => r.Id == updatedReservation.Id);
-            return reservation != null
+            return checkReservation != null
                 ? updatedReservation
                 : null;
-            // if (reservation != null)
-            // {
-            //     reservation.Id = updatedReservation.Id;
-            //     reservation.Orderdate = updatedReservation.Orderdate;
-            //     reservation.User.UserName = updatedReservation.User.UserName;
-            //     reservation.Whiskey = updatedReservation.Whiskey;
-            // }
-            // return reservation;
         }
 
         public Reservation Create(Reservation newReservation)

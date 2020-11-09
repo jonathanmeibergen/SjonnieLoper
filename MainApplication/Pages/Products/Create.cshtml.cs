@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SjonnieLoper.Pages.Products
+namespace SjonnieLoper.Services.DataModels.Pages.Products
 {
     public class CreateModel : PageModel
     {

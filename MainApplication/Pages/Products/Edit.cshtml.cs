@@ -4,14 +4,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SjonnieLoper.Services.DataModels.Core.Models;
+using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Pages.Products
+namespace SjonnieLoper.Services.DataModels.Pages.Products
 {
     public class EditModel : PageModel
     {
-        public void OnGet()
-        {
+        private readonly IReservations _reservationsDb;
+        private readonly IWhiskeys _whiskeysDb;
+        
+        public Whiskey Whiskey { get; set; }
 
+        public EditModel(IReservations reservations,
+            IWhiskeys whiskeysDb,
+            IHtmlHelper htmlHelper)
+        {
+            _reservationsDb = reservations;
+            _whiskeysDb = whiskeysDb;
+        }
+        public IActionResult OnGet(int whiskeyId)
+        {
+            Whiskey = _whiskeysDb.WhiskeyById(whiskeyId);
+            if (Whiskey == null)
+                return RedirectToPage("./NotFound");
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                TempData["Message"] = "Created a new reservation.";
+                _whiskeysDb.Update(Whiskey);
+                _whiskeysDb.Commit();
+                /*
+                return RedirectToPage("Reservations/Details", 
+                    new { whiskeyId = Whiskey.WhiskeyId });
+            */
+                return RedirectToPage("Products/Details", 
+                    new { whiskeyId = Whiskey.WhiskeyId });
+            }
+            return Page();
         }
     }
 }

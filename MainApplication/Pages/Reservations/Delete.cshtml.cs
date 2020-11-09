@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SjonnieLoper.Pages.Reservations
+namespace SjonnieLoper.Services.DataModels.Pages.Reservations
 {
     public class DeleteModel : PageModel
     {

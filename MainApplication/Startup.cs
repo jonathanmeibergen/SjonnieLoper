@@ -12,8 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SjonieLoper.Services;
+using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper
+namespace SjonnieLoper.Services.DataModels
 {
     public partial class Startup
     {

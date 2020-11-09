@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Services;
-using SjonnieLoper.Core;
-using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services.DataModels.Core;
+using SjonnieLoper.Services.DataModels.Core.Models;
+using SjonnieLoper.Services.DataModels.Services;
 
-namespace SjonnieLoper.Pages.Reservations
+namespace SjonnieLoper.Services.DataModels.Pages.Reservations
 {
     public class ListModel : PageModel
     {
