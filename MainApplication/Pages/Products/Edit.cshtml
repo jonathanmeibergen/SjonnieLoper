@@ -1,12 +1,16 @@
 @page
 @using System.Reflection
-@* @model sjonnieloper.pages.products.editmodel *@
-@model = sjonnieloper.
+@using SjonnieLoper.Pages.ViewModels
+ @*@model sjonnieloper.pages.products.editmodel *@
+@model =  WhiskeyViewModel;                                                       
+
+@*
 @{
     ViewData["Title"] = "Edit";
 }
+*@
 
-<h1>Edit product #@Model.  .Id</h1>
+<h1>Edit @Model.WhiskeyId</h1>
 
 <form method="post">
     <input type="hidden" asp-for="Whiskey.WhiskeyId">

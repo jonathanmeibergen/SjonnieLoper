@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SjonnieLoper.Services.DataModels.Core.Models;
-using SjonnieLoper.Services.DataModels.Services;
+using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services.DataModels.Pages.Products
 {

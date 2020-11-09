@@ -1,4 +1,5 @@
 using System.Buffers.Text;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using SjonieLoper.Core.Models;
 
@@ -10,8 +11,10 @@ namespace SjonnieLoper.Pages.ViewModels
             :base(reservation)
         {
         }
+        
+        public ReservationViewModel(){}
 
-        [Display(Name="Name client")]
+        [DisplayName("Name client ")]
         public override string ClientName
         {
             get => Customer.UserName;

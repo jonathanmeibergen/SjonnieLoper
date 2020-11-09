@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
+using SjonnieLoper.Pages.ViewModels;
 using SjonnieLoper.Services;
 
 namespace SjonnieLoper.Pages.Products
@@ -16,7 +17,7 @@ namespace SjonnieLoper.Pages.Products
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeysDb;
         
-        public Whiskey Whiskey { get; set; }
+        public WhiskeyViewModel Whiskey { get; set; }
 
         public EditModel(IReservations reservations,
             IWhiskeys whiskeysDb,
@@ -27,7 +28,7 @@ namespace SjonnieLoper.Pages.Products
         }
         public IActionResult OnGet(int whiskeyId)
         {
-            Whiskey = _whiskeysDb.WhiskeyById(whiskeyId);
+            Whiskey = new WhiskeyViewModel(_whiskeysDb.WhiskeyById(whiskeyId));
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();
@@ -38,7 +39,7 @@ namespace SjonnieLoper.Pages.Products
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new reservation.";
-                _whiskeysDb.Update(Whiskey);
+                _whiskeysDb.Update(new Whiskey(Whiskey));
                 _whiskeysDb.Commit();
                 /*
                 return RedirectToPage("Reservations/Details", 

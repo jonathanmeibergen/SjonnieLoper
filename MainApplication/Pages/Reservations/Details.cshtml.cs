@@ -31,7 +31,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             Reservation = _reservationsDb.ReservationById(reservationId);
             ReservationVM = new ReservationViewModel(Reservation);
-            if (Reservation == null)
+            if (ReservationVM == null)
                 return RedirectToPage("./NotFound");
             return Page();
         }

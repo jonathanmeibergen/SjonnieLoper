@@ -6,8 +6,8 @@ namespace SjonnieLoper.Core.Models
 {
     public class Whiskey
     {
-        private string _whiskeyId;
-        [ScaffoldColumn(false)] public string WhiskeyId 
+        private int _whiskeyId;
+        [ScaffoldColumn(false)] public int WhiskeyId 
         { 
             get => _whiskeyId; 
             set => _whiskeyId = value;
@@ -31,8 +31,8 @@ namespace SjonnieLoper.Core.Models
 
         public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {
-            WhiskeyId = Convert.ToString(whiskeyId);
-            _whiskeyId = name;
+            WhiskeyId = whiskeyId;
+            Name = name;
             Age = age;
             Origin = origin;
             AlcoholPercentage = alcoholPercentage;
@@ -49,7 +49,7 @@ namespace SjonnieLoper.Core.Models
         public Whiskey(Whiskey product)
         {
             WhiskeyId = product.WhiskeyId;
-            _whiskeyId = product.Name;
+            Name = product.Name;
             Age = product.Age;
             Origin = product.Origin;
             AlcoholPercentage = product.AlcoholPercentage;

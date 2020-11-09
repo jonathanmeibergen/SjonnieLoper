@@ -7,6 +7,7 @@ namespace SjonnieLoper.Services
     public interface IWhiskeys
     {
         IEnumerable<Whiskey> AllWhiskeys();
+        IEnumerable<Whiskey> WhiskeyByName(string name);
         Whiskey WhiskeyById(int id);
         IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType);
         public Whiskey Update(Whiskey updatedWhiskey);
@@ -34,6 +35,12 @@ namespace SjonnieLoper.Services
         }
 
         public IEnumerable<Whiskey> AllWhiskeys() => _whiskeys;
+        public IEnumerable<Whiskey> WhiskeyByName(string name) => 
+            _whiskeys
+            .Select(w => w)
+            .Where(t => t.Name == name)
+            .Select(item => item);
+
         public Whiskey WhiskeyById(int id) => 
             _whiskeys.SingleOrDefault(r => r.WhiskeyId == id);
 

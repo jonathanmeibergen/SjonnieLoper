@@ -47,7 +47,7 @@ namespace SjonieLoper.Services
 
         public IEnumerable<Reservation> ReservationsCustomerName(string name) =>
                 _reservations.Select(r => r)
-                .Where(entry => entry.CustomerOrder.UserName == name)
+                .Where(entry => entry.ClientName == name)
                 .Select(x => x);
 
         public Reservation Update(Reservation updatedReservation)
