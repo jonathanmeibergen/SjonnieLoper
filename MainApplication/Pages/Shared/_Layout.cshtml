@@ -24,13 +24,16 @@
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Products/List">Whiskeys</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="Reservations/List">Reservations</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        @{
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
+                            //forgetting to start with a '/' in a asp-page= url, causes an empty href when logged out
+                            var brkpnt = "breakpoint";// razor code only for setting a breakpoint, no further use.
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Reservations/List">Reservations</a>
                         </li>
                         
                     </ul>

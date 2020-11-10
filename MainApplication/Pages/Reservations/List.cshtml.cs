@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
+using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SjonnieLoper.Pages.Reservations
 {
+    [Authorize(Policy = "EmployeeOnly")]
+    //[AllowAnonymous]
     public class ListModel : PageModel
     {
         private readonly IReservations _reservationsDb;
@@ -19,7 +23,7 @@ namespace SjonnieLoper.Pages.Reservations
             _reservationsDb = reservations;
         }
         
-        public SelectList ResTypes { get; set; }
+        public SelectList ResTypes { get; set; } 
 
         [BindProperty(SupportsGet = true)]
         public string ProductType { get; set; }
@@ -28,15 +32,15 @@ namespace SjonnieLoper.Pages.Reservations
         public string SearchValue { get; set; }
         //[BindProperty] 
         public IEnumerable<Reservation> RetrievedReservations { get; set; }
-        
 
 
         public void OnGet()
         {
-            // TODO: Implement search function with 'searchvalue'.
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
-                : _reservationsDb.ReservationsCustomerName(SearchValue);
+                : _reservationsDb.ReservationByUserName(SearchValue);
+            
+           // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
         }
 
     }
