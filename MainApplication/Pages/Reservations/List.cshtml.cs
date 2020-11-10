@@ -38,7 +38,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
-                : _reservationsDb.ReservationByUserName(SearchValue);
+                : _reservationsDb.ReservationsCustomerName(SearchValue);
             
            // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
         }
