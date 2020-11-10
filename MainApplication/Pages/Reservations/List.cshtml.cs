@@ -33,11 +33,10 @@ namespace SjonnieLoper.Pages.Reservations
 
         public void OnGet()
         {
+            // TODO: Implement search function with 'searchvalue'.
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
                 : _reservationsDb.ReservationsCustomerName(SearchValue);
-            
-           // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
         }
 
     }
