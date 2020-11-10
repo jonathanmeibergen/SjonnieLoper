@@ -1,10 +1,14 @@
+using SjonnieLoper.Core.Models;
+using System;
+using System.Collections.Generic;
+
 namespace SjonnieLoper.Services
 {
     public class MockReservation
     {
         private List<Reservation> _reservations;
         
-        public Mock_Reservations()
+        public MockReservation()
         {
             _reservations = new List<Reservation>()
             {
