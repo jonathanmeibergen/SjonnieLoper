@@ -14,8 +14,8 @@
                 <select asp-for="ProductType" asp-items="Model.ResTypes">
                     <option value="">All</option>
                 </select>
-                <button class="btn btn-danger">
-                    <i class="btn-outline-info"></i>
+                <button class="btn btn-outline-info">
+                    <i class="fas fa-search"></i>
                 </button>
             </span>
         </div>
@@ -33,7 +33,7 @@
                 <a class="btn btn-primary"
                    asp-page="/Reservations/Details"
                    asp-route-reservationId="@order.Id">
-                    <i class="arrow"></i>
+                    <i class="fas fa-search-plus"></i>
                 </a>
             </td>
 
@@ -41,6 +41,7 @@
     }
 </table>
 
-<a asp-page="Reservations/Create" class="btn btn-outline-primary">
+<a asp-page="/Create" class="btn btn-outline-primary">
     Add reservation
+    <i class="fa fa-plus-square"></i>
 </a>
