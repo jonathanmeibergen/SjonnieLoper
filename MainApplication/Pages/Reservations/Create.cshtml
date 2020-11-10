@@ -9,13 +9,15 @@
 <form method="post">
     <input type="hidden" asp-for="Reservation.Id">
     <input type="hidden" asp-for="Reservation.Orderdate">
-   @* TODO: Create select list of available whiskey. 
+   @*
+    TODO: Create select list of available whiskey. 
     <div class="form-group">
         <label asp-for="Reservation.Whiskey.Name"></label>
         <select class="form-control" asp-for="Reservation.Whiskey.WhiskeyId"
                 asp-items="@(new SelectListItem())">
         </select>
-    </div>*@
+    </div>
+   *@
     <div class="form-group">
         <label asp-for="Reservation.Customer.UserName"></label>
         <input asp-for="Reservation.Customer.UserName" class="form-control"/>

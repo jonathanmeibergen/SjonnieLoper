@@ -25,7 +25,6 @@ namespace SjonnieLoper.Services
         {
             base.OnModelCreating(builder);
 
-
             ApplicationUser AppUser = new ApplicationUser {
                 //EmployeeNumber = 1,
                 Id = Guid.NewGuid().ToString(),
