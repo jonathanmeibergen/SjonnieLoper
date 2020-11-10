@@ -4,7 +4,7 @@ using SjonnieLoper.Services.DataModels;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 
-namespace SjonieLoper.Services
+namespace SjonnieLoper.Services
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

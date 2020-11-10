@@ -6,28 +6,31 @@ namespace SjonnieLoper.Core.Models
 {
     public class Whiskey
     {
-        private int _whiskeyId;
-        [ScaffoldColumn(false)] public int WhiskeyId 
-        { 
-            get => _whiskeyId; 
-            set => _whiskeyId = value;
-        }
-
-        [Required] private string _name;
-        
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        } 
-
-        public int Age { get; }
-        public string Origin { get; }
+        [Key]
         [Required]
-        public float AlcoholPercentage { get; }
-        //[Required]
-        public string ImagePath { get; }
-        [Required] public WhiskeyType WhiskeyType { get; }
+        [Display(Name="Id of whiskey ")]
+        public int WhiskeyId;
+
+        [Required] 
+        [Display(Name="Whiskey name ")]
+        public string Name;
+        
+        [Required]
+        [Display(Name="Age in whole years ")]
+        public int Age { get; set; }
+        
+        [Required]
+        [Display(Name="Origin of whiskey ")]
+        public string Origin { get; set; }
+        
+        [Required]
+        [Display(Name="Alcohol percentage of whiskey ")]
+        public float AlcoholPercentage { get; set; }
+        
+        public string ImagePath { get; set; }
+        
+        [Required] 
+        public virtual WhiskeyType WhiskeyType { get; set; }
 
         public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {

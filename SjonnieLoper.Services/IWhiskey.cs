@@ -38,7 +38,7 @@ namespace SjonnieLoper.Services
         public IEnumerable<Whiskey> WhiskeyByName(string name) => 
             _whiskeys
             .Select(w => w)
-            .Where(t => t.Name == name)
+            .Where(t => t. Name == name)
             .Select(item => item);
 
         public Whiskey WhiskeyById(int id) => 

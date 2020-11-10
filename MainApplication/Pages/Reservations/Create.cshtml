@@ -9,13 +9,10 @@
 
 <form method="post">
     <input type="hidden" asp-for="@Model.Reservation.Id">
-   @* TODO: Create select list of available whiskey. 
-    <div class="form-group">
-        <label asp-for="Reservation.Whiskey.Name"></label>
-        <select class="form-control" asp-for="Reservation.Whiskey.WhiskeyId"
-                asp-items="@(new SelectListItem())">
-        </select>
-    </div>*@
+        <label asp-for="Reservation.Products"></label>
+           <select asp-for="productAddedID"
+                   asp-items="@(new SelectList(Model.RegisteredWhiskeys, "Value", "Text"))">
+           </select>
     <div class="form-group">
         <label asp-for="@Model.Reservation.Id"></label>
         <input asp-for="@Model.Reservation.Id" class="form-control"/>

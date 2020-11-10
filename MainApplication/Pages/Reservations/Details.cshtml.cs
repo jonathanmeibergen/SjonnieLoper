@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SjonieLoper.Core.Models;
-using SjonieLoper.Services;
+using SjonnieLoper.Core.Models;
+using SjonnieLoper.Services;
 
 namespace SjonnieLoper.Pages.Reservations
 {

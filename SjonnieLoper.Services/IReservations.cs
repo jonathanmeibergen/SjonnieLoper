@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SjonieLoper.Core.Models;
 using SjonnieLoper.Core.Models;
 
-namespace SjonieLoper.Services
+namespace SjonnieLoper.Services
 {
     public interface IReservations
     {
@@ -28,12 +27,12 @@ namespace SjonieLoper.Services
             _reservations = new List<Reservation>()
             {
                 // Using development constructor for whiskey here, not intended for db use later.
-                new Reservation( 6, DateTime.Now, new Customer("Iris"), new Whiskey("Old Foo")),
-                new Reservation( 5, DateTime.Now, new Customer("Vera"), new Whiskey("Jack Bar")),
-                new Reservation( 4, DateTime.Now, new Customer("John"), new Whiskey("Golden Goose")),
-                new Reservation( 3, DateTime.Now, new Customer("Erik"), new Whiskey("Monkey Handles")),
-                new Reservation( 2, DateTime.Now, new Customer("Phoebe"), new Whiskey("Fizz Buzz")),
-                new Reservation( 1, DateTime.Now, new Customer("Mohammed"), new Whiskey("Monkey Handles"))
+                new Reservation( 6, DateTime.Now, new Customer("Iris", "a"), new Whiskey("Old Foo")),
+                new Reservation( 5, DateTime.Now, new Customer("Vera", "b"), new Whiskey("Jack Bar")),
+                new Reservation( 4, DateTime.Now, new Customer("John", "c"), new Whiskey("Golden Goose")),
+                new Reservation( 3, DateTime.Now, new Customer("Erik", "d"), new Whiskey("Monkey Handles")),
+                new Reservation( 2, DateTime.Now, new Customer("Phoebe", "e"), new Whiskey("Fizz Buzz")),
+                new Reservation( 1, DateTime.Now, new Customer("Mohammed", "f"), new Whiskey("Monkey Handles"))
             };
         }
 
@@ -47,7 +46,7 @@ namespace SjonieLoper.Services
 
         public IEnumerable<Reservation> ReservationsCustomerName(string name) =>
                 _reservations.Select(r => r)
-                .Where(entry => entry.ClientName == name)
+                .Where(entry => entry.Customer == name)
                 .Select(x => x);
 
         public Reservation Update(Reservation updatedReservation)

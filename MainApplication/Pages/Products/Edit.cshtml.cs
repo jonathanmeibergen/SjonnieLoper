@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
 
@@ -14,17 +13,14 @@ namespace SjonnieLoper.Pages.Products
 {
     public class EditModel : PageModel
     {
-        private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeysDb;
         
-        
         public Whiskey Product { get; set; }
-
-        public EditModel(IReservations reservations,
+        
+        public EditModel(
             IWhiskeys whiskeysDb,
             IHtmlHelper htmlHelper)
         {
-            _reservationsDb = reservations;
             _whiskeysDb = whiskeysDb;
         }
         public IActionResult OnGet(int whiskeyId)

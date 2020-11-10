@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Core.Models;
-using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
 
@@ -17,6 +16,8 @@ namespace SjonnieLoper.Pages.Reservations
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeysDb;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int productAddedID { get; set; }
         [BindProperty] public Reservation Reservation { get; set; }
 
         public CreateModel(IReservations reservations,
@@ -31,6 +32,9 @@ namespace SjonnieLoper.Pages.Reservations
         public void OnGet(int reservationId)
         {
             Reservation = new Reservation();
+            RegisteredWhiskeys = _whiskeysDb
+                .AllWhiskeys()
+                .GetWhiskeyNames();
         }
 
         public IActionResult OnPost()

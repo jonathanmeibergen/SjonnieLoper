@@ -11,12 +11,19 @@
     {
         <tr>
             <td>@prod.Name</td>
-            <td>@prod.WhiskeyType</td>
+            <td>@prod.WhiskeyType.Name</td>
             <td>@prod.Age</td>
             <td>@prod.AlcoholPercentage</td>
             <td>@prod.Origin</td>
             @* TODO: Replace ImagePath with actual image. *@
             <td>@prod.ImagePath</td>
+            <td>
+                <a class="btn btn-primary"
+                   asp-page="/Products/Details"
+                   asp-route-productId="@prod.WhiskeyId">
+                    <i class="arrow"></i>
+                </a>
+            </td>
         </tr>
     }
 </table>

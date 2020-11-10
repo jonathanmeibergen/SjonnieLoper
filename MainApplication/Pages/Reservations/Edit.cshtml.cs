@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SjonieLoper.Core.Models;
-using SjonieLoper.Services;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
 
@@ -17,21 +15,26 @@ namespace SjonnieLoper.Pages.Reservations
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeysDb;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int productAddedID { get; set; }
         [BindProperty]
         public Reservation Reservation { get; set; }
-        
+
         public EditModel(IReservations reservations,
-                        IWhiskeys whiskeysDb,
-                        IHtmlHelper htmlHelper)
+                        IWhiskeys whiskeysDb)
         {
             _reservationsDb = reservations;
             _whiskeysDb = whiskeysDb;
-            var allWhiskey = _whiskeysDb.AllWhiskeys();
             
+            /*
             RegisteredWhiskeys = new SelectList(allWhiskey.ToList(), "Value","Name");
+        */
         }
         public IActionResult OnGet(int reservationId)
         {
+            RegisteredWhiskeys = _whiskeysDb
+                .AllWhiskeys()
+                .GetWhiskeyNames();
             Reservation = _reservationsDb.ReservationById(reservationId);
             if (Reservation == null)
                 return RedirectToPage("./NotFound");
@@ -42,11 +45,12 @@ namespace SjonnieLoper.Pages.Reservations
         {
             if (ModelState.IsValid)
             {
+                Reservation.Products.Add(new Whiskey(_whiskeysDb.WhiskeyById(productAddedID)));
                 TempData["Message"] = "Created a new reservation.";
                 _reservationsDb.Update(Reservation);
                 _reservationsDb.Commit();
                 //BUG: Redirect to details not showing. 
-                return RedirectToPage("Reservations/Details", 
+                return RedirectToPage("./Details", 
                     new { reservationId = Reservation.Id });
             }
             //TODO: Repopulate dropdown list values.

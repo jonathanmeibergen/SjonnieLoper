@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SjonieLoper.Services;
+using SjonnieLoper.Services;
 using SjonnieLoper.Services.DataModels.Services;
 
 namespace SjonnieLoper.Services

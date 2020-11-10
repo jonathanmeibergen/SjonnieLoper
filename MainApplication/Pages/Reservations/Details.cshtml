@@ -11,10 +11,10 @@
 <h1>Order# @Model.Reservation.Id</h1>
 
 <div>
-    Client: @Model.Reservation.ClientName
+    Client: @Model.Reservation.Customer
 </div>
 <div>
-    Product: @Model.Reservation.Whiskey.Name
+    Product: @Model.Reservation.Products.Count
 </div>
 <div>
     Date of order: @Model.Reservation.Orderdate
