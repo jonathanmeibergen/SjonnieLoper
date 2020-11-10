@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ namespace SjonnieLoper.Pages.Products
     public class CreateModel : PageModel
     {
         private readonly IWhiskeys _whiskeysDb;
+        
         public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
         [BindProperty(SupportsGet = true)]
         public int productAddedID { get; set; }
@@ -19,10 +21,20 @@ namespace SjonnieLoper.Pages.Products
         {
             _whiskeysDb = whiskeysDb;
         }
-        public void OnGet()
+        public IActionResult OnPost()
         {
-            //RegisteredWhiskeyTypes = _whiskeysDb.WhiskeyCategories()
-
-        }
+            if (!ModelState.IsValid)
+            {
+                //TODO: Repopulate dropdown list.
+                return Page();
+            }
+            else
+            {
+                TempData["Message"] = "Created a new reservation.";
+                _whiskeysDb.Create(Whiskey);
+            }
+            return RedirectToPage("Reservations/Details",
+                new {reservationId = Whiskey.WhiskeyId });
+        } 
     }
 }
