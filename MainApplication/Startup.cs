@@ -32,7 +32,7 @@ namespace SjonnieLoper
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton<IReservations, Mock_Reservations>();
+            services.AddSingleton<IReservations, MockReservations>();
             services.AddDbContext<ApplicationDbContext>(options =>
                                                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => 
