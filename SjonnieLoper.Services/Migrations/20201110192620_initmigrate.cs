@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.Services.Migrations
 {
-    public partial class init : Migration
+    public partial class initmigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -166,28 +166,84 @@ namespace SjonnieLoper.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reservations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Orderdate = table.Column<DateTime>(nullable: false),
+                    Customer = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_Customer",
+                        column: x => x.Customer,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Whiskeys",
                 columns: table => new
                 {
                     WhiskeyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
                     Age = table.Column<int>(nullable: false),
-                    Origin = table.Column<string>(nullable: true),
+                    Origin = table.Column<string>(nullable: false),
                     AlcoholPercentage = table.Column<float>(nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
-                    WhiskeyTypeId = table.Column<int>(nullable: true)
+                    WhiskeyTypeId = table.Column<int>(nullable: false),
+                    ReservationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Whiskeys", x => x.WhiskeyId);
                     table.ForeignKey(
+                        name: "FK_Whiskeys_Reservations_ReservationId",
+                        column: x => x.ReservationId,
+                        principalTable: "Reservations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Whiskeys_WhiskeyTypes_WhiskeyTypeId",
                         column: x => x.WhiskeyTypeId,
                         principalTable: "WhiskeyTypes",
                         principalColumn: "WhiskeyTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Storage",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhiskeyId = table.Column<int>(nullable: true),
+                    Amount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Storage", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Storage_Whiskeys_WhiskeyId",
+                        column: x => x.WhiskeyId,
+                        principalTable: "Whiskeys",
+                        principalColumn: "WhiskeyId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "5c09a031-6f91-4d4d-b664-fe06aba9d949", 0, "ca1aa2a2-2cfb-452c-8e01-046edefd5b71", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAED6hbrHiF7tRrZr1D7Pt++hjkVWYrfD/5k0Cn/nkaIo+7nbr1khrrLv7NquqmXsAHw==", null, false, "62456f69-527f-4cf5-be64-72378fdf1139", false, "admin@admin.com" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[] { 1, "Role", "Admin", "5c09a031-6f91-4d4d-b664-fe06aba9d949" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -229,6 +285,21 @@ namespace SjonnieLoper.Services.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reservations_Customer",
+                table: "Reservations",
+                column: "Customer");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Storage_WhiskeyId",
+                table: "Storage",
+                column: "WhiskeyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Whiskeys_ReservationId",
+                table: "Whiskeys",
+                column: "ReservationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Whiskeys_WhiskeyTypeId",
                 table: "Whiskeys",
                 column: "WhiskeyTypeId");
@@ -252,16 +323,22 @@ namespace SjonnieLoper.Services.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Whiskeys");
+                name: "Storage");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Whiskeys");
+
+            migrationBuilder.DropTable(
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "WhiskeyTypes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

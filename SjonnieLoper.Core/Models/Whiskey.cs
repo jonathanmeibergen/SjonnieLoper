@@ -9,7 +9,7 @@ namespace SjonnieLoper.Core.Models
         [Key]
         [Required]
         [Display(Name="Id of whiskey ")]
-        public int WhiskeyId;
+        public int WhiskeyId { get; set; }
 
         [Required] 
         [Display(Name="Whiskey name ")]
