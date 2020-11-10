@@ -42,14 +42,6 @@ namespace SjonnieLoper
                 options.AddPolicy("EmployeeOnly", policy =>
                     policy.RequireClaim("Role")));
 
-            //[Authorize(Policy = "IsSpeaker")]
-
-            //.AddRoles<IdentityRole>()
-            //.AddRoleManager<RoleManager<IdentityRole>>();
-
-            // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //         .AddCookie();
-
             services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
         }
 
@@ -77,48 +69,7 @@ namespace SjonnieLoper
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
-
-            //CreateRoles(serviceProvider);
         }
 
-        private void CreateRoles(IServiceProvider serviceProvider)
-        {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            Task<IdentityResult> roleResult;
-            string email = "someone@somewhere.com";
-
-            //Check that there is an Administrator role and create if not
-            Task<bool> hasAdminRole = roleManager.RoleExistsAsync("Administrator");
-            hasAdminRole.Wait();
-
-            if (!hasAdminRole.Result)
-            {
-                roleResult = roleManager.CreateAsync(new IdentityRole("Administrator"));
-                roleResult.Wait();
-            }
-
-            //Check if the admin user exists and create it if not
-            //Add to the Administrator role
-
-            Task<ApplicationUser> testUser = userManager.FindByEmailAsync(email);
-            testUser.Wait();
-
-            if (testUser.Result == null)
-            {
-                ApplicationUser administrator = new ApplicationUser();
-                administrator.Email = email;
-                administrator.UserName = email;
-
-                Task<IdentityResult> newUser = userManager.CreateAsync(administrator, "_AStrongP@ssword!");
-                newUser.Wait();
-
-                if (newUser.Result.Succeeded)
-                {
-                    Task<IdentityResult> newUserRole = userManager.AddToRoleAsync(administrator, "Administrator");
-                    newUserRole.Wait();
-                }
-            }
-        }
     }
 }
