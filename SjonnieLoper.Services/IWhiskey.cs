@@ -12,6 +12,7 @@ namespace SjonnieLoper.Services
         IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType);
         public Whiskey Update(Whiskey updatedWhiskey);
         public Whiskey Create(Whiskey newWhiskey);
+        public IEnumerable<string> WhiskeyCategories();
         public int Commit();
     }
 
@@ -41,6 +42,13 @@ namespace SjonnieLoper.Services
             .Where(t => t. Name == name)
             .Select(item => item);
 
+        /*
+        public IEnumerable<string> WhiskeyCategories() => 
+            _whiskeys.Select(w => w)
+            .GroupBy(i => i.WhiskeyType).Distinct()
+            .Select(s => s);
+            */
+        
         public Whiskey WhiskeyById(int id) => 
             _whiskeys.SingleOrDefault(r => r.WhiskeyId == id);
 

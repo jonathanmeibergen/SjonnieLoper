@@ -8,29 +8,20 @@
 
 <form method="post">
     <input type="hidden" asp-for="Reservation.Id">
-   @* TODO: Create select list of available whiskey. 
-    <div class="form-group">
-        <label asp-for="Reservation.Whiskey.Name"></label>
-        <select class="form-control" asp-for="Reservation.Whiskey.WhiskeyId"
-                asp-items="@(new SelectListItem())">
-        </select>
-    </div>*@
+
 
     <div class="form-group">
-        @*
-        @Html.DropDownListFor(x => Model.productAddedID, new SelectList(Model.RegisteredWhiskeys, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "whiskey" })
-        *@
+
         <select asp-for="productAddedID"
                 asp-items="@(new SelectList(Model.RegisteredWhiskeys, "Value", "Text"))">
             
         </select>
         <label asp-for="Reservation.Customer"></label>
         <input asp-for="Reservation.Customer" class="form-control"/>
+        <span class="text-danger" asp-validation-for="Reservation.Customer"></span>
         <label asp-for="Reservation.Orderdate"></label>
         <input asp-for="Reservation.Orderdate" class="form-control"/>
-        @*
-        <span class="text-danger" asp-validation-for="Reservation.Whiskey"></span>
-    *@
+        <span class="text-danger" asp-validation-for="Reservation.Orderdate"></span>
     </div>
 
     <button type="submit" class="btn btn-outline-primary">Confirm</button>

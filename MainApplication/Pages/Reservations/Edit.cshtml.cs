@@ -25,10 +25,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             _reservationsDb = reservations;
             _whiskeysDb = whiskeysDb;
-            
-            /*
-            RegisteredWhiskeys = new SelectList(allWhiskey.ToList(), "Value","Name");
-        */
+
         }
         public IActionResult OnGet(int reservationId)
         {
@@ -49,7 +46,6 @@ namespace SjonnieLoper.Pages.Reservations
                 TempData["Message"] = "Created a new reservation.";
                 _reservationsDb.Update(Reservation);
                 _reservationsDb.Commit();
-                //BUG: Redirect to details not showing. 
                 return RedirectToPage("./Details", 
                     new { reservationId = Reservation.Id });
             }
