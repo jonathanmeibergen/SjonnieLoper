@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SjonnieLoper.Services.DataModels;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 
