@@ -21,7 +21,7 @@ namespace SjonnieLoper.Pages.Products
         }
         public void OnGet()
         {
-            RegisteredWhiskeyTypes = _whiskeysDb.WhiskeyCategories()
+            //RegisteredWhiskeyTypes = _whiskeysDb.WhiskeyCategories()
 
         }
     }

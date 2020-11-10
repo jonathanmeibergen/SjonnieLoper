@@ -10,8 +10,8 @@
     <select asp-for="productAddedID"
             asp-items="@(new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"))">
     </select>
-    <input type="hidden" asp-for="@Model.Reservation.Id">
-    <label asp-for="Reservation.Products"></label>
+    <input type="hidden" asp-for="@Model.Whiskey.WhiskeyId">
+    <label asp-for="Whiskey.Name"></label>
     <select asp-for="productAddedID"
             asp-items="@(new SelectList(Model.RegisteredWhiskeys, "Value", "Text"))">
     </select>

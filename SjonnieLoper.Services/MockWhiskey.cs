@@ -5,11 +5,11 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
-    public class MockWhiskey : IWhiskeys
+    public class Mock_Whiskey : IWhiskeys
     {
         private List<Whiskey> _whiskeys;
 
-        public MockWhiskey()
+        public Mock_Whiskey()
         {
             _whiskeys = new List<Whiskey>()
             {
@@ -25,18 +25,32 @@ namespace SjonnieLoper.Services
         }
 
         public IEnumerable<Whiskey> AllWhiskeys() => _whiskeys;
-        public Whiskey WhiskeyById(int id) => 
-            _whiskeys.FirstOrDefault(w => w.WhiskeyId == id);
+        public IEnumerable<Whiskey> WhiskeyByName(string name) =>
+            _whiskeys
+            .Select(w => w)
+            .Where(t => t.Name == name)
+            .Select(item => item);
 
-        public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
+        /*
+        public IEnumerable<string> WhiskeyCategories() => 
             _whiskeys.Select(w => w)
-                .Where(t => t.WhiskeyType.Name == typeName);
+            .GroupBy(i => i.WhiskeyType).Distinct()
+            .Select(s => s);
+            */
 
+        public Whiskey WhiskeyById(int id) =>
+            _whiskeys.SingleOrDefault(r => r.WhiskeyId == id);
+
+        public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
+            _whiskeys.Where(w => w.WhiskeyType
+                .Name == whiskeyType.Name)
+                .Select(w => w);
         public Whiskey Update(Whiskey updatedWhiskey)
         {
-            var reservation = 
-                _whiskeys.SingleOrDefault(r => r.WhiskeyId == updatedWhiskey.WhiskeyId);
-            return reservation != null
+            var checkWhiskey =
+                _whiskeys
+                    .SingleOrDefault(r => r.WhiskeyId == updatedWhiskey.WhiskeyId);
+            return checkWhiskey != null
                 ? updatedWhiskey
                 : null;
         }
@@ -44,14 +58,11 @@ namespace SjonnieLoper.Services
         public Whiskey Create(Whiskey newWhiskey)
         {
             _whiskeys.Add(newWhiskey);
-            newWhiskey.WhiskeyId = 
+            newWhiskey.WhiskeyId =
                 _whiskeys.Max(e => e.WhiskeyId) + 1;
             return newWhiskey;
         }
 
-        public int Commit()
-        {
-            throw new NotImplementedException();
-        }
+        public int Commit() => 0;
     }
 }

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
-using SjonnieLoper.Services.DataModels.Services;
 
 namespace SjonnieLoper.Pages.Products
 {

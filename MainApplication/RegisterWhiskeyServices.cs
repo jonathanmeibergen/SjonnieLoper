@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SjonnieLoper.Services;
-using SjonnieLoper.Services.DataModels.Services;
 
 namespace SjonnieLoper.Services
 {
@@ -9,7 +8,7 @@ namespace SjonnieLoper.Services
         public static IServiceCollection RegisterWhiskeyServices(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IReservations, Mock_Reservations>()
+                .AddSingleton<IReservations, MockReservations>()
                 .AddSingleton<IWhiskeys, Mock_Whiskey>();
         }
     }

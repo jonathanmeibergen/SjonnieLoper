@@ -44,5 +44,16 @@ namespace SjonnieLoper.Services
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Whiskey> WhiskeyByName(string name) =>
+           _db.Whiskeys
+           .Select(w => w)
+           .Where(t => t.Name == name)
+           .Select(item => item);
+
+        public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
+            _db.Whiskeys
+            .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
+            .Select(w => w);
     }
 }
