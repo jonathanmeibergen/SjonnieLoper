@@ -8,8 +8,8 @@ namespace SjonnieLoper.Services
         public static IServiceCollection RegisterWhiskeyServices(this IServiceCollection services)
         {
             return services
-                .AddSingleton<IReservations, MockReservations>()
-                .AddSingleton<IWhiskeys, MockWhiskey>();
+                .AddScoped<IReservations, SqlReservationData>()
+                .AddScoped<IWhiskeys, SqlWhiskeyData>();
         }
     }
 }
