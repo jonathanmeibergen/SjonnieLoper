@@ -5,10 +5,10 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
-    public class MockReservations 
+    public class MockReservations
     {
         private List<Reservation> _reservations;
-        
+
         public MockReservations()
         {
             _reservations = new List<Reservation>()
@@ -22,4 +22,5 @@ namespace SjonnieLoper.Services
                 new Reservation( 1, DateTime.Now, new Customer("Mohammed", "f"), new Whiskey("Monkey Handles"))
             };
         }
+    }
 }

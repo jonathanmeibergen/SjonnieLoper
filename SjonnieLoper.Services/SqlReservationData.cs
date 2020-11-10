@@ -5,7 +5,7 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
-    public class SqlReservationData
+    public class SqlReservationData : IReservations
     {
         private ApplicationDbContext _db;
 
