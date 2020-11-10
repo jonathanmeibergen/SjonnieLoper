@@ -23,7 +23,9 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
 {
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize(Policy = "EmployeeOnly")]
+
     public class AddEmployeeModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -53,7 +55,7 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
 
         public string ReturnUrl { get; set; }
 
-        public IEnumerable<SelectListItem> Claim { get; set; }
+        public IEnumerable<SelectListItem> Claims { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public Claim ClaimToCheck { get; set; }
@@ -80,24 +82,19 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
             public string ClaimForRole { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            Claim = _htmlHelper.GetEnumSelectList<RolesClaim>();
-
+            Claims = _htmlHelper.GetEnumSelectList<RolesClaim>();
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ClaimToCheck = _signInManager.Context.User.Claims.First(c => c.Type.Contains("Role"));
 
-            ClaimToCheck = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Role");
-
-            /*var authState = await authenticationStateTask;
-            var user = authState.User;
-
-            if (user.Identity.IsAuthenticated)
+            //Not admin?, no go
+            if(ClaimToCheck == null || ClaimToCheck.Value != Enum.GetName(typeof(RolesClaim),RolesClaim.Admin))
             {
-                //_authMessage = $"{user.Identity.Name} is authenticated.";
-                //_claims = user.Claims;
-                //_surnameMessage = $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
-            }*/
+                return RedirectToPage("Index");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -107,8 +104,11 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                var userResult = await _userManager.CreateAsync(user, Input.Password);
+                //TODO: tryparse
+                var claimResult = await _userManager.AddClaimAsync(user, new Claim("Role", Enum.GetName(typeof(RolesClaim), Int32.Parse(Input.ClaimForRole))));
+               
+                if (userResult.Succeeded && claimResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
@@ -123,11 +123,9 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _userManager.AddClaimAsync(user, new Claim("Role", Input.ClaimForRole));
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("EmployeeCreated", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -135,7 +133,8 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
+                //TODO: loop for claimResult
+                foreach (var error in userResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
