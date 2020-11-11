@@ -29,12 +29,13 @@ namespace SjonnieLoper.Pages.Reservations
             var allWhiskey = _whiskeysDb.AllWhiskeys();
         }
 
-        public void OnGet(int reservationId)
+        public IActionResult OnGet(int reservationId)
         {
             Reservation = new Reservation();
             RegisteredWhiskeys = _whiskeysDb
                 .AllWhiskeys()
                 .GetWhiskeyNames();
+            return Page();
         }
 
         public IActionResult OnPost()

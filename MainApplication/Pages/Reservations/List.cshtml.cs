@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -34,13 +35,21 @@ namespace SjonnieLoper.Pages.Reservations
         public IEnumerable<Reservation> RetrievedReservations { get; set; }
 
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
                 : _reservationsDb.ReservationsCustomerName(SearchValue);
             
            // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
+           return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            
+            return RedirectToPage();
         }
 
     }

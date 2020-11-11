@@ -23,6 +23,11 @@
                    asp-route-productId="@prod.WhiskeyId">
                     <i class="arrow"></i>
                 </a>
+                <a class="btn btn-primary"
+                   asp-page="/Products/Delete"
+                   asp-route-reservationId="@prod.WhiskeyId">
+                    <i class="fa fa-trash-alt"></i>
+                </a>
             </td>
         </tr>
     }
