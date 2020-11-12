@@ -29,7 +29,6 @@ namespace SjonnieLoper.Core.Models
         
         public string ImagePath { get; set; }
         
-        [Required] 
         public virtual WhiskeyType WhiskeyType { get; set; }
 
         public Whiskey(int id, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)

@@ -27,6 +27,9 @@ namespace SjonnieLoper.Services
             _db.Whiskeys.Select(w => w)
                 .Where(t => t.WhiskeyType.Name == typeName);
 
+        public IEnumerable<WhiskeyType> GetWhiskeyTypes() =>
+            _db.WhiskeyTypes.OrderBy( wt => wt.Name).Select(wt => wt);
+
         public Whiskey Update(Whiskey updatedWhiskey)
         {
             var entity = _db.Whiskeys.Attach(updatedWhiskey);
@@ -65,7 +68,7 @@ namespace SjonnieLoper.Services
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
                 .Select(w => w);
 
-        public IEnumerable<WhiskeyType> GetWhiskeyTypes() =>
-            _db.WhiskeyTypes.OrderBy( wt => wt.Name).Select(wt => wt);
+        public WhiskeyType GetWhiskeyTypeById(int Id) =>
+            _db.WhiskeyTypes.Where(wt => wt.WhiskeyTypeId == Id).SingleOrDefault();
     }
 }

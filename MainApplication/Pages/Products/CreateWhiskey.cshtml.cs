@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
@@ -16,7 +17,7 @@ namespace SjonnieLoper.Pages.Products
         public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
         private IEnumerable<WhiskeyType> whiskeyTypes { get; set; }
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public int productAddedID { get; set; }
         [BindProperty] public Whiskey Whiskey { get; set; }
 
@@ -43,6 +44,9 @@ namespace SjonnieLoper.Pages.Products
         
         public IActionResult OnPost()
         {
+            //RegisteredWhiskeyTypes = _whiskeysDb.GetWhiskeyTypes().GetWhiskeyTypesSelectList();
+            Whiskey.WhiskeyType = _whiskeysDb.GetWhiskeyTypeById(productAddedID);
+            //ModelState.SetModelValue("Whiskey.WhiskeyType", new ValueProviderResult(tempWhiskey.WhiskeyTypeId.ToString()));
             if (!ModelState.IsValid)
             {
                 //TODO: Repopulate dropdown list.
@@ -52,9 +56,10 @@ namespace SjonnieLoper.Pages.Products
             {
                 TempData["Message"] = "Added a new Whiskey product";
                 _whiskeysDb.Create(Whiskey);
+                _whiskeysDb.Commit();
             }
-            return RedirectToPage("Reservations/DetailsWhiskey",
-                new {reservationId = Whiskey.Id });
+            return RedirectToPage("Products/DetailsWhiskey",
+                new { productId = Whiskey.Id });
         } 
     }
 }
