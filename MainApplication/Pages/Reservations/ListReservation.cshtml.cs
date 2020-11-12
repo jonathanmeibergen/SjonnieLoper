@@ -37,7 +37,6 @@ namespace SjonnieLoper.Pages.Reservations
 
         public IActionResult OnGet()
         {
-
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
                 ? _reservationsDb.AllReservations()
                 : _reservationsDb.ReservationsCustomerName(SearchValue);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,6 +22,18 @@ namespace SjonnieLoper.Pages.Products
         {
             _whiskeysDb = whiskeysDb;
         }
+        
+        public IActionResult OnGet()
+        {
+            Whiskey = new Whiskey();
+            RegisteredWhiskeyTypes = _whiskeysDb
+                .AllWhiskeys()
+                .GroupBy(w => w.WhiskeyType)
+                .Select(t => t.Key)
+                .GetWhiskeyTypes();
+            return Page();
+        }
+        
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)

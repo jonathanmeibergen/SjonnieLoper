@@ -1,8 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +9,7 @@ using SjonnieLoper.Services;
 
 namespace SjonnieLoper.Pages.Reservations
 {
-    public class CreateModel : PageModel
+    public class foo : PageModel
     {
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeysDb;
@@ -20,16 +18,15 @@ namespace SjonnieLoper.Pages.Reservations
         public int productAddedID { get; set; }
         [BindProperty] public Reservation Reservation { get; set; }
 
-        public CreateModel(IReservations reservations,
+        public foo(IReservations reservations,
             IWhiskeys whiskeysDb,
             IHtmlHelper htmlHelper)
         {
             _reservationsDb = reservations;
             _whiskeysDb = whiskeysDb;
-            var allWhiskey = _whiskeysDb.AllWhiskeys();
         }
 
-        public IActionResult OnGet(int reservationId)
+        public IActionResult OnGet()
         {
             Reservation = new Reservation();
             RegisteredWhiskeys = _whiskeysDb

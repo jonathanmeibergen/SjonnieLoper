@@ -12,7 +12,6 @@ namespace SjonnieLoper.Pages.Products
     public class ListModel : PageModel
     {
         private readonly IWhiskeys _whiskeyDb;
-        public Whiskey Whiskey;
         
         public ListModel(IWhiskeys whiskeys)
         {

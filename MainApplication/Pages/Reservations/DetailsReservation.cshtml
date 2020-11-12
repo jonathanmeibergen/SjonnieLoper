@@ -20,7 +20,13 @@
     Date of order: @Model.Reservation.Orderdate
 </div>
 <a class="btn btn-outline-primary"
-   asp-page="/Reservations/Edit"
+   asp-page="/Reservations/EditReservation"
+   asp-route-reservationId="@Model.Reservation.Id">
+    Edit
+    <i class="arrow"></i>
+</a>
+<a class="btn btn-outline-primary"
+   asp-page="/Reservations/DeleteReservation"
    asp-route-reservationId="@Model.Reservation.Id">
     Edit
     <i class="arrow"></i>

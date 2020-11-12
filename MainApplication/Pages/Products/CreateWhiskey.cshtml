@@ -7,12 +7,9 @@
 <h1>Create</h1>
 
 <form method="post">
-    <select asp-for="productAddedID"
-            asp-items="@(new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"))">
-    </select>
     <input type="hidden" asp-for="@Model.Whiskey.WhiskeyId">
     <label asp-for="Whiskey.Name"></label>
-    <select asp-for="productAddedID"
+    <select asp-for="RegisteredWhiskeyTypes"
             asp-items="@(new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"))">
     </select>
     <div class="form-group">

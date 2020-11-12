@@ -31,12 +31,12 @@
             <td>@order.Orderdate</td>
             <td>
                 <a class="btn btn-primary"
-                   asp-page="/Reservations/Details"
+                   asp-page="/Reservations/DetailsReservation"
                    asp-route-reservationId="@order.Id">
                     <i class="fas fa-search-plus"></i>
                 </a>
                <a class="btn btn-primary"
-                                  asp-page="/Reservations/Delete"
+                                  asp-page="/Reservations/DeleteReservation"
                                   asp-route-reservationId="@order.Id">
                                    <i class="fa fa-trash-alt"></i>
                                </a> 
@@ -46,7 +46,7 @@
     }
 </table>
 
-<a asp-page="Reservations/Create" class="btn btn-outline-primary">
+<a asp-page="/Reservations/CreateReservation" class="btn btn-outline-primary">
     Add reservation
     <i class="fa fa-plus-square"></i>
 </a>
