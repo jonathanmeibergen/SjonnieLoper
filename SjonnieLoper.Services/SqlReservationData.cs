@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -14,7 +15,8 @@ namespace SjonnieLoper.Services
             _db = db;
         } 
         
-        public IEnumerable<Reservation> AllReservations() => _db.Reservations;
+        public IEnumerable<Reservation> AllReservations() => 
+            _db.Reservations.OrderByDescending( r => r.Orderdate);
 
         public Reservation ReservationByCustId(int id) =>
             _db.Reservations.FirstOrDefault(w => w.Id == id);
@@ -29,21 +31,29 @@ namespace SjonnieLoper.Services
 
         public Reservation Update(Reservation updatedReservation)
         {
-            var checkReservation = 
-                _db.Reservations.SingleOrDefault(r => r.Id == updatedReservation.Id);
-            return checkReservation != null
-                ? updatedReservation
-                : null;
+            var entity = _db.Reservations.Attach(updatedReservation);
+            entity.State = EntityState.Modified;
+            return updatedReservation;
         }
 
         public Reservation Create(Reservation newReservation)
         {
             _db.Reservations.Add(newReservation);
-            newReservation.Id = 
-                _db.Reservations.Max(e => e.Id) + 1;
             return newReservation;
         }
+        
+        public int Commit() => _db.SaveChanges();
+        
+        public Reservation Delete(int id)
+        {
+            var reservation = ReservationById(id);
 
-        public int Commit() => 0;
+            if (reservation != null)
+            {
+                _db.Reservations.Remove(reservation);
+            }
+
+            return reservation;
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace SjonnieLoper.Services
         public Whiskey Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/
         public int Commit();
+        public Whiskey Delete(int id);
     }
 }

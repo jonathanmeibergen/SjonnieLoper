@@ -1,0 +1,20 @@
+@page "{whiskeyId:int}"
+@model SjonnieLoper.Pages.Products.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<div class="alert alert-danger">
+    Are you sure you want to delete @Model.Whiskey.WhiskeyId?
+</div>
+<form method="POST">
+    <button type="submit" class="btn btn-outline-info">Yes 
+        <i class="fa fa-trash"></i>
+    </button>
+    <a asp-page="List" class="btn-outline-info">Cancel
+        <i class="fa fa-trash"></i>
+    </a>
+    
+</form>

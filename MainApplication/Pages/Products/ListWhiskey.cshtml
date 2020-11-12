@@ -1,0 +1,38 @@
+@page
+@model SjonnieLoper.Pages.Products.ListModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<table class="table">
+    @foreach (var prod in Model.RetrievedWhiskeys)
+    {
+        <tr>
+            <td>@prod.Name</td>
+            <td>@prod.WhiskeyType.Name</td>
+            <td>@prod.Age</td>
+            <td>@prod.AlcoholPercentage</td>
+            <td>@prod.Origin</td>
+            @* TODO: Replace ImagePath with actual image. *@
+            <td>@prod.ImagePath</td>
+            <td>
+                <a class="btn btn-primary"
+                   asp-page="/Products/Details"
+                   asp-route-productId="@prod.Id">
+                    <i class="arrow"></i>
+                </a>
+                <a class="btn btn-primary"
+                   asp-page="/Products/Delete"
+                   asp-route-reservationId="@prod.WhiskeyId">
+                    <i class="fa fa-trash-alt"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-page="/Products/CreateWhiskey" class="btn btn-outline-primary">
+    Add whiskey
+    <i class="fa fa-plus-square"></i>
+</a>

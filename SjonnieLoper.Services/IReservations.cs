@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Net.Sockets;
+using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -13,6 +15,6 @@ namespace SjonnieLoper.Services
         Reservation Update(Reservation updatedReservation);
         Reservation Create(Reservation newReservation);
         int Commit();
-        
+        Reservation Delete(int id);
     }
 }

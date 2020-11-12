@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -15,9 +16,11 @@ namespace SjonnieLoper.Services
             _db = db;
         }
 
-        public IEnumerable<Whiskey> AllWhiskeys() => _db.Whiskeys;
-        public Whiskey WhiskeyById(int id) => 
-            _db.Whiskeys.FirstOrDefault(w => w.Id == id);
+        public IEnumerable<Whiskey> AllWhiskeys() => 
+            _db.Whiskeys.OrderByDescending(o => o.WhiskeyType);
+
+        public Whiskey WhiskeyById(int id) =>
+            _db.Whiskeys.FirstOrDefault(w => w.WhiskeyId == id);
 
         public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
             _db.Whiskeys.Select(w => w)
@@ -25,35 +28,40 @@ namespace SjonnieLoper.Services
 
         public Whiskey Update(Whiskey updatedWhiskey)
         {
-            var reservation = 
-                _db.Whiskeys.SingleOrDefault(r => r.Id == updatedWhiskey.Id);
-            return reservation != null
-                ? updatedWhiskey
-                : null;
+            var entity = _db.Whiskeys.Attach(updatedWhiskey);
+            entity.State = EntityState.Modified;
+            return updatedWhiskey;
         }
 
         public Whiskey Create(Whiskey newWhiskey)
         {
             _db.Whiskeys.Add(newWhiskey);
-            newWhiskey.Id = 
-                _db.Whiskeys.Max(e => e.Id) + 1;
             return newWhiskey;
         }
 
-        public int Commit()
+        public int Commit() => _db.SaveChanges();
+
+        public Whiskey Delete(int id)
         {
-            throw new NotImplementedException();
+            var whiskey = WhiskeyById(id);
+
+            if (whiskey != null)
+            {
+                _db.Whiskeys.Remove(whiskey);
+                Commit();
+            }
+            return whiskey;
         }
 
         public IEnumerable<Whiskey> WhiskeyByName(string name) =>
-           _db.Whiskeys
-           .Select(w => w)
-           .Where(t => t.Name == name)
-           .Select(item => item);
+            _db.Whiskeys
+                .Select(w => w)
+                .Where(t => t.Name == name)
+                .Select(item => item);
 
         public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
             _db.Whiskeys
-            .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
-            .Select(w => w);
+                .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
+                .Select(w => w);
     }
 }
