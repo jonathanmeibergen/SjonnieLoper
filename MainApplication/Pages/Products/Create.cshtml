@@ -6,3 +6,23 @@
 
 <h1>Create</h1>
 
+<form method="post">
+    <select asp-for="productAddedID"
+            asp-items="@(new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"))">
+    </select>
+    <input type="hidden" asp-for="@Model.Whiskey.Id">
+    <label asp-for="Whiskey.Name"></label>
+    <select asp-for="productAddedID"
+            asp-items="@(new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"))">
+    </select>
+    <div class="form-group">
+        <label asp-for="@Model.Whiskey.Name"></label>
+        <input asp-for="@Model.Whiskey.Name" class="form-control"/>
+        <label asp-for="@Model.Whiskey.Id"></label>
+        <input asp-for="@Model.Whiskey.Id" class="form-control"/>
+        <label asp-for="@Model.Whiskey.Origin"></label>
+        <input asp-for="@Model.Whiskey.Origin" class="form-control"/>
+    </div>
+
+    <button type="submit" class="btn btn-outline-primary">Confirm</button>
+</form>

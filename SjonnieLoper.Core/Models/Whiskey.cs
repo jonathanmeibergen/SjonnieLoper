@@ -1,24 +1,40 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SjonnieLoper.Core.Models
 {
     public class Whiskey
     {
-        public int WhiskeyId { get; set; }
+        [Key]
         [Required]
-        public string Name { get; set; }
-        public int Age { get; }
-        public string Origin { get; }
-        [Required]
-        public float AlcoholPercentage { get; }
-        //[Required]
-        public string ImagePath { get; }
-        [Required]
-        public WhiskeyType WhiskeyType { get; }
+        [Display(Name="Id of whiskey ")]
+        public int Id { get; set; }
 
-        public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
+        [Required] 
+        [Display(Name="Whiskey name ")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name="Age in whole years ")]
+        public int Age { get; set; }
+        
+        [Required]
+        [Display(Name="Origin of whiskey ")]
+        public string Origin { get; set; }
+        
+        [Required]
+        [Display(Name="Alcohol percentage of whiskey ")]
+        public float AlcoholPercentage { get; set; }
+        
+        public string ImagePath { get; set; }
+        
+        [Required] 
+        public virtual WhiskeyType WhiskeyType { get; set; }
+
+        public Whiskey(int id, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {
-            WhiskeyId = whiskeyId;
+            Id = id;
             Name = name;
             Age = age;
             Origin = origin;
@@ -30,7 +46,18 @@ namespace SjonnieLoper.Core.Models
         // Development constructor for Mock_reservations.
         public Whiskey(string name)
         {
-            Name = Name;
+            Name = name;
+        }
+
+        public Whiskey(Whiskey product)
+        {
+            Id = product.Id;
+            Name = product.Name;
+            Age = product.Age;
+            Origin = product.Origin;
+            AlcoholPercentage = product.AlcoholPercentage;
+            ImagePath = product.ImagePath;
+            WhiskeyType = product.WhiskeyType;    
         }
         
         public Whiskey()

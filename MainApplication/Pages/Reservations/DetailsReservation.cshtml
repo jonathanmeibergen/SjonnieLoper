@@ -1,0 +1,34 @@
+@page "{reservationId:int}"
+@model SjonnieLoper.Pages.Reservations.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<h1>Order# @Model.Reservation.Id</h1>
+
+<div>
+    Client: @Model.Reservation.Customer
+</div>
+<div>
+    Product: @Model.Reservation.Product
+</div>
+<div>
+    Date of order: @Model.Reservation.Orderdate
+</div>
+<a class="btn btn-outline-primary"
+   asp-page="/Reservations/EditReservation"
+   asp-route-reservationId="@Model.Reservation.Id">
+    Edit
+    <i class="arrow"></i>
+</a>
+<a class="btn btn-outline-primary"
+   asp-page="/Reservations/DeleteReservation"
+   asp-route-reservationId="@Model.Reservation.Id">
+    Edit
+    <i class="arrow"></i>
+</a>
+<a asp-page="List" class="btn btn-outline-primary">All orders</a>
