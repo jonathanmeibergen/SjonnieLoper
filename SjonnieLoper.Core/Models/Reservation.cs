@@ -14,6 +14,7 @@ namespace SjonnieLoper.Core.Models
         public int Id { get; set; }
         
         [Display(Name="Product ")]
+        [Required]
         public virtual Whiskey Product { get; set; }
 
         [Display(Name="Id of customer ")]

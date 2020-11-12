@@ -1,5 +1,5 @@
 ﻿@page
-@model SjonnieLoper.Pages.Reservations.foo
+@model SjonnieLoper.Pages.Reservations.CreateModel
 
 @{
     Layout = null;
@@ -17,7 +17,7 @@
 <form method="post">
     <div class="form-group">
     <input type="hidden" asp-for="@Model.Reservation.Id">
-               @Html.LabelFor(x => Model.Reservation.Products, htmlAttributes: new { @class = "control-label col-md-2" })
+               @Html.LabelFor(x => Model.Reservation.Product, htmlAttributes: new { @class = "control-label col-md-2" })
                <div class="col-md-5">
                    @Html.DropDownListFor(x => Model.productAddedID,
                        new SelectList(Model.RegisteredWhiskeys, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country"})

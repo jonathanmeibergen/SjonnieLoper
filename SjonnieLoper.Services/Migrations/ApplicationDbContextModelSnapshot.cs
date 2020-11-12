@@ -99,7 +99,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "481a37b8-df10-4d48-9889-4b8db7cb2699"
+                            UserId = "f3cd1d11-bebf-4289-8553-5183d7f46a4e"
                         });
                 });
 
@@ -230,17 +230,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "481a37b8-df10-4d48-9889-4b8db7cb2699",
+                            Id = "f3cd1d11-bebf-4289-8553-5183d7f46a4e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86792b02-72d2-4a2f-a4b4-89a7730fef42",
+                            ConcurrencyStamp = "08744cc8-4932-4b03-a803-17e6b688c742",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMIAQedLrs3aIWFdoAg6OdRkG/AauYB1et3mdvw+Fd1MyVMrEoI+v3wdrtT9F44z7A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKsrF68qNDwRxCcpcihIW8howOtIfhK5/xOGB2ZjBPXT4FawRWnJ9nHLZF0ZxmKZ0w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "608ab47b-3712-42a4-95f3-5d6e2b2cece1",
+                            SecurityStamp = "2d08d35d-273c-488e-a8a9-2227a5f9c13e",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -260,9 +260,14 @@ namespace SjonnieLoper.Services.Migrations
                     b.Property<DateTime>("Orderdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Customer");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Reservations");
                 });
@@ -311,15 +316,10 @@ namespace SjonnieLoper.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReservationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("WhiskeyTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReservationId");
 
                     b.HasIndex("WhiskeyTypeId");
 
@@ -399,6 +399,12 @@ namespace SjonnieLoper.Services.Migrations
                         .HasForeignKey("Customer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SjonnieLoper.Core.Models.Whiskey", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Storage", b =>
@@ -410,10 +416,6 @@ namespace SjonnieLoper.Services.Migrations
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Whiskey", b =>
                 {
-                    b.HasOne("SjonnieLoper.Core.Models.Reservation", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ReservationId");
-
                     b.HasOne("SjonnieLoper.Core.Models.WhiskeyType", "WhiskeyType")
                         .WithMany()
                         .HasForeignKey("WhiskeyTypeId")
