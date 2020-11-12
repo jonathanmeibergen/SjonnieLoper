@@ -14,13 +14,11 @@ namespace SjonnieLoper.Core.Models
         public int Id { get; set; }
         
         [Display(Name="Product ")]
-        [Required]
         public virtual Whiskey Product { get; set; }
 
         [Display(Name="Id of customer ")]
         [ForeignKey("Customer")]
         [ScaffoldColumn(false)]
-        [Required]
         public virtual ApplicationUser User { get; set; }
         //public int CustomerId;
         
@@ -30,10 +28,6 @@ namespace SjonnieLoper.Core.Models
         [DisplayFormat(DataFormatString = "0:yyyy-MM-dd",
             ApplyFormatInEditMode = true)]
         public DateTime Orderdate { get; set; }
-        
-        [Display(Name="Name of client ")]
-        [Required]
-        public string Customer { get; set; }
         
         public Reservation(int id, DateTime time, Customer customer, Whiskey whiskey)
         {

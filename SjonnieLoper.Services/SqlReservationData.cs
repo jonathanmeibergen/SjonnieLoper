@@ -16,7 +16,9 @@ namespace SjonnieLoper.Services
         } 
         
         public IEnumerable<Reservation> AllReservations() => 
-            _db.Reservations.OrderByDescending( r => r.Orderdate);
+            _db.Reservations.Include(p => p.Product)
+                            .Include(u => u.User)
+                            .OrderByDescending(r => r.Orderdate);
 
         public Reservation ReservationByCustId(int id) =>
             _db.Reservations.FirstOrDefault(w => w.Id == id);
@@ -24,10 +26,12 @@ namespace SjonnieLoper.Services
         public Reservation ReservationById(int id) =>
             _db.Reservations.SingleOrDefault(r => r.Id == id);
 
-        public IEnumerable<Reservation> ReservationsCustomerName(string name) =>
-            _db.Reservations.Select(r => r)
-                .Where(entry => entry.Customer == name)
-                .Select(x => x);
+        public IEnumerable<Reservation> ReservationsUserName(string name) =>
+            _db.Reservations.Include(u => u.User)
+                            .Select(r => r)
+                            .Where(entry => entry.User.UserName == name)
+                            .Select(x => x)
+                            .Include(p => p.Product);
 
         public Reservation Update(Reservation updatedReservation)
         {

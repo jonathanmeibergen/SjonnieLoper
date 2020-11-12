@@ -18,7 +18,7 @@ namespace SjonnieLoper.Services
         }
 
         public IEnumerable<Whiskey> AllWhiskeys() => 
-            _db.Whiskeys.OrderByDescending(o => o.WhiskeyType);
+            _db.Whiskeys.Include(wt => wt.WhiskeyType).OrderByDescending(o => o.WhiskeyType);
 
         public Whiskey WhiskeyById(int id) =>
             _db.Whiskeys.FirstOrDefault(w => w.Id == id);
