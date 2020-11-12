@@ -9,12 +9,12 @@ namespace SjonnieLoper.Core.Models
         [Key]
         [Required]
         [Display(Name="Id of whiskey ")]
-        public int WhiskeyId;
+        public int Id { get; set; }
 
         [Required] 
         [Display(Name="Whiskey name ")]
-        public string Name;
-        
+        public string Name { get; set; }
+
         [Required]
         [Display(Name="Age in whole years ")]
         public int Age { get; set; }
@@ -32,9 +32,9 @@ namespace SjonnieLoper.Core.Models
         [Required] 
         public virtual WhiskeyType WhiskeyType { get; set; }
 
-        public Whiskey(int whiskeyId, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
+        public Whiskey(int id, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {
-            WhiskeyId = whiskeyId;
+            Id = id;
             Name = name;
             Age = age;
             Origin = origin;
@@ -51,7 +51,7 @@ namespace SjonnieLoper.Core.Models
 
         public Whiskey(Whiskey product)
         {
-            WhiskeyId = product.WhiskeyId;
+            Id = product.Id;
             Name = product.Name;
             Age = product.Age;
             Origin = product.Origin;

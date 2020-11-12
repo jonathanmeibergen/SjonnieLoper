@@ -40,10 +40,10 @@ namespace SjonnieLoper.Pages.Products
                 _whiskeysDb.Commit();
                 /*
                 return RedirectToPage("Reservations/Details", 
-                    new { whiskeyId = Whiskey.WhiskeyId });
+                    new { whiskeyId = Whiskey.Id });
             */
                 return RedirectToPage("Products/Details", 
-                    new { whiskeyId = Product.WhiskeyId });
+                    new { whiskeyId = Product.Id });
             }
             return Page();
         }

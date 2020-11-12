@@ -14,25 +14,25 @@ namespace SjonnieLoper.Pages.Reservations
     public class CreateModel : PageModel
     {
         private readonly IReservations _reservationsDb;
-        private readonly IWhiskeys _whiskeysDb;
+        private readonly IWhiskeys _whiskeys;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
         [BindProperty(SupportsGet = true)]
         public int productAddedID { get; set; }
         [BindProperty] public Reservation Reservation { get; set; }
 
         public CreateModel(IReservations reservations,
-            IWhiskeys whiskeysDb,
+            IWhiskeys whiskeys,
             IHtmlHelper htmlHelper)
         {
             _reservationsDb = reservations;
-            _whiskeysDb = whiskeysDb;
-            var allWhiskey = _whiskeysDb.AllWhiskeys();
+            _whiskeys = whiskeys;
+            var allWhiskey = _whiskeys.AllWhiskeys();
         }
 
         public void OnGet(int reservationId)
         {
             Reservation = new Reservation();
-            RegisteredWhiskeys = _whiskeysDb
+            RegisteredWhiskeys = _whiskeys
                 .AllWhiskeys()
                 .GetWhiskeyNames();
         }

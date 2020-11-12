@@ -16,9 +16,9 @@ namespace SjonnieLoper.Pages.Products
             _IWhiskeys = whiskeys;
         }
 
-        public IActionResult OnGet(int whiskeyId)
+        public IActionResult OnGet(int Id)
         {
-            Whiskey = _IWhiskeys.WhiskeyById(whiskeyId);
+            Whiskey = _IWhiskeys.WhiskeyById(Id);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();
@@ -33,7 +33,7 @@ namespace SjonnieLoper.Pages.Products
                 _IWhiskeys.Commit();
                 //BUG: Redirect to details not showing. 
                 return RedirectToPage("Products/Details", 
-                    new { reservationId = Whiskey.WhiskeyId });
+                    new { reservationId = Whiskey.Id });
             }
             //TODO: Repopulate dropdown list values.
             return Page();

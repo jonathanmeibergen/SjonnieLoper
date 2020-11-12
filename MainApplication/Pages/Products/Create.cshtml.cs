@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,6 +22,12 @@ namespace SjonnieLoper.Pages.Products
         {
             _whiskeysDb = whiskeysDb;
         }
+
+        public async Task OnGet()
+        {
+
+
+        }
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -34,7 +41,7 @@ namespace SjonnieLoper.Pages.Products
                 _whiskeysDb.Create(Whiskey);
             }
             return RedirectToPage("Reservations/Details",
-                new {reservationId = Whiskey.WhiskeyId });
+                new {reservationId = Whiskey.Id });
         } 
     }
 }

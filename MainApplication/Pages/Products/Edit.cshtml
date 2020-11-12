@@ -8,15 +8,17 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit product @Model.Product.WhiskeyId</h1>
+<h1>Edit product @Model.Product.Id</h1>
 
 <form method="post">
-    <input type="hidden" asp-for="Product.WhiskeyId">
+    <input type="hidden" asp-for="Product.Id">
 }
     <div class="form-group">
         <label asp-for="Product.Age"></label>
         <input asp-for="Product.Age" class="form-control"/>
         <span class="text-danger" asp-validation-for="Product.Age"></span>
+        <select>
+        </select>
         <label asp-for="Product.WhiskeyType.Name"></label>
         <input asp-for="Product.WhiskeyType.Name" class="form-control"/>
         <span class="text-danger" asp-validation-for="Product.WhiskeyType"></span>

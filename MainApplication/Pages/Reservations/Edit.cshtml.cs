@@ -13,7 +13,7 @@ namespace SjonnieLoper.Pages.Reservations
     public class EditModel : PageModel
     {
         private readonly IReservations _reservationsDb;
-        private readonly IWhiskeys _whiskeysDb;
+        private readonly IWhiskeys _whiskeys;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
         [BindProperty(SupportsGet = true)]
         public int productAddedID { get; set; }
@@ -24,12 +24,12 @@ namespace SjonnieLoper.Pages.Reservations
                         IWhiskeys whiskeysDb)
         {
             _reservationsDb = reservations;
-            _whiskeysDb = whiskeysDb;
+            _whiskeys = whiskeysDb;
 
         }
         public IActionResult OnGet(int reservationId)
         {
-            RegisteredWhiskeys = _whiskeysDb
+            RegisteredWhiskeys = _whiskeys
                 .AllWhiskeys()
                 .GetWhiskeyNames();
             Reservation = _reservationsDb.ReservationById(reservationId);
@@ -42,7 +42,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             if (ModelState.IsValid)
             {
-                Reservation.Products.Add(new Whiskey(_whiskeysDb.WhiskeyById(productAddedID)));
+                Reservation.Product = new Whiskey(_whiskeys.WhiskeyById(productAddedID));
                 TempData["Message"] = "Created a new reservation.";
                 _reservationsDb.Update(Reservation);
                 _reservationsDb.Commit();

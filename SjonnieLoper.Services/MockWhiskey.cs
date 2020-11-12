@@ -38,7 +38,7 @@ namespace SjonnieLoper.Services
             */
         
         public Whiskey WhiskeyById(int id) => 
-            _whiskeys.SingleOrDefault(r => r.WhiskeyId == id);
+            _whiskeys.SingleOrDefault(r => r.Id == id);
 
         public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
             _whiskeys.Where(w => w.WhiskeyType
@@ -48,7 +48,7 @@ namespace SjonnieLoper.Services
         {
             var checkWhiskey = 
                 _whiskeys
-                    .SingleOrDefault(r => r.WhiskeyId == updatedWhiskey.WhiskeyId);
+                    .SingleOrDefault(r => r.Id == updatedWhiskey.Id);
             return checkWhiskey != null
                 ? updatedWhiskey
                 : null;
@@ -57,8 +57,8 @@ namespace SjonnieLoper.Services
         public Whiskey Create(Whiskey newWhiskey)
         {
             _whiskeys.Add(newWhiskey);
-            newWhiskey.WhiskeyId = 
-                _whiskeys.Max(e => e.WhiskeyId) + 1;
+            newWhiskey.Id = 
+                _whiskeys.Max(e => e.Id) + 1;
             return newWhiskey;
         }
 
