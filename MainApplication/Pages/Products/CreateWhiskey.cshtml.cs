@@ -47,7 +47,7 @@ namespace SjonnieLoper.Pages.Products
                 _whiskeysDb.Create(Whiskey);
             }
             return RedirectToPage("Reservations/DetailsWhiskey",
-                new {reservationId = Whiskey.WhiskeyId });
+                new {reservationId = Whiskey.Id });
         } 
     }
 }

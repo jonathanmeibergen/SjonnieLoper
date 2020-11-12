@@ -80,7 +80,7 @@ namespace SjonnieLoper.Services.Migrations
                     table.PrimaryKey("PK_Storage", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Storage_Whiskeys_WhiskeyId",
-                        column: x => x.WhiskeyId,
+                        column: x => x.Id,
                         principalTable: "Whiskeys",
                         principalColumn: "WhiskeyId",
                         onDelete: ReferentialAction.Restrict);

@@ -20,7 +20,7 @@ namespace SjonnieLoper.Services
             _db.Whiskeys.OrderByDescending(o => o.WhiskeyType);
 
         public Whiskey WhiskeyById(int id) =>
-            _db.Whiskeys.FirstOrDefault(w => w.WhiskeyId == id);
+            _db.Whiskeys.FirstOrDefault(w => w.Id == id);
 
         public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
             _db.Whiskeys.Select(w => w)
