@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core.Models;
 
@@ -63,5 +64,8 @@ namespace SjonnieLoper.Services
             _db.Whiskeys
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
                 .Select(w => w);
+
+        public IEnumerable<WhiskeyType> GetWhiskeyTypes() =>
+            _db.WhiskeyTypes.OrderBy( wt => wt.Name).Select(wt => wt);
     }
 }

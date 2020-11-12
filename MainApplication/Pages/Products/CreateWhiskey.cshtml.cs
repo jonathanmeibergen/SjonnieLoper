@@ -14,9 +14,12 @@ namespace SjonnieLoper.Pages.Products
         private readonly IWhiskeys _whiskeysDb;
         
         public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
+        private IEnumerable<WhiskeyType> whiskeyTypes { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public int productAddedID { get; set; }
         [BindProperty] public Whiskey Whiskey { get; set; }
+
 
         public CreateModel(IWhiskeys whiskeysDb)
         {
@@ -26,11 +29,15 @@ namespace SjonnieLoper.Pages.Products
         public IActionResult OnGet()
         {
             Whiskey = new Whiskey();
-            RegisteredWhiskeyTypes = _whiskeysDb
+            //RegisteredWhiskeyTypes = _whiskeysDb.
+            RegisteredWhiskeyTypes = _whiskeysDb.GetWhiskeyTypes().GetWhiskeyTypesSelectList();
+            
+            /*RegisteredWhiskeyTypes = _whiskeysDb
                 .AllWhiskeys()
                 .GroupBy(w => w.WhiskeyType)
                 .Select(t => t.Key)
                 .GetWhiskeyTypes();
+            */
             return Page();
         }
         

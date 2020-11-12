@@ -28,11 +28,10 @@ namespace SjonnieLoper.Core.Models
         
         
         public static IEnumerable<SelectListItem>
-            GetWhiskeyTypes(this IEnumerable<WhiskeyType> whiskeyType)
+            GetWhiskeyTypesSelectList(this IEnumerable<WhiskeyType> whiskeyType)
         {
             List<SelectListItem> types = 
-                whiskeyType.OrderBy(n => n.Name)
-                    .Select(n =>
+                whiskeyType.Select(n =>
                         new SelectListItem
                         {
                             Value = n.ToString(),
