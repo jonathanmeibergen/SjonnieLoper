@@ -35,7 +35,7 @@ namespace SjonnieLoper.Core.Models
                     .Select(n =>
                         new SelectListItem
                         {
-                            Value = n.WhiskeyTypeId.ToString(),
+                            Value = n.ToString(),
                             Text = n.Name
                         }).ToList();
             var emptyField = new SelectListItem()

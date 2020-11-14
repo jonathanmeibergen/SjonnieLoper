@@ -43,10 +43,10 @@ namespace SjonnieLoper.Pages.Products
             }
             else
             {
-                TempData["Message"] = "Created a new reservation.";
+                TempData["Message"] = "Added a new Whiskey product";
                 _whiskeysDb.Create(Whiskey);
             }
-            return RedirectToPage("Reservations/Details",
+            return RedirectToPage("Reservations/DetailsWhiskey",
                 new {reservationId = Whiskey.WhiskeyId });
         } 
     }

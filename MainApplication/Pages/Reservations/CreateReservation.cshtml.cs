@@ -38,17 +38,14 @@ namespace SjonnieLoper.Pages.Reservations
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
-            {
-                //TODO: Repopulate dropdown list.
                 return Page();
-            }
             else
             {
                 TempData["Message"] = "Created a new reservation.";
                 Reservation.Orderdate = DateTime.Now;
                 _reservationsDb.Create(Reservation);
             }
-            return RedirectToPage("Reservations/Details",
+            return RedirectToPage("Reservations/DetailsReservation",
                 new {reservationId = Reservation.Id});
         }
     }

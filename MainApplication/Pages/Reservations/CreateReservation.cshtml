@@ -15,20 +15,23 @@
 <h1>Create reservation</h1>
 
 <form method="post">
-    <input type="hidden" asp-for="@Model.Reservation.Id">
-        <label asp-for="Reservation.Products"></label>
-           <select asp-for="productAddedID"
-                   asp-items="@(new SelectList(Model.RegisteredWhiskeys, "Value", "Text"))">
-           </select>
     <div class="form-group">
+    <input type="hidden" asp-for="@Model.Reservation.Id">
+               @Html.LabelFor(x => Model.Reservation.Products, htmlAttributes: new { @class = "control-label col-md-2" })
+               <div class="col-md-5">
+                   @Html.DropDownListFor(x => Model.productAddedID,
+                       new SelectList(Model.RegisteredWhiskeys, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country"})
+                   @Html.ValidationMessageFor(x => x.productAddedID, "", new { @class = "text-danger" })
+               </div> 
+        
         <label asp-for="@Model.Reservation.Customer"></label>
         <input asp-for="@Model.Reservation.Customer" class="form-control"/>
         <span class="text-danger" asp-validation-for="Reservation.Customer"></span>
-        
+
         <label asp-for="@Model.Reservation.Orderdate"></label>
         <input asp-for="@Model.Reservation.Orderdate" class="form-control"/>
         <span class="text-danger" asp-validation-for="Reservation.Orderdate"></span>
-        
+
     </div>
 
     <button type="submit" class="btn btn-outline-primary">Confirm</button>
