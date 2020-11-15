@@ -1,0 +1,52 @@
+@page
+@model SjonnieLoper.Pages.Reservations.ListModel
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<h1>Reservations</h1>
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchValue">
+            <span class="input-group-btn">
+                <select asp-for="ProductType" asp-items="Model.ResTypes">
+                    <option value="">All</option>
+                </select>
+                <button class="btn btn-outline-info">
+                    <i class="fas fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+<table class="table">
+    @foreach (var order in Model.RetrievedReservations)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.User.UserName</td>
+            <td>@order.Product</td>
+            <td>@order.Orderdate</td>
+            <td>
+                <a class="btn btn-primary"
+                   asp-page="/Reservations/DetailsReservation"
+                   asp-route-reservationId="@order.Id">
+                    <i class="fas fa-search-plus"></i>
+                </a>
+               <a class="btn btn-primary"
+                                  asp-page="/Reservations/DeleteReservation"
+                                  asp-route-reservationId="@order.Id">
+                                   <i class="fa fa-trash-alt"></i>
+                               </a> 
+            </td>
+
+        </tr>
+    }
+</table>
+
+<a asp-page="/Reservations/CreateReservation" class="btn btn-outline-primary">
+    Add reservation
+    <i class="fa fa-plus-square"></i>
+</a>

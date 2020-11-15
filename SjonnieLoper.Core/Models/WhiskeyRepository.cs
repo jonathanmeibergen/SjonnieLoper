@@ -14,7 +14,7 @@ namespace SjonnieLoper.Core.Models
                 .Select(n =>
                     new SelectListItem
                     {
-                        Value = n.WhiskeyId.ToString(),
+                        Value = n.Id.ToString(),
                         Text = n.Name
                     }).ToList();
             var emptyField = new SelectListItem()
@@ -25,5 +25,26 @@ namespace SjonnieLoper.Core.Models
             whiskeys.Insert(0, emptyField);
             return new SelectList(whiskeys, "Value", "Text");
         }
+        
+        
+        public static IEnumerable<SelectListItem>
+            GetWhiskeyTypesSelectList(this IEnumerable<WhiskeyType> whiskeyType)
+        {
+            List<SelectListItem> types = 
+                whiskeyType.Select(n =>
+                        new SelectListItem
+                        {
+                            Value = n.WhiskeyTypeId.ToString(),
+                            Text = n.Name
+                        }).ToList();
+            var emptyField = new SelectListItem()
+            {
+                Value = null,
+                Text = "--- Choose a type ---"
+            };
+            types.Insert(0, emptyField);
+            return new SelectList(types, "Value", "Text");
+        }
+        
     }
 }

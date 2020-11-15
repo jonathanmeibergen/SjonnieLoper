@@ -1,0 +1,53 @@
+﻿@page
+@using SjonnieLoper.Core.Models
+@model AddEmployeeModel
+@{
+    ViewData["Title"] = "Add Employee";
+    ViewData["ActivePage"] = ManageNavPages.AddEmployee;
+}
+
+<h4>@ViewData["Title"]</h4>
+<!--<partial name="_StatusMessage" model="Model.StatusMessage" />-->
+
+<div class="row">
+    <div class="col-md-6">
+        @if (@Model.ClaimToCheck != null)
+        {
+            if (Model.ClaimToCheck.Value.Contains(Enum.GetName(typeof(RolesClaim), RolesClaim.Admin)))
+            {
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.ClaimForRole"></label>
+                        <select class="form-control" asp-for="Input.ClaimForRole"
+                                asp-items="Model.Claims">
+                        </select>
+                        <span class="text-danger" asp-validation-for="Input.ClaimForRole"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                </form>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
