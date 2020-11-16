@@ -99,7 +99,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "5c09a031-6f91-4d4d-b664-fe06aba9d949"
+                            UserId = "f2767fd9-4121-4c7a-953b-ca7b0754b616"
                         });
                 });
 
@@ -230,17 +230,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5c09a031-6f91-4d4d-b664-fe06aba9d949",
+                            Id = "f2767fd9-4121-4c7a-953b-ca7b0754b616",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ca1aa2a2-2cfb-452c-8e01-046edefd5b71",
+                            ConcurrencyStamp = "ff06d8ca-9a60-41a7-a1da-190b285ca0f4",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED6hbrHiF7tRrZr1D7Pt++hjkVWYrfD/5k0Cn/nkaIo+7nbr1khrrLv7NquqmXsAHw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGs657BCVzo7gicvTr+0eVK8rn4AgXpmEKvga6LHi1cEMFgdn3gVa9zE5r2c8CMktA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62456f69-527f-4cf5-be64-72378fdf1139",
+                            SecurityStamp = "02c89767-e2db-4363-bf8f-60bc20509286",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -253,16 +253,23 @@ namespace SjonnieLoper.Services.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Customer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Orderdate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Customer");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Reservations");
                 });
@@ -277,19 +284,19 @@ namespace SjonnieLoper.Services.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WhiskeyId")
+                    b.Property<int?>("whiskeyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WhiskeyId");
+                    b.HasIndex("whiskeyId");
 
                     b.ToTable("Storage");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Whiskey", b =>
                 {
-                    b.Property<int>("WhiskeyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -303,19 +310,18 @@ namespace SjonnieLoper.Services.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Origin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReservationId")
+                    b.Property<int?>("WhiskeyTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WhiskeyTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("WhiskeyId");
-
-                    b.HasIndex("ReservationId");
+                    b.HasKey("Id");
 
                     b.HasIndex("WhiskeyTypeId");
 
@@ -324,7 +330,7 @@ namespace SjonnieLoper.Services.Migrations
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.WhiskeyType", b =>
                 {
-                    b.Property<int>("WhiskeyTypeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -332,9 +338,36 @@ namespace SjonnieLoper.Services.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("WhiskeyTypeId");
+                    b.HasKey("Id");
 
                     b.ToTable("WhiskeyTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Scotch"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Japanese"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Canadian"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bourbon"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Irish"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -392,29 +425,25 @@ namespace SjonnieLoper.Services.Migrations
                 {
                     b.HasOne("SjonnieLoper.Core.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("Customer")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Customer");
+
+                    b.HasOne("SjonnieLoper.Core.Models.Whiskey", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Storage", b =>
                 {
                     b.HasOne("SjonnieLoper.Core.Models.Whiskey", "whiskey")
                         .WithMany()
-                        .HasForeignKey("WhiskeyId");
+                        .HasForeignKey("whiskeyId");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Whiskey", b =>
                 {
-                    b.HasOne("SjonnieLoper.Core.Models.Reservation", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ReservationId");
-
                     b.HasOne("SjonnieLoper.Core.Models.WhiskeyType", "WhiskeyType")
                         .WithMany()
-                        .HasForeignKey("WhiskeyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WhiskeyTypeId");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,7 +14,7 @@ namespace SjonnieLoper.Core.Models
         public int Id { get; set; }
         
         [Display(Name="Product ")]
-        public virtual ICollection<Whiskey> Products { get; set; }
+        public virtual Whiskey Product { get; set; }
 
         [Display(Name="Id of customer ")]
         [ForeignKey("Customer")]
@@ -28,22 +28,22 @@ namespace SjonnieLoper.Core.Models
         [DisplayFormat(DataFormatString = "0:yyyy-MM-dd",
             ApplyFormatInEditMode = true)]
         public DateTime Orderdate { get; set; }
-        
-        [Display(Name="Name of client ")]
+
         [Required]
-        public string Customer { get; set; }
+        [Display(Name = "Amount")]
+        public int Amount { get; set; }
         
         public Reservation(int id, DateTime time, Customer customer, Whiskey whiskey)
         {
             Id = id;
             Orderdate = time;
             //Customer = customer.UserName;
-            this.Products = new HashSet<Whiskey>();
+            //this.Products = new HashSet<Whiskey>();
         }
 
         public Reservation(Reservation @base)
         {
-            this.Products = new HashSet<Whiskey>();
+            //this.Products = new HashSet<Whiskey>();
             Id = @base.Id;
             Orderdate = @base.Orderdate;
             //Customer = @base.Customer;
@@ -51,7 +51,7 @@ namespace SjonnieLoper.Core.Models
         
         public Reservation()
         {
-            this.Products = new HashSet<Whiskey>();
+            //this.Products = new HashSet<Whiskey>();
         }
 
     }

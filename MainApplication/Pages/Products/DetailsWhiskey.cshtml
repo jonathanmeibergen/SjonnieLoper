@@ -1,0 +1,51 @@
+@page "{productId:int}"
+@model SjonnieLoper.Pages.Products.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<h1>@Model.Whiskey.Name</h1>
+
+<fieldset>
+    <legend>
+        @Html.DisplayNameForModel()
+    </legend>
+</fieldset>
+@*<div>
+    Origin: @Model.Whiskey.Origin
+</div>
+<div>
+    Product: @Model.Reservation.Whiskey.Name
+</div>
+<div>
+    Date of order: @Model.Reservation.Orderdate
+</div>*@
+<dl class="row">
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.Id)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.Id)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.Name)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.Name)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.WhiskeyType.Name)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.WhiskeyType.Name)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.Origin)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.Origin)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.AlcoholPercentage)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.AlcoholPercentage)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.Age)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.Age)</dd>
+    <dt class="col-sm-3">@Html.LabelFor(m => m.Whiskey.ImagePath)</dt>
+    <dd class="col-sm-9">@Html.ValueFor(m => m.Whiskey.ImagePath)</dd>
+</dl>
+
+<a class="btn btn-outline-primary"
+   asp-page="/Products/EditWhiskey
+   "
+   asp-route-reservationId="@Model.Whiskey.Id">
+    Edit
+    <i class="arrow"></i>
+</a>
+<a asp-page="ListWhiskey" class="btn btn-outline-primary">All whiskeys</a>

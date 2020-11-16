@@ -9,7 +9,7 @@
 
 <form method="post">
     <input type="hidden" asp-for="@Model.Reservation.Id">
-        <label asp-for="Reservation.Products"></label>
+        <label asp-for="@Model.RegisteredWhiskeys"></label>
            <select asp-for="productAddedID"
                    asp-items="@(new SelectList(Model.RegisteredWhiskeys, "Value", "Text"))">
            </select>

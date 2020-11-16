@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -10,9 +11,14 @@ namespace SjonnieLoper.Services
         IEnumerable<Whiskey> WhiskeyByName(string name);
         Whiskey WhiskeyById(int id);
         IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType);
+        IEnumerable<WhiskeyType> GetWhiskeyTypes();
+        WhiskeyType GetWhiskeyTypeById(int Id);
+
+        WhiskeyType CreateWhiskeyType(string newWhiskeyType);
         public Whiskey Update(Whiskey updatedWhiskey);
         public Whiskey Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/
         public int Commit();
+        public Whiskey Delete(int id);
     }
 }

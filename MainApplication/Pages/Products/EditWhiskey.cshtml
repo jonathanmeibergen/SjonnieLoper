@@ -1,0 +1,38 @@
+@page "{whiskeyId:int}"
+ @model SjonnieLoper.Pages.Products.EditModel 
+@*
+@Model =  Sjonnieloper.Pages.Products.Editmodel;                                                       
+*@
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit product @Model.Product.Id</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Product.Id">
+}
+    <div class="form-group">
+        <label asp-for="Product.Age"></label>
+        <input asp-for="Product.Age" class="form-control"/>
+        <span class="text-danger" asp-validation-for="Product.Age"></span>
+        <select>
+        </select>
+        <label asp-for="Product.WhiskeyType.Name"></label>
+        <input asp-for="Product.WhiskeyType.Name" class="form-control"/>
+        <span class="text-danger" asp-validation-for="Product.Name"></span>
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" class="form-control">
+        <span class="text-danger" asp-validation-for="Product.Name"></span>
+        <label asp-for="Product.AlcoholPercentage"></label>
+        <input asp-for="Product.AlcoholPercentage" class="form-control"/>
+        <span class="text-danger" asp-validation-for="Product.AlcoholPercentage"></span>
+        <label asp-for="Product.Origin"></label>
+        <input asp-for="Product.Origin" class="form-control"/>
+        <span class="text-danger" asp-validation-for=Product.Origin></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-primary">Confirm</button>
+</form>
+

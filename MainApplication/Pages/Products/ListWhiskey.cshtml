@@ -1,0 +1,49 @@
+@page
+@model SjonnieLoper.Pages.Products.ListModel
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<table class="table">
+    <thead>
+        <tr class="small">
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Id)</th>
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Name)</th>
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().WhiskeyType)</th>
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Origin)</th>
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().AlcoholPercentage)</th>
+            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().ImagePath)</th>
+        </tr>
+    </thead>
+    @foreach (var prod in Model.RetrievedWhiskeys)
+    {
+        <tr>
+            <td>@prod.Id</td>
+            <td>@prod.Name</td>
+            <td>@prod.WhiskeyType.Name</td>
+            <td>@prod.Origin</td>
+            <td>@prod.AlcoholPercentage</td>
+            <td>@prod.Age</td>
+            @* TODO: Replace ImagePath with actual image. *@
+            <td>@prod.ImagePath</td>
+            <td>
+                <a class="btn btn-primary"
+                   asp-page="/Products/DetailsWhiskey"
+                   asp-route-productId="@prod.Id">
+                    <i class="fa fa-list"></i>
+                </a>
+                <a class="btn btn-primary"
+                   asp-page="/Products/DeleteWhiskey"
+                   asp-route-productId="@prod.Id">
+                    <i class="fa fa-trash-alt"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-page="/Products/CreateWhiskey" class="btn btn-outline-primary">
+    Add whiskey
+    <i class="fa fa-plus-square"></i>
+</a>
