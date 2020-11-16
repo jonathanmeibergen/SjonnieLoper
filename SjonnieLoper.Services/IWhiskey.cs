@@ -13,6 +13,8 @@ namespace SjonnieLoper.Services
         IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType);
         IEnumerable<WhiskeyType> GetWhiskeyTypes();
         WhiskeyType GetWhiskeyTypeById(int Id);
+
+        WhiskeyType CreateWhiskeyType(string newWhiskeyType);
         public Whiskey Update(Whiskey updatedWhiskey);
         public Whiskey Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/

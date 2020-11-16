@@ -4,29 +4,48 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create Whiskey</h1>
 
-<form method="post">
-
-    <div class="form-group">
-        
-
-        @Html.LabelFor(x => Model.Whiskey.WhiskeyType, htmlAttributes: new {@class = "control-label col-md-3"})
-        <div class="col-md-6">
-            @Html.DropDownListFor(x => Model.productAddedID,
-                new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"), htmlAttributes: new {@class = "form-control", id = "Country"})
-            @Html.ValidationMessageFor(x => x.Whiskey.Id, "", new {@class = "text-danger"})
-        </div>
-
-
+<div class="form-group col-md-8">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="@Model.Whiskey.Id">
-        <label asp-for="@Model.Whiskey.Name"></label>
-        <input asp-for="@Model.Whiskey.Name" class="form-control"/>
-        <span class="text-danger" asp-validation-for="@Model.Whiskey.Name"></span>
-        <label asp-for="@Model.Whiskey.Origin"></label>
-        <input asp-for="@Model.Whiskey.Origin" class="form-control"/>
-        <span class="text-danger" asp-validation-for="@Model.Whiskey.Origin"></span>
-    </div>
 
-    <button type="submit" class="btn btn-outline-primary">Confirm</button>
-</form>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.Whiskey.WhiskeyType)
+            @Html.DropDownListFor(x => Model.productTypeId,
+                                       new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"),
+                                                      htmlAttributes: new { @class = "form-control" })
+            <span class="text-danger" asp-validation-for="@Model.WhiskeyType"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.NewWhiskeyType"></label>
+            <input asp-for="@Model.NewWhiskeyType" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.WhiskeyType"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Whiskey.Name"></label>
+            <input asp-for="@Model.Whiskey.Name" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.Whiskey.Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Whiskey.Origin"></label>
+            <input asp-for="@Model.Whiskey.Origin" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.Whiskey.Origin"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Whiskey.AlcoholPercentage"></label>
+            <input asp-for="@Model.Whiskey.AlcoholPercentage" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.Whiskey.AlcoholPercentage"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Whiskey.Age"></label>
+            <input asp-for="@Model.Whiskey.Age" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.Whiskey.Age"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Whiskey.ImagePath"></label>
+            <input type="file" asp-for="ImageUpload" class="form-control-file" />
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Confirm</button>
+    </form>
+</div>

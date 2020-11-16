@@ -7,18 +7,18 @@ namespace SjonnieLoper.Pages.Products
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWhiskeys _IWhiskeys;
+        private readonly IWhiskeys _whiskeys;
         public Whiskey Whiskey;
         [TempData] public string Message { get; set; }
 
         public DetailsModel(IWhiskeys whiskeys)
         {
-            _IWhiskeys = whiskeys;
+            _whiskeys = whiskeys;
         }
 
-        public IActionResult OnGet(int Id)
+        public IActionResult OnGet(int productId)
         {
-            Whiskey = _IWhiskeys.WhiskeyById(Id);
+            Whiskey = _whiskeys.WhiskeyById(productId);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();
@@ -28,12 +28,12 @@ namespace SjonnieLoper.Pages.Products
         {
             if (ModelState.IsValid)
             {
-                TempData["Message"] = "Created a new reservation.";
-                _IWhiskeys.Update(Whiskey);
-                _IWhiskeys.Commit();
+                TempData["Message"] = "Created a new whiskey.";
+                _whiskeys.Update(Whiskey);
+                _whiskeys.Commit();
                 //BUG: Redirect to details not showing. 
-                return RedirectToPage("Products/Details", 
-                    new { reservationId = Whiskey.Id });
+                return RedirectToPage("DetailsWhiskey", 
+                    new { productId = Whiskey.Id });
             }
             //TODO: Repopulate dropdown list values.
             return Page();

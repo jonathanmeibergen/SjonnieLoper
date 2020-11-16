@@ -15,9 +15,9 @@ namespace SjonnieLoper.Pages.Products
             _whiskeyDb = whiskey;
         }
 
-        public IActionResult OnGet(int reservationId)
+        public IActionResult OnGet(int productId)
         {
-            Whiskey = _whiskeyDb.WhiskeyById(reservationId);
+            Whiskey = _whiskeyDb.WhiskeyById(productId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
@@ -26,16 +26,16 @@ namespace SjonnieLoper.Pages.Products
             return Page();
         }
 
-        public IActionResult OnPost(int whiskeyId)
+        public IActionResult OnPost(int productId)
         {
-            _whiskeyDb.Delete(whiskeyId);
+            Whiskey = _whiskeyDb.Delete(productId);
             _whiskeyDb.Commit();
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
             }
 
-            return RedirectToPage("./List");
+            return RedirectToPage("./ListWhiskey");
         }
     }
 }

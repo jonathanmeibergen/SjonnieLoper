@@ -27,8 +27,9 @@
         <tr>
             <td>@order.Id</td>
             <td>@order.User.UserName</td>
-            <td>@order.Product</td>
+            <td>@order.Product.Name</td>
             <td>@order.Orderdate</td>
+            <td>@order.Amount</td>
             <td>
                 <a class="btn btn-primary"
                    asp-page="/Reservations/DetailsReservation"

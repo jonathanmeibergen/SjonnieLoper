@@ -16,6 +16,7 @@ using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using AspNetCore.RouteAnalyzer;
 
 namespace SjonnieLoper
 {
@@ -41,7 +42,7 @@ namespace SjonnieLoper
                 options.AddPolicy("EmployeeOnly", policy =>
                     policy.RequireClaim("Role")));
 
-            services.AddRazorPages().AddMvcOptions(o => o.Filters.Add(new AuthorizeFilter()));
+            services.AddRazorPages().AddMvcOptions(o => { o.Filters.Add(new AuthorizeFilter());            });
             services.RegisterWhiskeyServices();
         }
 

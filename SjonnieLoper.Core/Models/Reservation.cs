@@ -28,6 +28,10 @@ namespace SjonnieLoper.Core.Models
         [DisplayFormat(DataFormatString = "0:yyyy-MM-dd",
             ApplyFormatInEditMode = true)]
         public DateTime Orderdate { get; set; }
+
+        [Required]
+        [Display(Name = "Amount")]
+        public int Amount { get; set; }
         
         public Reservation(int id, DateTime time, Customer customer, Whiskey whiskey)
         {

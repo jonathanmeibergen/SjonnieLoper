@@ -45,7 +45,7 @@ namespace SjonnieLoper.Pages.Reservations
            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             
             return RedirectToPage();

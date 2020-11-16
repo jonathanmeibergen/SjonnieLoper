@@ -26,7 +26,8 @@ namespace SjonnieLoper.Core.Models
         [Required]
         [Display(Name="Alcohol percentage of whiskey ")]
         public float AlcoholPercentage { get; set; }
-        
+
+        [Display(Name = "Image for whiskey")]
         public string ImagePath { get; set; }
         
         public virtual WhiskeyType WhiskeyType { get; set; }

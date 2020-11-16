@@ -50,13 +50,13 @@ namespace SjonnieLoper.Services.Migrations
                 name: "WhiskeyTypes",
                 columns: table => new
                 {
-                    WhiskeyTypeId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WhiskeyTypes", x => x.WhiskeyTypeId);
+                    table.PrimaryKey("PK_WhiskeyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,7 +176,7 @@ namespace SjonnieLoper.Services.Migrations
                     Origin = table.Column<string>(nullable: false),
                     AlcoholPercentage = table.Column<float>(nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
-                    WhiskeyTypeId = table.Column<int>(nullable: false)
+                    WhiskeyTypeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,8 +185,8 @@ namespace SjonnieLoper.Services.Migrations
                         name: "FK_Whiskeys_WhiskeyTypes_WhiskeyTypeId",
                         column: x => x.WhiskeyTypeId,
                         principalTable: "WhiskeyTypes",
-                        principalColumn: "WhiskeyTypeId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,9 +195,10 @@ namespace SjonnieLoper.Services.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: true),
+                    Customer = table.Column<string>(nullable: true),
                     Orderdate = table.Column<DateTime>(nullable: false),
-                    Customer = table.Column<string>(nullable: false)
+                    Amount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,13 +208,13 @@ namespace SjonnieLoper.Services.Migrations
                         column: x => x.Customer,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reservations_Whiskeys_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Whiskeys",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,12 +240,24 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "f3cd1d11-bebf-4289-8553-5183d7f46a4e", 0, "08744cc8-4932-4b03-a803-17e6b688c742", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKsrF68qNDwRxCcpcihIW8howOtIfhK5/xOGB2ZjBPXT4FawRWnJ9nHLZF0ZxmKZ0w==", null, false, "2d08d35d-273c-488e-a8a9-2227a5f9c13e", false, "admin@admin.com" });
+                values: new object[] { "f2767fd9-4121-4c7a-953b-ca7b0754b616", 0, "ff06d8ca-9a60-41a7-a1da-190b285ca0f4", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGs657BCVzo7gicvTr+0eVK8rn4AgXpmEKvga6LHi1cEMFgdn3gVa9zE5r2c8CMktA==", null, false, "02c89767-e2db-4363-bf8f-60bc20509286", false, "admin@admin.com" });
+
+            migrationBuilder.InsertData(
+                table: "WhiskeyTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Scotch" },
+                    { 2, "Japanese" },
+                    { 3, "Canadian" },
+                    { 4, "Bourbon" },
+                    { 5, "Irish" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
-                values: new object[] { 1, "Role", "Admin", "f3cd1d11-bebf-4289-8553-5183d7f46a4e" });
+                values: new object[] { 1, "Role", "Admin", "f2767fd9-4121-4c7a-953b-ca7b0754b616" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

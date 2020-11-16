@@ -17,12 +17,13 @@ namespace SjonnieLoper.Core.Models
                         Value = n.Id.ToString(),
                         Text = n.Name
                     }).ToList();
-            var emptyField = new SelectListItem()
+            /*var emptyField = new SelectListItem()
             {
-                Value = null,
+                Value = "0",
                 Text = "--- select a product ---"
             };
             whiskeys.Insert(0, emptyField);
+            whiskeys[0].Value = "0";*/
             return new SelectList(whiskeys, "Value", "Text");
         }
         
@@ -34,12 +35,12 @@ namespace SjonnieLoper.Core.Models
                 whiskeyType.Select(n =>
                         new SelectListItem
                         {
-                            Value = n.WhiskeyTypeId.ToString(),
+                            Value = n.Id.ToString(),
                             Text = n.Name
                         }).ToList();
             var emptyField = new SelectListItem()
             {
-                Value = null,
+                Value = "0",
                 Text = "--- Choose a type ---"
             };
             types.Insert(0, emptyField);

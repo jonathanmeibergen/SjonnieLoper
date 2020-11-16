@@ -46,6 +46,11 @@ namespace SjonnieLoper.Services
                 ClaimValue = "Admin"
             });
 
+            builder.Entity<WhiskeyType>().HasData(new WhiskeyType { Id = 1, Name = "Scotch" });
+            builder.Entity<WhiskeyType>().HasData(new WhiskeyType { Id = 2, Name = "Japanese" }); 
+            builder.Entity<WhiskeyType>().HasData(new WhiskeyType { Id = 3, Name = "Canadian" });
+            builder.Entity<WhiskeyType>().HasData(new WhiskeyType { Id = 4, Name = "Bourbon" });
+            builder.Entity<WhiskeyType>().HasData(new WhiskeyType { Id = 5, Name = "Irish" });
         }
     }
 }

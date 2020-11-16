@@ -10,7 +10,7 @@ using SjonnieLoper.Services;
 namespace SjonnieLoper.Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201112094328_model")]
+    [Migration("20201113122501_model")]
     partial class model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,7 +101,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "f3cd1d11-bebf-4289-8553-5183d7f46a4e"
+                            UserId = "f2767fd9-4121-4c7a-953b-ca7b0754b616"
                         });
                 });
 
@@ -232,17 +232,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3cd1d11-bebf-4289-8553-5183d7f46a4e",
+                            Id = "f2767fd9-4121-4c7a-953b-ca7b0754b616",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08744cc8-4932-4b03-a803-17e6b688c742",
+                            ConcurrencyStamp = "ff06d8ca-9a60-41a7-a1da-190b285ca0f4",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKsrF68qNDwRxCcpcihIW8howOtIfhK5/xOGB2ZjBPXT4FawRWnJ9nHLZF0ZxmKZ0w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGs657BCVzo7gicvTr+0eVK8rn4AgXpmEKvga6LHi1cEMFgdn3gVa9zE5r2c8CMktA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2d08d35d-273c-488e-a8a9-2227a5f9c13e",
+                            SecurityStamp = "02c89767-e2db-4363-bf8f-60bc20509286",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -255,14 +255,16 @@ namespace SjonnieLoper.Services.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Customer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Orderdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -318,7 +320,7 @@ namespace SjonnieLoper.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("WhiskeyTypeId")
+                    b.Property<int?>("WhiskeyTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -330,7 +332,7 @@ namespace SjonnieLoper.Services.Migrations
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.WhiskeyType", b =>
                 {
-                    b.Property<int>("WhiskeyTypeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -338,9 +340,36 @@ namespace SjonnieLoper.Services.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("WhiskeyTypeId");
+                    b.HasKey("Id");
 
                     b.ToTable("WhiskeyTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Scotch"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Japanese"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Canadian"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bourbon"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Irish"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -398,15 +427,11 @@ namespace SjonnieLoper.Services.Migrations
                 {
                     b.HasOne("SjonnieLoper.Core.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("Customer")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Customer");
 
                     b.HasOne("SjonnieLoper.Core.Models.Whiskey", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.Models.Storage", b =>
@@ -420,9 +445,7 @@ namespace SjonnieLoper.Services.Migrations
                 {
                     b.HasOne("SjonnieLoper.Core.Models.WhiskeyType", "WhiskeyType")
                         .WithMany()
-                        .HasForeignKey("WhiskeyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WhiskeyTypeId");
                 });
 #pragma warning restore 612, 618
         }
