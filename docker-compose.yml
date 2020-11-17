@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  sqlserver:
+      build:
+          context: .
+          dockerfile: dockerfile
+        ports:
+          - 11433:1433
+        env_file:
+            - sqlserver.env
+            - sapassword.env
+    container_name: SjonnieDbDocker
+    volumes:
+      - ./SQL_Production/DataProduction/:/var/opt/mssql/data 
+      - ./SQL_Production/LogsProduction/:/var/opt/mssql/log
+      - ./SQL_Production/BackupProduction/:/var/opt/mssql/backup
+      - sqlsystem:/var/opt/mssql
+    volumes:
+  sqlsystem:
+  sqldata:
+  sqllog:
+  sqlbackup:
