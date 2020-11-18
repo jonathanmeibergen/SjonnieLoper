@@ -44,7 +44,7 @@ namespace SjonnieLoper.Pages.Reservations
                 .GetWhiskeyNames();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -55,11 +55,11 @@ namespace SjonnieLoper.Pages.Reservations
             {
                 TempData["Message"] = "Created a new reservation.";
                 Reservation.Orderdate = DateTime.Now;
-                Reservation.User = _userManager.GetUserAsync(User).Result;
-                Reservation.Product = _whiskeys.WhiskeyById(productAddedID);
+                Reservation.User =  await _userManager.GetUserAsync(User);
+                Reservation.Product = await _whiskeys.WhiskeyById(productAddedID);
 
-                Reservation = _reservationsDb.Create(Reservation);
-                _reservationsDb.Commit();
+                Reservation = await _reservationsDb.Create(Reservation);
+                await _reservationsDb.Commit();
             }
             return RedirectToPage("Reservations/DetailsReservation",
                 new {reservationId = Reservation.Id});

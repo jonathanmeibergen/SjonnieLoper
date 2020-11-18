@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
 
@@ -7,18 +8,17 @@ namespace SjonnieLoper.Services
 {
     public interface IWhiskeys
     {
-        IEnumerable<Whiskey> AllWhiskeys();
-        IEnumerable<Whiskey> WhiskeyByName(string name);
-        Whiskey WhiskeyById(int id);
-        IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType);
-        IEnumerable<WhiskeyType> GetWhiskeyTypes();
-        WhiskeyType GetWhiskeyTypeById(int Id);
-
-        WhiskeyType CreateWhiskeyType(string newWhiskeyType);
-        public Whiskey Update(Whiskey updatedWhiskey);
-        public Whiskey Create(Whiskey newWhiskey);
+        Task<IEnumerable<Whiskey>> AllWhiskeys();
+        Task<IEnumerable<Whiskey>> WhiskeyByName(string name);
+        Task<Whiskey> WhiskeyById(int id);
+        Task<IEnumerable<Whiskey>> WhiskeysByType(WhiskeyType whiskeyType);
+        Task<IEnumerable<WhiskeyType>> GetWhiskeyTypes();
+        Task<WhiskeyType> GetWhiskeyTypeById(int Id);
+        Task<WhiskeyType> CreateWhiskeyType(string newWhiskeyType);
+        Task <Whiskey> Update(Whiskey updatedWhiskey);
+        Task <Whiskey> Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/
-        public int Commit();
-        public Whiskey Delete(int id);
+        Task<int> Commit();
+        Task<Whiskey> Delete(int id);
     }
 }

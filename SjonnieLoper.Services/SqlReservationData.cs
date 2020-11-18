@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -41,7 +43,7 @@ namespace SjonnieLoper.Services
             return await Task.FromResult(updatedReservation);
         }
 
-        public async Task <Reservation> Create(Reservation newReservation)
+        public async Task<Reservation> Create(Reservation newReservation)
         {
             await _db.Reservations.AddAsync(newReservation);
             return newReservation;
@@ -53,7 +55,7 @@ namespace SjonnieLoper.Services
         {
             var reservation = await ReservationById(id);
 
-            if (reservation != null)
+            if (!(reservation is null))
             {
                 _db.Reservations.Remove(reservation);
             }

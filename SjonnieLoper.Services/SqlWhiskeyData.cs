@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,66 +18,74 @@ namespace SjonnieLoper.Services
             _db = db;
         }
 
-        public IEnumerable<Whiskey> AllWhiskeys() => 
-            _db.Whiskeys.Include(wt => wt.WhiskeyType).OrderByDescending(o => o.WhiskeyType);
+        public async Task<IEnumerable<Whiskey>> AllWhiskeys() => 
+            await _db.Whiskeys.Include(wt => wt.WhiskeyType)
+                .OrderByDescending(o => o.WhiskeyType)
+                .ToListAsync();
 
-        public Whiskey WhiskeyById(int id) =>
-            _db.Whiskeys.Include(d => d.WhiskeyType).First(w => w.Id == id);
+        public async Task<Whiskey> WhiskeyById(int id) =>
+            await _db.Whiskeys.Include(d => d.WhiskeyType)
+                .FirstAsync(w => w.Id == id);
 
-        public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
-            _db.Whiskeys.Select(w => w)
-                .Where(t => t.WhiskeyType.Name == typeName);
+        public async Task<IEnumerable<Whiskey>> WhiskeyByType(string typeName) =>
+            await _db.Whiskeys.Select(w => w)
+                .Where(t => t.WhiskeyType.Name == typeName)
+                .ToListAsync();
 
-        public IEnumerable<WhiskeyType> GetWhiskeyTypes() =>
-            _db.WhiskeyTypes.OrderBy( wt => wt.Name).Select(wt => wt);
+        public async Task<IEnumerable<WhiskeyType>> GetWhiskeyTypes() =>
+           await _db.WhiskeyTypes
+               .OrderBy( wt => wt.Name)
+               .Select(wt => wt)
+               .ToListAsync();
 
-        public Whiskey Update(Whiskey updatedWhiskey)
+        public async Task<Whiskey> Update(Whiskey updatedWhiskey)
         {
-            var entity = _db.Whiskeys.Attach(updatedWhiskey);
+            var entity = await Task.FromResult(_db.Whiskeys.Attach(updatedWhiskey));
             entity.State = EntityState.Modified;
-            return updatedWhiskey;
+            return await Task.FromResult(updatedWhiskey);
         }
 
-        public Whiskey Create(Whiskey newWhiskey)
+        public async Task<Whiskey> Create(Whiskey newWhiskey)
         {
-            _db.Whiskeys.Add(newWhiskey);
+            await _db.Whiskeys.AddAsync(newWhiskey);
             return newWhiskey;
         }
 
-        public int Commit() => _db.SaveChanges();
+        public Task<int> Commit() => _db.SaveChangesAsync();
 
-        public Whiskey Delete(int id)
+        public async Task<Whiskey> Delete(int id)
         {
-            var whiskey = WhiskeyById(id);
+            var whiskey = await WhiskeyById(id);
 
             if (whiskey != null)
             {
                 _db.Whiskeys.Remove(whiskey);
-                Commit();
+                await Commit();
             }
             return whiskey;
         }
 
-        public IEnumerable<Whiskey> WhiskeyByName(string name) =>
-            _db.Whiskeys
+        public async Task<IEnumerable<Whiskey>> WhiskeyByName(string name) =>
+            await _db.Whiskeys
                 .Select(w => w)
                 .Where(t => t.Name == name)
-                .Select(item => item);
+                .Select(item => item).ToListAsync();
 
-        public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
-            _db.Whiskeys
+        public async Task<IEnumerable<Whiskey>> WhiskeysByType(WhiskeyType whiskeyType) =>
+            await _db.Whiskeys
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
-                .Select(w => w);
+                .Select(w => w).ToListAsync();
 
-        public WhiskeyType GetWhiskeyTypeById(int Id) =>
-            _db.WhiskeyTypes.Where(wt => wt.Id == Id).SingleOrDefault();
+        public async Task<WhiskeyType> GetWhiskeyTypeById(int Id) =>
+            await _db.WhiskeyTypes.Where(wt => wt.Id == Id)
+                .SingleOrDefaultAsync();
 
-        public WhiskeyType CreateWhiskeyType(string newWhiskeyType)
+        public async Task<WhiskeyType> CreateWhiskeyType(string newWhiskeyType)
         {
-            if (_db.WhiskeyTypes.Any(wt => wt.Name == newWhiskeyType))
+            if (await _db.WhiskeyTypes.AnyAsync(wt => wt.Name == newWhiskeyType))
                 return _db.WhiskeyTypes.First(wt => wt.Name == newWhiskeyType);
 
-            return _db.WhiskeyTypes.Add(new WhiskeyType { Name = newWhiskeyType }).Entity;
+            return (await _db.WhiskeyTypes.AddAsync(new WhiskeyType { Name = newWhiskeyType })).Entity;
         }
     }
 }
