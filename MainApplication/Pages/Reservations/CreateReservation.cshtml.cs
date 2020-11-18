@@ -41,6 +41,7 @@ namespace SjonnieLoper.Pages.Reservations
             Reservation = new Reservation();
             RegisteredWhiskeys = _whiskeys
                 .AllWhiskeys()
+                .Result
                 .GetWhiskeyNames();
         }
 

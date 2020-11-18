@@ -35,19 +35,18 @@ namespace SjonnieLoper.Pages.Reservations
         public IEnumerable<Reservation> RetrievedReservations { get; set; }
 
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             RetrievedReservations = String.IsNullOrEmpty(SearchValue)
-                ? _reservationsDb.AllReservations()
-                : _reservationsDb.ReservationsUserName(SearchValue);
+                ? await _reservationsDb.AllReservations()
+                : await _reservationsDb.ReservationsUserName(SearchValue);
 
            // ResTypes = new SelectList(_reservationsDb.ReservationWhiskeyTypes());
            return Page();
         }
 
-        public IActionResult OnPostAsync()
+        public IActionResult OnPost()
         {
-            
             return RedirectToPage();
         }
 

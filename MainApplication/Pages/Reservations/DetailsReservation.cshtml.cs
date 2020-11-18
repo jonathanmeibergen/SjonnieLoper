@@ -25,9 +25,9 @@ namespace SjonnieLoper.Pages.Reservations
         {
             _reservationsDb = reservations;
         }
-        public IActionResult OnGet(int reservationId)
+        public async Task<IActionResult> OnGet(int reservationId)
         {
-            Reservation = _reservationsDb.ReservationById(reservationId);
+            Reservation = await _reservationsDb.ReservationById(reservationId);
             if (Reservation == null)
                 return RedirectToPage("./NotFound");
             return Page();

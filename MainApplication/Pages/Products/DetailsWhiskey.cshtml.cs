@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core.Models;
@@ -9,28 +10,28 @@ namespace SjonnieLoper.Pages.Products
     {
         private readonly IWhiskeys _whiskeys;
         public Whiskey Whiskey;
-        [TempData] public string Message { get; set; }
+        [TempData] public string Message { get; }
 
         public DetailsModel(IWhiskeys whiskeys)
         {
             _whiskeys = whiskeys;
         }
 
-        public IActionResult OnGet(int productId)
+        public async Task<IActionResult> OnGet(int productId)
         {
-            Whiskey = _whiskeys.WhiskeyById(productId);
+            Whiskey = await _whiskeys.WhiskeyById(productId);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new whiskey.";
-                _whiskeys.Update(Whiskey);
-                _whiskeys.Commit();
+                await _whiskeys.Update(Whiskey);
+                await _whiskeys.Commit();
                 //BUG: Redirect to details not showing. 
                 return RedirectToPage("DetailsWhiskey", 
                     new { productId = Whiskey.Id });

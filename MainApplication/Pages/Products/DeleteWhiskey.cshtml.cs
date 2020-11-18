@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core.Models;
@@ -15,9 +16,9 @@ namespace SjonnieLoper.Pages.Products
             _whiskeyDb = whiskey;
         }
 
-        public IActionResult OnGet(int productId)
+        public async Task<IActionResult> OnGet(int productId)
         {
-            Whiskey = _whiskeyDb.WhiskeyById(productId);
+            Whiskey = await _whiskeyDb.WhiskeyById(productId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
@@ -26,15 +27,14 @@ namespace SjonnieLoper.Pages.Products
             return Page();
         }
 
-        public IActionResult OnPost(int productId)
+        public async Task<IActionResult> OnPost(int productId)
         {
-            Whiskey = _whiskeyDb.Delete(productId);
-            _whiskeyDb.Commit();
+            Whiskey = await _whiskeyDb.Delete(productId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
             }
-
+            await _whiskeyDb.Commit();
             return RedirectToPage("./ListWhiskey");
         }
     }

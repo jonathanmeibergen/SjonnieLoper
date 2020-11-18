@@ -23,25 +23,21 @@ namespace SjonnieLoper.Pages.Products
         {
             _whiskeysDb = whiskeysDb;
         }
-        public IActionResult OnGet(int whiskeyId)
+        public async Task<IActionResult> OnGet(int whiskeyId)
         {
-            Product = _whiskeysDb.WhiskeyById(whiskeyId);
+            Product = await _whiskeysDb.WhiskeyById(whiskeyId);
             if (Product == null)
                 return RedirectToPage("./NotFound");
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new reservation.";
-                _whiskeysDb.Update(Product);
-                _whiskeysDb.Commit();
-                /*
-                return RedirectToPage("Reservations/Details", 
-                    new { whiskeyId = Whiskey.Id });
-            */
+                await _whiskeysDb.Update(Product);
+                await _whiskeysDb.Commit();
                 return RedirectToPage("Products/Details", 
                     new { whiskeyId = Product.Id });
             }
