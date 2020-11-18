@@ -11,16 +11,16 @@
         <input type="hidden" asp-for="@Model.Whiskey.Id">
 
         <div class="form-group">
-            @Html.LabelFor(x => Model.Whiskey.WhiskeyType)
-            @Html.DropDownListFor(x => Model.productTypeId,
+            @Html.LabelFor(x => Model.WhiskeyType)
+            @Html.DropDownListFor(x => Model.inputModel.productTypeId,
                                        new SelectList(Model.RegisteredWhiskeyTypes, "Value", "Text"),
                                                       htmlAttributes: new { @class = "form-control" })
-            <span class="text-danger" asp-validation-for="@Model.WhiskeyType"></span>
+            <span class="text-danger" asp-validation-for="@Model.inputModel.productTypeId"></span>
         </div>
         <div class="form-group">
-            <label asp-for="@Model.NewWhiskeyType"></label>
-            <input asp-for="@Model.NewWhiskeyType" class="form-control" />
-            <span class="text-danger" asp-validation-for="@Model.WhiskeyType"></span>
+            <label asp-for="@Model.inputModel.NewWhiskeyType"></label>
+            <input asp-for="@Model.inputModel.NewWhiskeyType" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.inputModel.NewWhiskeyType"></span>
         </div>
         <div class="form-group">
             <label asp-for="@Model.Whiskey.Name"></label>
