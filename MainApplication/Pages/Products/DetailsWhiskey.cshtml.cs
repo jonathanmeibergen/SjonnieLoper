@@ -10,7 +10,7 @@ namespace SjonnieLoper.Pages.Products
     {
         private readonly IWhiskeys _whiskeys;
         public Whiskey Whiskey;
-        [TempData] public string Message { get; }
+        [TempData] public string Message { get; set; }
 
         public DetailsModel(IWhiskeys whiskeys)
         {
