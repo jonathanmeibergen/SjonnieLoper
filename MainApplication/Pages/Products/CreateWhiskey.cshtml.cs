@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -57,14 +58,20 @@ namespace SjonnieLoper.Pages.Products
         {
             Whiskey = new Whiskey();
             RegisteredWhiskeyTypes = _whiskeysDb.GetTypes().GetWhiskeyTypesSelectList();
+            RegisteredWhiskeyTypes = _whiskeysDb
+                .GetWhiskeyTypes().Result
+                .GetWhiskeyTypesSelectList();
             return Page();
         }
         
-        public IActionResult OnPost(InputModel inputModel)
+        public async Task<IActionResult> OnPost(InputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
                 RegisteredWhiskeyTypes = _whiskeysDb.GetTypes().GetWhiskeyTypesSelectList();
+                RegisteredWhiskeyTypes = _whiskeysDb
+                    .GetWhiskeyTypes().Result
+                    .GetWhiskeyTypesSelectList();
                 return Page();
             }
             else
@@ -76,7 +83,8 @@ namespace SjonnieLoper.Pages.Products
                                                      "uploads",
                                                      Whiskey.Id.ToString());
                     var filePath = Path.Combine(directoryPath,
-                                                Path.GetFileName(ImageUpload.FileName));
+                                                Path.GetFileName(ImageUpload.FileName) 
+                                                ?? throw new NullReferenceException());
 
                     Directory.CreateDirectory(directoryPath);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -94,11 +102,12 @@ namespace SjonnieLoper.Pages.Products
                 if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
                     Page();
 
-                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null ? 
-                    _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) : _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
+                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null 
+                    ? await _whiskeysDb.GetWhiskeyTypeById(Int32.Parse(inputModel.productTypeId)) 
+                    : await _whiskeysDb.CreateWhiskeyType(inputModel.NewWhiskeyType);
 
-                _whiskeysDb.Create(Whiskey);
-                _whiskeysDb.Commit();
+                await _whiskeysDb.Create(Whiskey);
+                await _whiskeysDb.Commit();
             }
             return RedirectToPage("DetailsWhiskey",
                 new { productId = Whiskey.Id });

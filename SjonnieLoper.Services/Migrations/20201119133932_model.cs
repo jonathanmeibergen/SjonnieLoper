@@ -52,7 +52,7 @@ namespace SjonnieLoper.Services.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,7 +240,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "f2767fd9-4121-4c7a-953b-ca7b0754b616", 0, "ff06d8ca-9a60-41a7-a1da-190b285ca0f4", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGs657BCVzo7gicvTr+0eVK8rn4AgXpmEKvga6LHi1cEMFgdn3gVa9zE5r2c8CMktA==", null, false, "02c89767-e2db-4363-bf8f-60bc20509286", false, "admin@admin.com" });
+                values: new object[] { "f593ee5e-59d3-4771-b4b9-48ea0571b977", 0, "9800c307-7959-4920-b338-b81bef348837", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEHvACm64fmLJ946dyYS/Q4pNckvVB6dfJkiq1x3iOoZpkLlfz0ikzhkHxGIOPyFOFw==", null, false, "bd4bcabf-f26b-48e6-9eb8-7f385f90d39e", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "WhiskeyTypes",
@@ -257,7 +257,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
-                values: new object[] { 1, "Role", "Admin", "f2767fd9-4121-4c7a-953b-ca7b0754b616" });
+                values: new object[] { 1, "Role", "Admin", "f593ee5e-59d3-4771-b4b9-48ea0571b977" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

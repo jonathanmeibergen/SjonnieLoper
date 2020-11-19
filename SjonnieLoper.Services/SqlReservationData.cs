@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
@@ -13,46 +16,46 @@ namespace SjonnieLoper.Services
         public SqlReservationData(ApplicationDbContext db)
         {
             _db = db;
-        } 
-        
-        public IEnumerable<Reservation> AllReservations() => 
-            _db.Reservations.Include(p => p.Product)
-                            .Include(u => u.User)
-                            .OrderByDescending(r => r.Orderdate);
+        }
 
-        public Reservation ReservationByCustId(int id) =>
-            _db.Reservations.FirstOrDefault(w => w.Id == id);
+        public async Task<IEnumerable<Reservation>> AllReservations() =>
+            await _db.Reservations.Include( p => p.Product)
+                .Include(u => u.User)
+                .OrderByDescending(r => r.Orderdate).ToListAsync();
 
-        public Reservation ReservationById(int id) =>
-            _db.Reservations.SingleOrDefault(r => r.Id == id);
+        public async Task<Reservation> ReservationByCustId(int id) =>
+            await _db.Reservations.FirstOrDefaultAsync(w => w.Id == id);
 
-        public IEnumerable<Reservation> ReservationsUserName(string name) =>
-            _db.Reservations.Include(u => u.User)
+        public Task<Reservation> ReservationById(int id) =>
+            _db.Reservations.SingleOrDefaultAsync(r => r.Id == id);
+
+        public async Task<IEnumerable<Reservation>> ReservationsUserName(string name) =>
+            await _db.Reservations.Include(u => u.User)
                             .Select(r => r)
                             .Where(entry => entry.User.UserName == name)
                             .Select(x => x)
-                            .Include(p => p.Product);
+                            .Include(p => p.Product).ToListAsync();
 
-        public Reservation Update(Reservation updatedReservation)
+        public async Task <Reservation> Update(Reservation updatedReservation)
         {
             var entity = _db.Reservations.Attach(updatedReservation);
             entity.State = EntityState.Modified;
-            return updatedReservation;
+            return await Task.FromResult(updatedReservation);
         }
 
-        public Reservation Create(Reservation newReservation)
+        public async Task<Reservation> Create(Reservation newReservation)
         {
-            _db.Reservations.Add(newReservation);
+            await _db.Reservations.AddAsync(newReservation);
             return newReservation;
         }
         
-        public int Commit() => _db.SaveChanges();
+        public async Task <int> Commit() => await _db.SaveChangesAsync();
         
-        public Reservation Delete(int id)
+        public async Task <Reservation> Delete(int id)
         {
-            var reservation = ReservationById(id);
+            var reservation = await ReservationById(id);
 
-            if (reservation != null)
+            if (!(reservation is null))
             {
                 _db.Reservations.Remove(reservation);
             }

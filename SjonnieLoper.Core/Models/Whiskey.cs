@@ -30,9 +30,9 @@ namespace SjonnieLoper.Core.Models
         [Display(Name = "Image for whiskey")]
         public string ImagePath { get; set; }
         
-        public virtual WhiskeyType WhiskeyType { get; set; }
+        public WhiskeyType WhiskeyType { get; set; }
 
-        public Whiskey(int id, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
+        /*public Whiskey(int id, string name, int age, string origin, float alcoholPercentage, string imagePath, WhiskeyType whiskeyType)
         {
             Id = id;
             Name = name;
@@ -41,13 +41,13 @@ namespace SjonnieLoper.Core.Models
             AlcoholPercentage = alcoholPercentage;
             ImagePath = imagePath;
             WhiskeyType = whiskeyType;    
-        }
+        }*/
 
         // Development constructor for Mock_reservations.
-        public Whiskey(string name)
+        /*public Whiskey(string name)
         {
             Name = name;
-        }
+        }*/
 
         public Whiskey(Whiskey product)
         {

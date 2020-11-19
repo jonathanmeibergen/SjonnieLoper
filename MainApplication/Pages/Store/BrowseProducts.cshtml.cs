@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,11 +27,17 @@ namespace SjonnieLoper.Pages.Store
         [BindProperty]
         public IEnumerable<Whiskey> RetrievedWhiskeys { get; set; }
         
-        public void OnGet()
+        public async Task<IActionResult>  OnGet()
         {
             RetrievedWhiskeys = String.IsNullOrEmpty(SearchValue)
-                ? _whiskeyDb.GetAll()
-                : _whiskeyDb.GetByName(SearchValue);
+                ? await _whiskeyDb.AllWhiskeys()
+                : await _whiskeyDb.WhiskeyByName(SearchValue);
+            return Page();
+        }
+        
+        public IActionResult OnPost()
+        {
+            return RedirectToPage();
         }
     }
 }
