@@ -18,12 +18,12 @@ namespace SjonnieLoper.Services
             _db = db;
         }
 
-        public async Task<IEnumerable<Whiskey>> AllWhiskeys() => 
+        public async Task<IEnumerable<Whiskey>> GetAll() => 
             await _db.Whiskeys.Include(wt => wt.WhiskeyType)
                 .OrderByDescending(o => o.WhiskeyType)
                 .ToListAsync();
 
-        public async Task<Whiskey> WhiskeyById(int id) =>
+        public async Task<Whiskey> GetById(int id) =>
             await _db.Whiskeys.Include(d => d.WhiskeyType)
                 .FirstAsync(w => w.Id == id);
 
@@ -32,7 +32,7 @@ namespace SjonnieLoper.Services
                 .Where(t => t.WhiskeyType.Name == typeName)
                 .ToListAsync();
 
-        public async Task<IEnumerable<WhiskeyType>> GetWhiskeyTypes() =>
+        public async Task<IEnumerable<WhiskeyType>> GetAllTypes() =>
            await _db.WhiskeyTypes
                .OrderBy( wt => wt.Name)
                .Select(wt => wt)
@@ -55,7 +55,7 @@ namespace SjonnieLoper.Services
 
         public async Task<Whiskey> Delete(int id)
         {
-            var whiskey = await WhiskeyById(id);
+            var whiskey = await GetById(id);
 
             if (whiskey != null)
             {
@@ -65,22 +65,22 @@ namespace SjonnieLoper.Services
             return whiskey;
         }
 
-        public IEnumerable<Whiskey> WhiskeyByName(string name) =>
-            _db.Whiskeys
+        public async Task<IEnumerable<Whiskey>> GetByName(string name) =>
+            await _db.Whiskeys
                 .Select(w => w)
                 .Where(t => t.Name == name)
                 .Select(item => item).ToListAsync();
 
-        public async Task<IEnumerable<Whiskey>> WhiskeysByType(WhiskeyType whiskeyType) =>
+        public async Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType) =>
             await _db.Whiskeys
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
                 .Select(w => w).ToListAsync();
 
-        public async Task<WhiskeyType> GetWhiskeyTypeById(int Id) =>
+        public async Task<WhiskeyType> GetTypeById(int Id) =>
             await _db.WhiskeyTypes.Where(wt => wt.Id == Id)
                 .SingleOrDefaultAsync();
 
-        public async Task<WhiskeyType> CreateWhiskeyType(string newWhiskeyType)
+        public async Task<WhiskeyType> CreateType(string newWhiskeyType)
         {
             if (await _db.WhiskeyTypes.AnyAsync(wt => wt.Name == newWhiskeyType))
                 return _db.WhiskeyTypes.First(wt => wt.Name == newWhiskeyType);

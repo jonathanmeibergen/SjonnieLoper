@@ -35,13 +35,14 @@ namespace SjonnieLoper.Pages.Reservations
             _whiskeys = whiskeys;
         }
 
-        public void OnGet(int productId)
+        public async Task<IActionResult> OnGet(int productId)
         {
             Reservation = new Reservation();
-            Reservation.Product = _whiskeys.GetById(productId);
+            Reservation.Product = await _whiskeys.GetById(productId);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(int productId)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +53,7 @@ namespace SjonnieLoper.Pages.Reservations
                 TempData["Message"] = "Created a new reservation.";
                 Reservation.Orderdate = DateTime.Now;
                 Reservation.User =  await _userManager.GetUserAsync(User);
-                Reservation.Product = await _whiskeys.WhiskeyById(productAddedID);
+                Reservation.Product = await _whiskeys.GetById(productId);
 
                 Reservation = await _reservationsDb.Create(Reservation);
                 await _reservationsDb.Commit();
