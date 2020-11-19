@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/mssql/server:2017-latest
+
+RUN useradd -u 10001 mssql
+
+RUN mkdir /var/opt/sqlserver
+RUN mkdir /var/opt/sqlserver/data
+RUN mkdir /var/opt/sqlserver/log
+RUN mkdir /var/opt/sqlserver/backup
+
+RUN chown -R mssql:mssql /var/opt/sqlserver
+RUN chown -R mssql:mssql /opt/mssql
+
+USER mssql
+

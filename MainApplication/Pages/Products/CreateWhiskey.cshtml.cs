@@ -20,45 +20,43 @@ namespace SjonnieLoper.Pages.Products
         private readonly IWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
-
-        [BindProperty]
-        public IFormFile ImageUpload { get; set; }
-
-        [BindProperty]
-        public string NewWhiskeyType { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Whiskey Type is required.")]
-        public string WhiskeyType { get; set; }
-
-        [BindProperty]
-        public int productTypeId { get; set; } = 0;
-        [BindProperty] public Whiskey Whiskey { get; set; }
-
+        public InputModel inputModel { get; set; }
 
         public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
         {
             _whiskeysDb = whiskeysDb;
             _webHostEnvironment = webHostEnvironment;
         }
-        
+
+            [BindProperty(SupportsGet = true)]
+            public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
+
+            [BindProperty]
+            public IFormFile ImageUpload { get; set; }
+
+            [BindProperty]
+            public string WhiskeyType { get; set; }
+            [BindProperty] public Whiskey Whiskey { get; set; }
+
+        public class InputModel
+        {
+            [DataType(DataType.Text)]
+            [BindProperty]
+            public string productTypeId { get; set; }
+
+            [WhiskeyTypeValidationAttribute(OtherProperty = "productTypeId", ErrorMessage = "Whiskey Type is required.")]
+            [BindProperty]
+            public string NewWhiskeyType { get; set; }
+        }
+
         public IActionResult OnGet()
         {
             Whiskey = new Whiskey();
-            //RegisteredWhiskeyTypes = _whiskeysDb.
             RegisteredWhiskeyTypes = _whiskeysDb.GetWhiskeyTypes().GetWhiskeyTypesSelectList();
-            
-            /*RegisteredWhiskeyTypes = _whiskeysDb
-                .AllWhiskeys()
-                .GroupBy(w => w.WhiskeyType)
-                .Select(t => t.Key)
-                .GetWhiskeyTypes();
-            */
             return Page();
         }
         
-        public IActionResult OnPost()
+        public IActionResult OnPost(InputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -89,11 +87,11 @@ namespace SjonnieLoper.Pages.Products
                 }
                 TempData["Message"] = "Added a new Whiskey product";
 
-                if (NewWhiskeyType == null && productTypeId == 0)
+                if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
                     Page();
 
-                Whiskey.WhiskeyType = NewWhiskeyType == null ? 
-                    _whiskeysDb.GetWhiskeyTypeById(productTypeId) : _whiskeysDb.CreateWhiskeyType(NewWhiskeyType);
+                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null ? 
+                    _whiskeysDb.GetWhiskeyTypeById(Int32.Parse(inputModel.productTypeId)) : _whiskeysDb.CreateWhiskeyType(inputModel.NewWhiskeyType);
 
                 _whiskeysDb.Create(Whiskey);
                 _whiskeysDb.Commit();
@@ -101,6 +99,5 @@ namespace SjonnieLoper.Pages.Products
             return RedirectToPage("DetailsWhiskey",
                 new { productId = Whiskey.Id });
         }
-
     }
 }
