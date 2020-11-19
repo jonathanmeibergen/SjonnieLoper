@@ -30,8 +30,8 @@ namespace SjonnieLoper.Pages.Reservations
         public IActionResult OnGet(int reservationId)
         {
             RegisteredWhiskeys = _whiskeys
-                .AllWhiskeys()
-                .GetWhiskeyNames();
+                .GetAll()
+                .GetWhiskeysSelectList();
             Reservation = _reservationsDb.ReservationById(reservationId);
             if (Reservation == null)
                 return RedirectToPage("./NotFound");
@@ -42,7 +42,7 @@ namespace SjonnieLoper.Pages.Reservations
         {
             if (ModelState.IsValid)
             {
-                Reservation.Product = new Whiskey(_whiskeys.WhiskeyById(productAddedID));
+                Reservation.Product = new Whiskey(_whiskeys.GetById(productAddedID));
                 TempData["Message"] = "Created a new reservation.";
                 _reservationsDb.Update(Reservation);
                 _reservationsDb.Commit();

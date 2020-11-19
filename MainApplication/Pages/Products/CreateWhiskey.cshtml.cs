@@ -33,17 +33,21 @@ namespace SjonnieLoper.Pages.Products
 
             [BindProperty]
             public IFormFile ImageUpload { get; set; }
-
+            
+            [Display(Name = "Whiskey type")]
             [BindProperty]
             public string WhiskeyType { get; set; }
             [BindProperty] public Whiskey Whiskey { get; set; }
 
+        // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
+        // otherwise the values inside the custom validation attribute are empty
         public class InputModel
         {
             [DataType(DataType.Text)]
             [BindProperty]
             public string productTypeId { get; set; }
 
+            [Display(Name = "Or add new Whiskey Type")]
             [WhiskeyTypeValidationAttribute(OtherProperty = "productTypeId", ErrorMessage = "Whiskey Type is required.")]
             [BindProperty]
             public string NewWhiskeyType { get; set; }
@@ -52,7 +56,7 @@ namespace SjonnieLoper.Pages.Products
         public IActionResult OnGet()
         {
             Whiskey = new Whiskey();
-            RegisteredWhiskeyTypes = _whiskeysDb.GetWhiskeyTypes().GetWhiskeyTypesSelectList();
+            RegisteredWhiskeyTypes = _whiskeysDb.GetTypes().GetWhiskeyTypesSelectList();
             return Page();
         }
         
@@ -60,7 +64,7 @@ namespace SjonnieLoper.Pages.Products
         {
             if (!ModelState.IsValid)
             {
-                RegisteredWhiskeyTypes = _whiskeysDb.GetWhiskeyTypes().GetWhiskeyTypesSelectList();
+                RegisteredWhiskeyTypes = _whiskeysDb.GetTypes().GetWhiskeyTypesSelectList();
                 return Page();
             }
             else
@@ -81,7 +85,7 @@ namespace SjonnieLoper.Pages.Products
                             ImageUpload.CopyTo(fileStream);
                     }
 
-                    Whiskey.ImagePath = Path.Combine("uploads",
+                    Whiskey.ImagePath = Path.Combine(@"\uploads",
                                                      Whiskey.Id.ToString(),
                                                      Path.GetFileName(filePath));
                 }
@@ -91,7 +95,7 @@ namespace SjonnieLoper.Pages.Products
                     Page();
 
                 Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null ? 
-                    _whiskeysDb.GetWhiskeyTypeById(Int32.Parse(inputModel.productTypeId)) : _whiskeysDb.CreateWhiskeyType(inputModel.NewWhiskeyType);
+                    _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) : _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
 
                 _whiskeysDb.Create(Whiskey);
                 _whiskeysDb.Commit();

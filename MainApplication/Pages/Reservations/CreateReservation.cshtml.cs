@@ -20,11 +20,11 @@ namespace SjonnieLoper.Pages.Reservations
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeys;
-        public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public int productAddedID { get; set; }
-        [BindProperty] public Reservation Reservation { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int productId { get; set; }
+        public Whiskey Whiskey { get; set; }
+        [BindProperty] public Reservation Reservation { get; set; }
         public CreateModel(IReservations reservations,
             IWhiskeys whiskeys,
             IHtmlHelper htmlHelper,
@@ -33,22 +33,18 @@ namespace SjonnieLoper.Pages.Reservations
             _userManager = userManager;
             _reservationsDb = reservations;
             _whiskeys = whiskeys;
-            var allWhiskey = _whiskeys.AllWhiskeys();
         }
 
-        public void OnGet(int reservationId)
+        public void OnGet(int productId)
         {
             Reservation = new Reservation();
-            RegisteredWhiskeys = _whiskeys
-                .AllWhiskeys()
-                .GetWhiskeyNames();
+            Reservation.Product = _whiskeys.GetById(productId);
         }
 
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
-                //TODO: Repopulate dropdown list.
                 return Page();
             }
             else
@@ -56,8 +52,7 @@ namespace SjonnieLoper.Pages.Reservations
                 TempData["Message"] = "Created a new reservation.";
                 Reservation.Orderdate = DateTime.Now;
                 Reservation.User = _userManager.GetUserAsync(User).Result;
-                Reservation.Product = _whiskeys.WhiskeyById(productAddedID);
-
+                Reservation.Product = _whiskeys.GetById(productId);
                 Reservation = _reservationsDb.Create(Reservation);
                 _reservationsDb.Commit();
             }

@@ -7,7 +7,7 @@ namespace SjonnieLoper.Core.Models
     public static class WhiskeyRepository
     {
         public static IEnumerable<SelectListItem>
-            GetWhiskeyNames(this IEnumerable<Whiskey> whiskey)
+            GetWhiskeysSelectList(this IEnumerable<Whiskey> whiskey)
         {
             List<SelectListItem> whiskeys = 
                 whiskey.OrderBy(n => n.Name)

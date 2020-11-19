@@ -18,7 +18,7 @@ namespace SjonnieLoper.Pages.Products
 
         public IActionResult OnGet(int productId)
         {
-            Whiskey = _whiskeys.WhiskeyById(productId);
+            Whiskey = _whiskeys.GetById(productId);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();

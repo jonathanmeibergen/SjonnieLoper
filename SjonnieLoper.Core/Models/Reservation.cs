@@ -30,6 +30,7 @@ namespace SjonnieLoper.Core.Models
         public DateTime Orderdate { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue)]
         [Display(Name = "Amount")]
         public int Amount { get; set; }
         

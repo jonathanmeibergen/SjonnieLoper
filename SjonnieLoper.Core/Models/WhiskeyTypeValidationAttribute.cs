@@ -18,28 +18,20 @@ namespace SjonnieLoper.Core.Models
             protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
             if (value == null)
-                value = 0;
+                value = String.Empty;
 
             var otherProperty = validationContext.ObjectType.GetProperty(OtherProperty);
-            var otherPropertyValue = (string)otherProperty.GetValue(validationContext.ObjectInstance, null);
+            int otherPropertyValue = Int32.Parse((string)otherProperty.GetValue(validationContext.ObjectInstance, null));
 
-            /*if (properties.Length == 0 && (Int32)value == 0)
+            if (otherPropertyValue == 0 && String.Equals((string)value, String.Empty))
             {
                 return new ValidationResult(String.Empty);
+            } 
+            else if (otherPropertyValue != 0 && !String.Equals((string)value, String.Empty))
+            {
+                return new ValidationResult("Please select only one type");
             }
-            var otherValue = properties.GetValue(0);
-
-                // at this stage you have "value" and "otherValue" pointing
-                // to the value of the property on which this attribute
-                // is applied and the value of the other property respectively
-                // => you could do some checks
-                if (!object.Equals(value, otherValue))
-                {
-                    // here we are verifying whether the 2 values are equal
-                    // but you could do any custom validation you like
-                    return new ValidationResult(this.FormatErrorMessage(validationContext.DisplayName));
-                }*/
-                return null;
+            return null;
             }
             
 

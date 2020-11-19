@@ -29,8 +29,8 @@ namespace SjonnieLoper.Pages.Store
         public void OnGet()
         {
             RetrievedWhiskeys = String.IsNullOrEmpty(SearchValue)
-                ? _whiskeyDb.AllWhiskeys()
-                : _whiskeyDb.WhiskeyByName(SearchValue);
+                ? _whiskeyDb.GetAll()
+                : _whiskeyDb.GetByName(SearchValue);
         }
     }
 }

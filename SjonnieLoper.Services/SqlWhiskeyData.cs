@@ -17,17 +17,17 @@ namespace SjonnieLoper.Services
             _db = db;
         }
 
-        public IEnumerable<Whiskey> AllWhiskeys() => 
+        public IEnumerable<Whiskey> GetAll() => 
             _db.Whiskeys.Include(wt => wt.WhiskeyType).OrderByDescending(o => o.WhiskeyType);
 
-        public Whiskey WhiskeyById(int id) =>
+        public Whiskey GetById(int id) =>
             _db.Whiskeys.Include(d => d.WhiskeyType).First(w => w.Id == id);
 
         public IEnumerable<Whiskey> WhiskeyByType(string typeName) =>
             _db.Whiskeys.Select(w => w)
                 .Where(t => t.WhiskeyType.Name == typeName);
 
-        public IEnumerable<WhiskeyType> GetWhiskeyTypes() =>
+        public IEnumerable<WhiskeyType> GetTypes() =>
             _db.WhiskeyTypes.OrderBy( wt => wt.Name).Select(wt => wt);
 
         public Whiskey Update(Whiskey updatedWhiskey)
@@ -47,7 +47,7 @@ namespace SjonnieLoper.Services
 
         public Whiskey Delete(int id)
         {
-            var whiskey = WhiskeyById(id);
+            var whiskey = GetById(id);
 
             if (whiskey != null)
             {
@@ -57,21 +57,21 @@ namespace SjonnieLoper.Services
             return whiskey;
         }
 
-        public IEnumerable<Whiskey> WhiskeyByName(string name) =>
+        public IEnumerable<Whiskey> GetByName(string name) =>
             _db.Whiskeys
                 .Select(w => w)
                 .Where(t => t.Name == name)
                 .Select(item => item);
 
-        public IEnumerable<Whiskey> WhiskeysByType(WhiskeyType whiskeyType) =>
+        public IEnumerable<Whiskey> GetByType(WhiskeyType whiskeyType) =>
             _db.Whiskeys
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
                 .Select(w => w);
 
-        public WhiskeyType GetWhiskeyTypeById(int Id) =>
+        public WhiskeyType GetTypeById(int Id) =>
             _db.WhiskeyTypes.Where(wt => wt.Id == Id).SingleOrDefault();
 
-        public WhiskeyType CreateWhiskeyType(string newWhiskeyType)
+        public WhiskeyType CreateType(string newWhiskeyType)
         {
             if (_db.WhiskeyTypes.Any(wt => wt.Name == newWhiskeyType))
                 return _db.WhiskeyTypes.First(wt => wt.Name == newWhiskeyType);
