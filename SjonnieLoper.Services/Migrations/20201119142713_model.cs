@@ -240,7 +240,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "f593ee5e-59d3-4771-b4b9-48ea0571b977", 0, "9800c307-7959-4920-b338-b81bef348837", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEHvACm64fmLJ946dyYS/Q4pNckvVB6dfJkiq1x3iOoZpkLlfz0ikzhkHxGIOPyFOFw==", null, false, "bd4bcabf-f26b-48e6-9eb8-7f385f90d39e", false, "admin@admin.com" });
+                values: new object[] { "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d", 0, "6da53abf-fe80-43c5-b14f-db5e8feaa157", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFRhHUGpuga7v9pq3yBahJ5jXOlK483RPnP9A3Q93sDTJgY7ddhdLEvDjxClBS6Upw==", null, false, "3a4399f0-0653-4b05-bc4d-36e8c3e1c0aa", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "WhiskeyTypes",
@@ -257,7 +257,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
-                values: new object[] { 1, "Role", "Admin", "f593ee5e-59d3-4771-b4b9-48ea0571b977" });
+                values: new object[] { 1, "Role", "Admin", "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

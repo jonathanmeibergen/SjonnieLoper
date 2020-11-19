@@ -10,7 +10,7 @@ using SjonnieLoper.Services;
 namespace SjonnieLoper.Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201119133932_model")]
+    [Migration("20201119142713_model")]
     partial class model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,7 +101,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "f593ee5e-59d3-4771-b4b9-48ea0571b977"
+                            UserId = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d"
                         });
                 });
 
@@ -232,17 +232,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f593ee5e-59d3-4771-b4b9-48ea0571b977",
+                            Id = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9800c307-7959-4920-b338-b81bef348837",
+                            ConcurrencyStamp = "6da53abf-fe80-43c5-b14f-db5e8feaa157",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHvACm64fmLJ946dyYS/Q4pNckvVB6dfJkiq1x3iOoZpkLlfz0ikzhkHxGIOPyFOFw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFRhHUGpuga7v9pq3yBahJ5jXOlK483RPnP9A3Q93sDTJgY7ddhdLEvDjxClBS6Upw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bd4bcabf-f26b-48e6-9eb8-7f385f90d39e",
+                            SecurityStamp = "3a4399f0-0653-4b05-bc4d-36e8c3e1c0aa",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
