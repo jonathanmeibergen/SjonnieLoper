@@ -91,6 +91,7 @@ namespace SjonnieLoper.Pages.Products
                 }
                 TempData["Message"] = "Added a new Whiskey product";
 
+                //TODO check if this redirect is necessary
                 if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
                     Page();
 
