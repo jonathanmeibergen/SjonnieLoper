@@ -15,12 +15,12 @@ using SjonnieLoper.Services;
 
 namespace SjonnieLoper.Pages.Products
 {
-    public class CreateModel : PageModel
+    public partial class CreateModel : PageModel
     {
         private readonly IWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public InputModel inputModel { get; set; }
+        public PageViewModels.CreateModel.InputModel inputModel { get; set; }
 
         public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
         {
@@ -41,17 +41,6 @@ namespace SjonnieLoper.Pages.Products
 
         // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
         // otherwise the values inside the custom validation attribute are empty
-        public class InputModel
-        {
-            [DataType(DataType.Text)]
-            [BindProperty]
-            public string productTypeId { get; set; }
-
-            [Display(Name = "Or add new Whiskey Type")]
-            [WhiskeyTypeValidationAttribute(OtherProperty = "productTypeId", ErrorMessage = "Whiskey Type is required.")]
-            [BindProperty]
-            public string NewWhiskeyType { get; set; }
-        }
 
         public IActionResult OnGet()
         {
@@ -60,7 +49,7 @@ namespace SjonnieLoper.Pages.Products
             return Page();
         }
         
-        public async Task<IActionResult> OnPost(InputModel inputModel)
+        public async Task<IActionResult> OnPost(PageViewModels.CreateModel.InputModel inputModel)
         {
             if (!ModelState.IsValid)
             {

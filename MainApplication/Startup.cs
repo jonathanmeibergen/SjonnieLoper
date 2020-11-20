@@ -33,8 +33,9 @@ namespace SjonnieLoper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DockerSqlConnection")));
+            services.AddDefaultIdentity<ApplicationUser>(options => 
+            {
                 options.SignIn.RequireConfirmedAccount = true;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -43,7 +44,10 @@ namespace SjonnieLoper
                 options.AddPolicy("EmployeeOnly", policy =>
                     policy.RequireClaim("Role")));
 
-            services.AddRazorPages().AddMvcOptions(o => { o.Filters.Add(new AuthorizeFilter());            });
+            services.AddRazorPages().AddMvcOptions(o =>
+            {
+                o.Filters.Add(new AuthorizeFilter());
+            });
             services.RegisterWhiskeyServices();
         }
 
