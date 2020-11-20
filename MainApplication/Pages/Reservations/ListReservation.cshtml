@@ -11,7 +11,7 @@
         <div class="input-group">
             <input type="search" class="form-control" asp-for="SearchValue">
             <span class="input-group-btn">
-                <select asp-for="ProductType" asp-items="Model.ResTypes">
+                <select class="form-control" asp-for="ProductType" asp-items="Model.ResTypes">
                     <option value="">All</option>
                 </select>
                 <button class="btn btn-outline-info">
@@ -40,14 +40,9 @@
                                   asp-page="/Reservations/DeleteReservation"
                                   asp-route-reservationId="@order.Id">
                                    <i class="fa fa-trash-alt"></i>
-                               </a> 
+               </a> 
             </td>
 
         </tr>
     }
 </table>
-
-<a asp-page="/Reservations/CreateReservation" class="btn btn-outline-primary">
-    Add reservation
-    <i class="fa fa-plus-square"></i>
-</a>

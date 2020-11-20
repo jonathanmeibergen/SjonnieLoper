@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
@@ -34,17 +33,21 @@ namespace SjonnieLoper.Pages.Products
 
             [BindProperty]
             public IFormFile ImageUpload { get; set; }
-
+            
+            [Display(Name = "Whiskey type")]
             [BindProperty]
             public string WhiskeyType { get; set; }
             [BindProperty] public Whiskey Whiskey { get; set; }
 
+        // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
+        // otherwise the values inside the custom validation attribute are empty
         public class InputModel
         {
             [DataType(DataType.Text)]
             [BindProperty]
             public string productTypeId { get; set; }
 
+            [Display(Name = "Or add new Whiskey Type")]
             [WhiskeyTypeValidationAttribute(OtherProperty = "productTypeId", ErrorMessage = "Whiskey Type is required.")]
             [BindProperty]
             public string NewWhiskeyType { get; set; }
@@ -53,9 +56,7 @@ namespace SjonnieLoper.Pages.Products
         public IActionResult OnGet()
         {
             Whiskey = new Whiskey();
-            RegisteredWhiskeyTypes = _whiskeysDb
-                .GetWhiskeyTypes().Result
-                .GetWhiskeyTypesSelectList();
+            RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes().Result.GetWhiskeyTypesSelectList();
             return Page();
         }
         
@@ -63,9 +64,7 @@ namespace SjonnieLoper.Pages.Products
         {
             if (!ModelState.IsValid)
             {
-                RegisteredWhiskeyTypes = _whiskeysDb
-                    .GetWhiskeyTypes().Result
-                    .GetWhiskeyTypesSelectList();
+                RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes().Result.GetWhiskeyTypesSelectList();
                 return Page();
             }
             else
@@ -77,8 +76,7 @@ namespace SjonnieLoper.Pages.Products
                                                      "uploads",
                                                      Whiskey.Id.ToString());
                     var filePath = Path.Combine(directoryPath,
-                                                Path.GetFileName(ImageUpload.FileName) 
-                                                ?? throw new NullReferenceException());
+                                                Path.GetFileName(ImageUpload.FileName));
 
                     Directory.CreateDirectory(directoryPath);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -87,18 +85,18 @@ namespace SjonnieLoper.Pages.Products
                             ImageUpload.CopyTo(fileStream);
                     }
 
-                    Whiskey.ImagePath = Path.Combine("uploads",
+                    Whiskey.ImagePath = Path.Combine(@"\uploads",
                                                      Whiskey.Id.ToString(),
                                                      Path.GetFileName(filePath));
                 }
                 TempData["Message"] = "Added a new Whiskey product";
 
+                //TODO check if this redirect is necessary
                 if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
                     Page();
 
-                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null 
-                    ? await _whiskeysDb.GetWhiskeyTypeById(Int32.Parse(inputModel.productTypeId)) 
-                    : await _whiskeysDb.CreateWhiskeyType(inputModel.NewWhiskeyType);
+                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null ? 
+                    await _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) : await _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
 
                 await _whiskeysDb.Create(Whiskey);
                 await _whiskeysDb.Commit();

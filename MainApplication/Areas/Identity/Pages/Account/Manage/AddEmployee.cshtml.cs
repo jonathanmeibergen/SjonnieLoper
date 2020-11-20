@@ -106,7 +106,7 @@ namespace SjonnieLoper.Areas.Identity.Pages.Account.Manage
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
                 var userResult = await _userManager.CreateAsync(user, Input.Password);
-                //TODO: tryparse
+                //TODO: tryparse catch exception
                 var claimResult = await _userManager.AddClaimAsync(user, new Claim("Role", Enum.GetName(typeof(RolesClaim), Int32.Parse(Input.ClaimForRole))));
                
                 if (userResult.Succeeded && claimResult.Succeeded)

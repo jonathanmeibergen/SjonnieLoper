@@ -10,7 +10,7 @@ namespace SjonnieLoper.Pages.Products
     {
         private readonly IWhiskeys _whiskeys;
         public Whiskey Whiskey;
-        [TempData] public string Message { get; }
+        [TempData] public string Message { get; set; }
 
         public DetailsModel(IWhiskeys whiskeys)
         {
@@ -19,7 +19,7 @@ namespace SjonnieLoper.Pages.Products
 
         public async Task<IActionResult> OnGet(int productId)
         {
-            Whiskey = await _whiskeys.WhiskeyById(productId);
+            Whiskey = await _whiskeys.GetById(productId);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");
             return Page();

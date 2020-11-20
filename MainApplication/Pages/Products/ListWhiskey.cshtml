@@ -13,8 +13,6 @@
             <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Name)</th>
             <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().WhiskeyType)</th>
             <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Origin)</th>
-            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().AlcoholPercentage)</th>
-            <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().Age)</th>
             <th>@Html.LabelFor(m => m.RetrievedWhiskeys.First().ImagePath)</th>
         </tr>
     </thead>
@@ -25,11 +23,13 @@
             <td>@prod.Name</td>
             <td>@prod.WhiskeyType.Name</td>
             <td>@prod.Origin</td>
-            <td>@prod.AlcoholPercentage</td>
-            <td>@prod.Age</td>
-            @* TODO: Replace ImagePath with actual image. *@
-            <td><img href="../../@prod.ImagePath." /></td>
+            <td><img height="100" src="@prod.ImagePath" /></td>
             <td>
+                <a class="btn btn-primary"
+                   asp-page="/Reservations/CreateReservation"
+                   asp-route-productId="@prod.Id">
+                    Reserve Product
+                </a>
                 <a class="btn btn-primary"
                    asp-page="/Products/DetailsWhiskey"
                    asp-route-productId="@prod.Id">

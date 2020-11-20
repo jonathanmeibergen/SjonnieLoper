@@ -30,8 +30,8 @@ namespace SjonnieLoper.Pages.Store
         public async Task<IActionResult>  OnGet()
         {
             RetrievedWhiskeys = String.IsNullOrEmpty(SearchValue)
-                ? await _whiskeyDb.AllWhiskeys()
-                : await _whiskeyDb.WhiskeyByName(SearchValue);
+                ? await _whiskeyDb.GetAll()
+                : await _whiskeyDb.GetByName(SearchValue);
             return Page();
         }
         

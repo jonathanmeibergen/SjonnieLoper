@@ -10,7 +10,7 @@ using SjonnieLoper.Services;
 namespace SjonnieLoper.Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201113122501_model")]
+    [Migration("20201119142713_model")]
     partial class model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,7 +101,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "f2767fd9-4121-4c7a-953b-ca7b0754b616"
+                            UserId = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d"
                         });
                 });
 
@@ -232,17 +232,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f2767fd9-4121-4c7a-953b-ca7b0754b616",
+                            Id = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ff06d8ca-9a60-41a7-a1da-190b285ca0f4",
+                            ConcurrencyStamp = "6da53abf-fe80-43c5-b14f-db5e8feaa157",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGs657BCVzo7gicvTr+0eVK8rn4AgXpmEKvga6LHi1cEMFgdn3gVa9zE5r2c8CMktA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFRhHUGpuga7v9pq3yBahJ5jXOlK483RPnP9A3Q93sDTJgY7ddhdLEvDjxClBS6Upw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "02c89767-e2db-4363-bf8f-60bc20509286",
+                            SecurityStamp = "3a4399f0-0653-4b05-bc4d-36e8c3e1c0aa",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -338,6 +338,7 @@ namespace SjonnieLoper.Services.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

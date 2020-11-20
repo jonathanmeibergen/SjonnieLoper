@@ -8,13 +8,13 @@ namespace SjonnieLoper.Services
 {
     public interface IWhiskeys
     {
-        Task<IEnumerable<Whiskey>> AllWhiskeys();
-        Task<IEnumerable<Whiskey>> WhiskeyByName(string name);
-        Task<Whiskey> WhiskeyById(int id);
-        Task<IEnumerable<Whiskey>> WhiskeysByType(WhiskeyType whiskeyType);
-        Task<IEnumerable<WhiskeyType>> GetWhiskeyTypes();
-        Task<WhiskeyType> GetWhiskeyTypeById(int Id);
-        Task<WhiskeyType> CreateWhiskeyType(string newWhiskeyType);
+        Task<IEnumerable<Whiskey>> GetAll();
+        Task<IEnumerable<Whiskey>> GetByName(string name);
+        Task<Whiskey> GetById(int id);
+        Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType);
+        Task<IEnumerable<WhiskeyType>> GetAllTypes();
+        Task<WhiskeyType> GetTypeById(int Id);
+        Task<WhiskeyType> CreateType(string newWhiskeyType);
         Task <Whiskey> Update(Whiskey updatedWhiskey);
         Task <Whiskey> Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/

@@ -20,11 +20,11 @@ namespace SjonnieLoper.Pages.Reservations
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IReservations _reservationsDb;
         private readonly IWhiskeys _whiskeys;
-        public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public int productAddedID { get; set; }
-        [BindProperty] public Reservation Reservation { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int productId { get; set; }
+        public Whiskey Whiskey { get; set; }
+        [BindProperty] public Reservation Reservation { get; set; }
         public CreateModel(IReservations reservations,
             IWhiskeys whiskeys,
             IHtmlHelper htmlHelper,
@@ -33,23 +33,19 @@ namespace SjonnieLoper.Pages.Reservations
             _userManager = userManager;
             _reservationsDb = reservations;
             _whiskeys = whiskeys;
-            var allWhiskey = _whiskeys.AllWhiskeys();
         }
 
-        public void OnGet(int reservationId)
+        public async Task<IActionResult> OnGet(int productId)
         {
             Reservation = new Reservation();
-            RegisteredWhiskeys = _whiskeys
-                .AllWhiskeys()
-                .Result
-                .GetWhiskeyNames();
+            Reservation.Product = await _whiskeys.GetById(productId);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(int productId)
         {
             if (!ModelState.IsValid)
             {
-                //TODO: Repopulate dropdown list.
                 return Page();
             }
             else
@@ -57,7 +53,7 @@ namespace SjonnieLoper.Pages.Reservations
                 TempData["Message"] = "Created a new reservation.";
                 Reservation.Orderdate = DateTime.Now;
                 Reservation.User =  await _userManager.GetUserAsync(User);
-                Reservation.Product = await _whiskeys.WhiskeyById(productAddedID);
+                Reservation.Product = await _whiskeys.GetById(productId);
 
                 Reservation = await _reservationsDb.Create(Reservation);
                 await _reservationsDb.Commit();

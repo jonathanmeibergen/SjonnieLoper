@@ -18,7 +18,7 @@ namespace SjonnieLoper.Pages.Products
 
         public async Task<IActionResult> OnGet(int productId)
         {
-            Whiskey = await _whiskeyDb.WhiskeyById(productId);
+            Whiskey = await _whiskeyDb.GetById(productId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
