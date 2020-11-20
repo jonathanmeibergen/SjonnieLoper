@@ -8,9 +8,9 @@
 ## Docker quickstart ##
 
 
-- Containers
- - MSSQL_Sjonnie
- - redis_Sjonnie
+* _Containers_
+  * MSSQL_Sjonnie
+  * redis_Sjonnie
 
 To use sql or redis from the containers set connection string in startup.cs to
 "DockerSqlConnection" for sql or "DockerSqlConnection" for redis.
