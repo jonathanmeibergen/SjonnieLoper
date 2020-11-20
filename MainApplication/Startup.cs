@@ -33,7 +33,7 @@ namespace SjonnieLoper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DockerSqlConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -42,12 +42,17 @@ namespace SjonnieLoper
                 options.AddPolicy("EmployeeOnly", policy =>
                     policy.RequireClaim("Role")));
 
-            services.AddRazorPages().AddMvcOptions(o => { o.Filters.Add(new AuthorizeFilter());            });
+            services.AddRazorPages().AddMvcOptions(o =>
+            {
+                o.Filters.Add(new AuthorizeFilter());
+            });
             services.RegisterWhiskeyServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env, 
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -69,8 +74,10 @@ namespace SjonnieLoper
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
-
     }
 }
