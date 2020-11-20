@@ -1,0 +1,40 @@
+version: '3.7'
+
+
+networks:
+  app-network:
+    driver: "bridge"
+
+services:
+    sqlserver1:
+        container_name: MSSQL_Sjonnie
+        env_file:
+          - sqlserver.env
+          - sapassword.env
+        build: 
+          context: .
+          dockerfile: dockerfile
+        ports:  
+          - "11433:1433"
+        volumes: 
+          - sqlsystem:/var/opt/mssql/
+          - sqldata:/var/opt/sqlserver/data
+          - sqllog:/var/opt/sqlserver/log
+          - sqlbackup:/var/opt/sqlserver/backup
+    redis:
+        container_name: redis_Sjonnie
+        build:
+            context: .
+            dockerfile: redisdocker
+        image: redis:4.0
+        ports:
+          - "6382:6379"
+        networks:
+          - app-network
+
+volumes:
+  sqlsystem:
+  sqldata:
+  sqllog:
+  sqlbackup:
+
