@@ -1,10 +1,12 @@
 ### SjonnieLoper webapp ###
 
+
 ...
 ...
 ...
 
 ## Docker quickstart ##
+
 
 - Containers
  - MSSQL_Sjonnie
@@ -13,9 +15,12 @@
 To use sql or redis from the containers set connection string in startup.cs to
 "DockerSqlConnection" for sql or "DockerSqlConnection" for redis.
 
+
 Docker services can be managed using the desktop app or Visual studio built in tools.
 
-# Install desktop app and/or cli tools #
+
+# Install desktop app and/or  cli tools #
+
 
 *Mac desktop app*
 Includes compose tools and standard tools needed.
@@ -24,10 +29,11 @@ This includes the app and cli tools.
 https://docs.docker.com/docker-for-mac/install/
 
 
-To start up the containers run the following commands in the 'docker_files' folder.
 
 # Initial build and start #
 
+
+To start up the containers run the following commands in the 'docker_files' folder.
 
 To create and start the containers run the following command, -d detaches
 your terminal from the session. Commands for managing just a single container at bottom.
