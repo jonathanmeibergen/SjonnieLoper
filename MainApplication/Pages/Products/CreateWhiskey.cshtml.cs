@@ -20,7 +20,7 @@ namespace SjonnieLoper.Pages.Products
         private readonly IWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PageViewModels.CreateModel.InputModel InputModel { get; set; }
+        public PageViewModels.InputModel InputModel { get; set; }
 
         public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
         {
@@ -49,7 +49,7 @@ namespace SjonnieLoper.Pages.Products
             return Page();
         }
         
-        public async Task<IActionResult> OnPost(PageViewModels.CreateModel.InputModel inputModel)
+        public async Task<IActionResult> OnPost(PageViewModels.InputModel inputModel)
         {
             if (!ModelState.IsValid)
             {

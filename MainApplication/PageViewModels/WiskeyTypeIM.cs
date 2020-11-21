@@ -4,8 +4,6 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.PageViewModels
 {
-    public partial class CreateModel
-    {
         public class InputModel
         {
             [DataType(DataType.Text)]
@@ -17,5 +15,4 @@ namespace SjonnieLoper.PageViewModels
             [BindProperty]
             public string NewWhiskeyType { get; set; }
         }
-    }
 }
