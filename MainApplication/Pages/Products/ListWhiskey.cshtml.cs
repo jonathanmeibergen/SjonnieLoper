@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
+using StackExchange.Redis;
 
 namespace SjonnieLoper.Pages.Products
 {
     public class ListModel : PageModel
     {
         private readonly ISqlWhiskeys _whiskeyDb;
+        private readonly ICacheWhiskey _whiskeyCache;
         
-        public ListModel(ISqlWhiskeys whiskeys)
+        public ListModel(ISqlWhiskeys whiskeys,
+            ICacheWhiskey whiskeyCache)
         {
             _whiskeyDb = whiskeys;
+            _whiskeyCache = whiskeyCache;
         }
         public SelectList ResTypes { get; set; }
 

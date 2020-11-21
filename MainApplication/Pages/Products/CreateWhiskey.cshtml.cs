@@ -19,25 +19,29 @@ namespace SjonnieLoper.Pages.Products
     {
         private readonly ISqlWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ICacheWhiskey _whiskeyCache;
 
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
+
+        [BindProperty]
+        public IFormFile ImageUpload { get; set; }
+        
+        [Display(Name = "Whiskey type")]
+        [BindProperty]
+        public string WhiskeyType { get; set; }
+        [BindProperty] public Whiskey Whiskey { get; set; }
         public PageViewModels.InputModel InputModel { get; set; }
 
-        public CreateModel(ISqlWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
+        public CreateModel(ISqlWhiskeys whiskeysDb,
+            IWebHostEnvironment webHostEnvironment,
+            ICacheWhiskey whiskeyCache)
         {
             _whiskeysDb = whiskeysDb;
             _webHostEnvironment = webHostEnvironment;
+            _whiskeyCache = whiskeyCache;
         }
 
-            [BindProperty(SupportsGet = true)]
-            public IEnumerable<SelectListItem> RegisteredWhiskeyTypes { get; set; }
-
-            [BindProperty]
-            public IFormFile ImageUpload { get; set; }
-            
-            [Display(Name = "Whiskey type")]
-            [BindProperty]
-            public string WhiskeyType { get; set; }
-            [BindProperty] public Whiskey Whiskey { get; set; }
 
 
         public IActionResult OnGet()

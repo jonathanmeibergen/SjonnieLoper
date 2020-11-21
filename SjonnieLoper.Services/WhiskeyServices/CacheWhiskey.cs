@@ -10,11 +10,11 @@ namespace SjonnieLoper.Services
 {
     public class CacheWhiskey : ICacheWhiskey
     {
-        private readonly IConnectionMultiplexer _cache;
-        private IDatabase _dbInstance;
-        public CacheWhiskey(IConnectionMultiplexer cache)
+        private readonly IDatabase _dbInstance;
+        public CacheWhiskey(IConnectionMultiplexer cacheDb)
         {
-            _cache = cache;
+            _dbInstance = cacheDb.GetDatabase();
+            var inst = "Life!!";
         }
 
         public Task<IEnumerable<Whiskey>> GetAll()
@@ -24,7 +24,6 @@ namespace SjonnieLoper.Services
 
         public async Task<IEnumerable<Whiskey>> GetByName(string name)
         {
-            _dbInstance = _cache.GetDatabase();
             string recordkey = "whiskey_" + DateTime.Now.ToString("yyyyMMdd_hhmm");
             var result = _dbInstance
                 .GetRecordAsync<Whiskey>(recordkey);
@@ -33,9 +32,12 @@ namespace SjonnieLoper.Services
             return null;
         }
 
-        public Task<Whiskey> GetById(int id)
+        public async Task<Whiskey> GetById(int id)
         {
-            throw new NotImplementedException();
+            string prodKey = $"product:{id.ToString()}";
+            var a  = await _dbInstance.GetRecordAsync<Whiskey>(prodKey);
+            Console.WriteLine(a);
+            return null;
         }
 
         public Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType)
@@ -66,7 +68,7 @@ namespace SjonnieLoper.Services
         public async Task<Whiskey> Create(Whiskey newWhiskey)
         {
             // TODO: Change to create.
-            var rid = newWhiskey.Id.ToString();
+            var rid = "product:"+newWhiskey.Id.ToString();
             await _dbInstance.SetRecordAsync(rid, newWhiskey);
             var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
             Console.WriteLine(a);

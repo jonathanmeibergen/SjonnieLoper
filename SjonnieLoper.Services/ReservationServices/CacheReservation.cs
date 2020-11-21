@@ -2,16 +2,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using SjonnieLoper.Core.Models;
+using StackExchange.Redis;
 
 namespace SjonnieLoper.Services
 {
     public class CacheReservation : ICacheReservations
     {
-        private readonly IDistributedCache _cache;
+        private readonly IDatabase _dbInstance;
 
-        public CacheReservation(IDistributedCache cache)
+        public CacheReservation(IConnectionMultiplexer cache)
         {
-            _cache = cache;
+            _dbInstance = cache.GetDatabase();
         }
         public Task<IEnumerable<Reservation>> AllReservations()
         {
