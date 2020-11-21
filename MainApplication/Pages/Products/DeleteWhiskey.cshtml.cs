@@ -8,10 +8,10 @@ namespace SjonnieLoper.Pages.Products
 {
     public class DeleteModel : PageModel
     {
-        private readonly IWhiskeys _whiskeyDb;
+        private readonly ISqlWhiskeys _whiskeyDb;
         public Whiskey Whiskey { get; set; }
 
-        public DeleteModel(IWhiskeys whiskey)
+        public DeleteModel(ISqlWhiskeys whiskey)
         {
             _whiskeyDb = whiskey;
         }

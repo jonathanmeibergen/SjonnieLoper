@@ -11,9 +11,9 @@ namespace SjonnieLoper.Pages.Store
 {
     public class BrowseProducts : PageModel
     {
-        private readonly IWhiskeys _whiskeyDb;
+        private readonly ISqlWhiskeys _whiskeyDb;
         
-        public BrowseProducts(IWhiskeys whiskeys)
+        public BrowseProducts(ISqlWhiskeys whiskeys)
         {
             _whiskeyDb = whiskeys;
         }

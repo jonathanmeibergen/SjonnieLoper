@@ -12,9 +12,9 @@ namespace SjonnieLoper.Pages.Products
 {
     public class ListModel : PageModel
     {
-        private readonly IWhiskeys _whiskeyDb;
+        private readonly ISqlWhiskeys _whiskeyDb;
         
-        public ListModel(IWhiskeys whiskeys)
+        public ListModel(ISqlWhiskeys whiskeys)
         {
             _whiskeyDb = whiskeys;
         }

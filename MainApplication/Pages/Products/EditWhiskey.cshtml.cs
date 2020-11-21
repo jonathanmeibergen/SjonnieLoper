@@ -13,12 +13,12 @@ namespace SjonnieLoper.Pages.Products
 {
     public class EditModel : PageModel
     {
-        private readonly IWhiskeys _whiskeysDb;
+        private readonly ISqlWhiskeys _whiskeysDb;
         
         public Whiskey Product { get; set; }
         
         public EditModel(
-            IWhiskeys whiskeysDb,
+            ISqlWhiskeys whiskeysDb,
             IHtmlHelper htmlHelper)
         {
             _whiskeysDb = whiskeysDb;

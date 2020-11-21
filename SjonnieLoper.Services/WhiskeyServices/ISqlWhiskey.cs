@@ -6,7 +6,7 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
-    public interface IWhiskeys
+    public interface ISqlWhiskeys
     {
         Task<IEnumerable<Whiskey>> GetAll();
         Task<IEnumerable<Whiskey>> GetByName(string name);

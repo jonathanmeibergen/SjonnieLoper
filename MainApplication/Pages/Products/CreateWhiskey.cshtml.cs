@@ -17,12 +17,12 @@ namespace SjonnieLoper.Pages.Products
 {
     public partial class CreateModel : PageModel
     {
-        private readonly IWhiskeys _whiskeysDb;
+        private readonly ISqlWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public PageViewModels.InputModel InputModel { get; set; }
 
-        public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
+        public CreateModel(ISqlWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
         {
             _whiskeysDb = whiskeysDb;
             _webHostEnvironment = webHostEnvironment;

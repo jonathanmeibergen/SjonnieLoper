@@ -19,14 +19,14 @@ namespace SjonnieLoper.Pages.Reservations
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IReservations _reservationsDb;
-        private readonly IWhiskeys _whiskeys;
+        private readonly ISqlWhiskeys _whiskeys;
 
         [BindProperty(SupportsGet = true)]
         public int productId { get; set; }
         public Whiskey Whiskey { get; set; }
         [BindProperty] public Reservation Reservation { get; set; }
         public CreateModel(IReservations reservations,
-            IWhiskeys whiskeys,
+            ISqlWhiskeys whiskeys,
             IHtmlHelper htmlHelper,
             UserManager<ApplicationUser> userManager)
         {

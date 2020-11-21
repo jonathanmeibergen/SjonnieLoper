@@ -9,11 +9,11 @@ using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.Services
 {
-    public class SqlWhiskeyData : IWhiskeys
+    public class SqlSqlWhiskeyData : ISqlWhiskeys
     {
         private ApplicationDbContext _db;
 
-        public SqlWhiskeyData(ApplicationDbContext db)
+        public SqlSqlWhiskeyData(ApplicationDbContext db)
         {
             _db = db;
         }

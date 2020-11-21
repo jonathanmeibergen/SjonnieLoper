@@ -13,7 +13,7 @@ namespace SjonnieLoper.Pages.Reservations
     public class EditModel : PageModel
     {
         private readonly IReservations _reservationsDb;
-        private readonly IWhiskeys _whiskeys;
+        private readonly ISqlWhiskeys _whiskeys;
         public IEnumerable<SelectListItem> RegisteredWhiskeys { get; set; }
         [BindProperty(SupportsGet = true)]
         public int productAddedID { get; set; }
@@ -21,7 +21,7 @@ namespace SjonnieLoper.Pages.Reservations
         public Reservation Reservation { get; set; }
 
         public EditModel(IReservations reservations,
-                        IWhiskeys whiskeysDb)
+                        ISqlWhiskeys whiskeysDb)
         {
             _reservationsDb = reservations;
             _whiskeys = whiskeysDb;

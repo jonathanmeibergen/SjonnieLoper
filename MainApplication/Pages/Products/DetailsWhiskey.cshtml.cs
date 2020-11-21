@@ -8,11 +8,11 @@ namespace SjonnieLoper.Pages.Products
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWhiskeys _whiskeys;
+        private readonly ISqlWhiskeys _whiskeys;
         public Whiskey Whiskey;
         [TempData] public string Message { get; set; }
 
-        public DetailsModel(IWhiskeys whiskeys)
+        public DetailsModel(ISqlWhiskeys whiskeys)
         {
             _whiskeys = whiskeys;
         }
