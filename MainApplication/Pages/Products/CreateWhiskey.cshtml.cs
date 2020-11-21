@@ -20,7 +20,7 @@ namespace SjonnieLoper.Pages.Products
         private readonly IWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PageViewModels.CreateModel.InputModel inputModel { get; set; }
+        public PageViewModels.CreateModel.InputModel InputModel { get; set; }
 
         public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
         {
@@ -84,8 +84,9 @@ namespace SjonnieLoper.Pages.Products
                 if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
                     Page();
 
-                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null ? 
-                    await _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) : await _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
+                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null 
+                    ? await _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) 
+                    : await _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
 
                 await _whiskeysDb.Create(Whiskey);
                 await _whiskeysDb.Commit();
