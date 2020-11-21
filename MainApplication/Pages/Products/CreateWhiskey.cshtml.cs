@@ -39,8 +39,6 @@ namespace SjonnieLoper.Pages.Products
             public string WhiskeyType { get; set; }
             [BindProperty] public Whiskey Whiskey { get; set; }
 
-        // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
-        // otherwise the values inside the custom validation attribute are empty
 
         public IActionResult OnGet()
         {
