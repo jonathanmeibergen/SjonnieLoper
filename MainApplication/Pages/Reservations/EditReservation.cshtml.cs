@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SjonnieLoper.Components;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
 

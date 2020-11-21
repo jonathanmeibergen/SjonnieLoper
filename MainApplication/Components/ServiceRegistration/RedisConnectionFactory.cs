@@ -1,10 +1,10 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
- using Microsoft.Extensions.DependencyInjection;
- using StackExchange.Redis;
+using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
-namespace SjonnieLoper.Services
+namespace SjonnieLoper.Core.ServiceRegistration
 {
     public static partial class MyServices
     {

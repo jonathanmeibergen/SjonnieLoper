@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SjonnieLoper.Core.Models;
 
-namespace SjonnieLoper.Core.Models
+namespace SjonnieLoper.Components
 {
     public static class WhiskeyRepository
     {

@@ -17,6 +17,8 @@ using SjonnieLoper.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using AspNetCore.RouteAnalyzer;
+using SjonnieLoper.Components.ServiceRegistration;
+using SjonnieLoper.Core.ServiceRegistration;
 using StackExchange.Redis;
 
 namespace SjonnieLoper
