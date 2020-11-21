@@ -32,6 +32,16 @@ namespace SjonnieLoper
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*var factory =
+                new RedisConnectionFactory(("Docker",
+                    Configuration.GetConnectionString("DockerRedisServerUrl")));*/
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(Configuration
+                .GetConnectionString("DockerRedisServerUrl")); 
+            services.AddSingleton<IConnectionMultiplexer>(redis);
+            
+            /*services.RegisterRedisServices(Configuration
+                .GetConnectionString("DockerRedisServerUrl"));*/
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DockerSqlConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => 
@@ -52,7 +62,10 @@ namespace SjonnieLoper
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
