@@ -38,11 +38,11 @@ namespace SjonnieLoper.Services
                .Select(wt => wt)
                .ToListAsync();
 
-        public async Task<Whiskey> Update(Whiskey updatedWhiskey)
+        public Whiskey Update(Whiskey updatedWhiskey)
         {
-            var entity = await Task.FromResult(_db.Whiskeys.Attach(updatedWhiskey));
+            var entity = _db.Whiskeys.Attach(updatedWhiskey);
             entity.State = EntityState.Modified;
-            return await Task.FromResult(updatedWhiskey);
+            return updatedWhiskey;
         }
 
         public async Task<Whiskey> Create(Whiskey newWhiskey)

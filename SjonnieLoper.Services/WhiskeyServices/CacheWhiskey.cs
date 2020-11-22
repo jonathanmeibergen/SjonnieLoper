@@ -64,16 +64,13 @@ namespace SjonnieLoper.Services
             throw new NotImplementedException();
         }
 
-        public Task<Whiskey> Update(Whiskey updatedWhiskey)
-        {
-            throw new System.NotImplementedException();
-        }
+        public Whiskey Update(Whiskey updatedWhiskey) => 
+            Create(updatedWhiskey).Result;
 
         public async Task<Whiskey> Create(Whiskey newWhiskey)
         {
             // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)<-- NOT A HASHSET PLEASE!
-            // TODO: Create/check SADD -> WhiskeyName(k:productName, v: id)
-            // TODO: Create/update objects serialized SET -> (K:whiskey:prodId V:obj serialized)
+            // TODO: Centralize keys.
             string typeSetKey  = "whiskey:type";
             string whiskeyType = newWhiskey.WhiskeyType.Name;
             string prodId = newWhiskey.Id.ToString();
@@ -81,7 +78,7 @@ namespace SjonnieLoper.Services
             {
                 new HashEntry(whiskeyType, prodId)
             };
-            _dbInstance.HashSet(typeSetKey, typeH);
+            await _dbInstance.HashSetAsync(typeSetKey, typeH);
 
             string nameSetKey = "whiskey:name";
             string prodNameKey = newWhiskey.Name;
@@ -90,21 +87,20 @@ namespace SjonnieLoper.Services
             {
                 new HashEntry(prodNameKey, prodIdVal)
             };
-            _dbInstance.HashSet(nameSetKey, nameH);
+            await _dbInstance.HashSetAsync(nameSetKey, nameH);
 
             var typeSet = _dbInstance.HashGetAll(typeSetKey);
             var nameSet = _dbInstance.HashGetAll(nameSetKey);
 
             var rid = $"whiskey:{newWhiskey.Id.ToString()}";
             
-            await _dbInstance.SetRecordAsync(rid, newWhiskey);
-            var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
-            Console.WriteLine(a);
-            return null;
+            _ = _dbInstance.SetRecordAsync(rid, newWhiskey);
+            return newWhiskey;
         }
 
         public Task<int> Commit()
         {
+            // Used for logging in redis.
             throw new System.NotImplementedException();
         }
 

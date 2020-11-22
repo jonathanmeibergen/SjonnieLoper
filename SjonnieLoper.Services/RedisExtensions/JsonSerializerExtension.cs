@@ -28,8 +28,7 @@ namespace SjonnieLoper.Services.RedisExtensions
             options.SlidingExpiration = unusedExpireTime;
 
             var jsonData = JsonSerializer.Serialize(data);
-            var a = cache.StringSet(recordId, jsonData);
-            var c = "cool";
+            await cache.StringSetAsync(recordId, jsonData);
         }
 
         public static async Task<T> GetRecordAsync<T>(this IDatabase cache,

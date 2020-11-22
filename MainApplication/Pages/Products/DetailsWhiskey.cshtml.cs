@@ -40,13 +40,15 @@ namespace SjonnieLoper.Pages.Products
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new whiskey.";
-                await _whiskeysDb.Update(Whiskey);
+                // In the context of redis 'Update' does the same as 'Create',
+                // Apply Update(create) here to mirror EF binding status service side.
+                _whiskeyCache.Update(Whiskey);
+                
+                _whiskeysDb.Update(Whiskey);
                 await _whiskeysDb.Commit();
-                //BUG: Redirect to details not showing. 
                 return RedirectToPage("DetailsWhiskey", 
                     new { productId = Whiskey.Id });
             }
-            //TODO: Repopulate dropdown list values.
             return Page();
         } 
         }
