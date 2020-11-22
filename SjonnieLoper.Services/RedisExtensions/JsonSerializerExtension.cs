@@ -9,7 +9,7 @@ using static Microsoft.Extensions.DependencyInjection.IServiceCollection;
 
 namespace SjonnieLoper.Services.RedisExtensions
 {
-    public static class DistributedCacheExtensions
+    public static partial class DistributedCacheExtensions
     {
 
     #region Serializers

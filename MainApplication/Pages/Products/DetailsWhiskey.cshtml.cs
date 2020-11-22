@@ -42,6 +42,7 @@ namespace SjonnieLoper.Pages.Products
                 TempData["Message"] = "Created a new whiskey.";
                 // In the context of redis 'Update' does the same as 'Create',
                 // Apply Update(create) here to mirror EF binding status service side.
+                // TODO: use update for concurrency or lifetime expire settings.
                 _whiskeyCache.Update(Whiskey);
                 
                 _whiskeysDb.Update(Whiskey);

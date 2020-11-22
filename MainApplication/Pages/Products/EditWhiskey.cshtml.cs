@@ -36,7 +36,7 @@ namespace SjonnieLoper.Pages.Products
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new reservation.";
-                await _whiskeysDb.Update(Product);
+                _whiskeysDb.Update(Product);
                 await _whiskeysDb.Commit();
                 return RedirectToPage("Products/Details", 
                     new { whiskeyId = Product.Id });
