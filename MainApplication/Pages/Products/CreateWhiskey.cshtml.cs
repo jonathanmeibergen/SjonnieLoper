@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SjonnieLoper.Components;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services;
@@ -47,7 +49,12 @@ namespace SjonnieLoper.Pages.Products
         public IActionResult OnGet()
         {
             Whiskey = new Whiskey();
-            RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes().Result.GetWhiskeyTypesSelectList();
+            RegisteredWhiskeyTypes = _whiskeysDb
+                .GetAllTypes()
+                .Result
+                .GetWhiskeyTypesSelectList();
+
+            var cachedTypes = _whiskeyCache.GetAllTypes();
             return Page();
         }
         
@@ -55,7 +62,9 @@ namespace SjonnieLoper.Pages.Products
         {
             if (!ModelState.IsValid)
             {
-                RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes().Result.GetWhiskeyTypesSelectList();
+                RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes()
+                    .Result
+                    .GetWhiskeyTypesSelectList();
                 return Page();
             }
             else
@@ -67,13 +76,14 @@ namespace SjonnieLoper.Pages.Products
                                                      "uploads",
                                                      Whiskey.Id.ToString());
                     var filePath = Path.Combine(directoryPath,
-                                                Path.GetFileName(ImageUpload.FileName));
+                                                Path.GetFileName(ImageUpload.FileName) 
+                                                ?? throw new NullReferenceException());
 
                     Directory.CreateDirectory(directoryPath);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        if (ImageUpload.ContentType.ToString().Contains("image"))
-                            ImageUpload.CopyTo(fileStream);
+                        if (ImageUpload.ContentType.Contains("image"))
+                            await ImageUpload.CopyToAsync(fileStream);
                     }
 
                     Whiskey.ImagePath = Path.Combine(@"\uploads",
@@ -83,16 +93,24 @@ namespace SjonnieLoper.Pages.Products
                 TempData["Message"] = "Added a new Whiskey product";
 
                 //TODO check if this redirect is necessary
-                if (inputModel.NewWhiskeyType == null && Int32.Parse(inputModel.productTypeId) == 0)
+                if ((inputModel.NewWhiskeyType, int.Parse(inputModel.productTypeId)) is (null, 0))
+                {
                     Page();
-
-                Whiskey.WhiskeyType = inputModel.NewWhiskeyType == null 
-                    ? await _whiskeysDb.GetTypeById(Int32.Parse(inputModel.productTypeId)) 
-                    : await _whiskeysDb.CreateType(inputModel.NewWhiskeyType);
-
-                await _whiskeysDb.Create(Whiskey);
-                await _whiskeysDb.Commit();
-                //TODO: Resolve race condition redis vs sql unit of work.
+                }
+                
+                Whiskey.WhiskeyType = await (inputModel.NewWhiskeyType switch
+                {
+                    null =>  _whiskeysDb.GetTypeById(int.Parse(inputModel.productTypeId)),
+                    _ => _whiskeysDb.CreateType(new WhiskeyType() {Name = inputModel.NewWhiskeyType})
+                });
+                
+                //TODO: serialize and add whiskey type to cache.                
+                Whiskey prod = await _whiskeysDb.Create(Whiskey);
+                var t1 = _whiskeyCache.CreateType(prod.WhiskeyType);
+                var t2 = _whiskeysDb.Commit();
+                await Task.WhenAll(t1, t2);
+                
+                
             }
             return RedirectToPage("DetailsWhiskey",
                 new { productId = Whiskey.Id });

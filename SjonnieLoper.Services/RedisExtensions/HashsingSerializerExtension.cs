@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using SjonnieLoper.Core.Models;
 using StackExchange.Redis;
 
 namespace SjonnieLoper.Services.RedisExtensions
 {
     public static partial class DistributedCacheExtensions
     {
-        public static HashEntry[] ObjectToHash(this object obj)
+        public static HashEntry[] ObjectToHash<T>(this T obj)
         {
             PropertyInfo[] objProperties = obj.GetType().GetProperties();
             return objProperties

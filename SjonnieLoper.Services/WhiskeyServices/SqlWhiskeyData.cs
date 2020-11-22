@@ -76,16 +76,17 @@ namespace SjonnieLoper.Services
                 .Where(w => w.WhiskeyType.Name == whiskeyType.Name)
                 .Select(w => w).ToListAsync();
 
-        public async Task<WhiskeyType> GetTypeById(int Id) =>
-            await _db.WhiskeyTypes.Where(wt => wt.Id == Id)
+        public async Task<WhiskeyType> GetTypeById(int id) =>
+            await _db.WhiskeyTypes.Where(wt => wt.Id == id)
                 .SingleOrDefaultAsync();
 
-        public async Task<WhiskeyType> CreateType(string newWhiskeyType)
+        public async Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType)
         {
-            if (await _db.WhiskeyTypes.AnyAsync(wt => wt.Name == newWhiskeyType))
-                return _db.WhiskeyTypes.First(wt => wt.Name == newWhiskeyType);
+            if (await _db.WhiskeyTypes.AnyAsync(wt => wt.Name == newWhiskeyType.Name))
+                return _db.WhiskeyTypes
+                    .First(wt => wt.Name == newWhiskeyType.Name);
 
-            return (await _db.WhiskeyTypes.AddAsync(new WhiskeyType { Name = newWhiskeyType })).Entity;
+            return (await _db.WhiskeyTypes.AddAsync(new WhiskeyType { Name = newWhiskeyType.Name })).Entity;
         }
     }
 }

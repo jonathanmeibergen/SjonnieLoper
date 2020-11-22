@@ -14,19 +14,23 @@ namespace SjonnieLoper.Services.RedisExtensions
 
     #region Serializers
 
-    
+        public static async Task SerializedHashAsync<T>(this T obj,
+            Func<RedisKey, HashEntry[], CommandFlags, Task> redisFunc,
+            string field,
+            string key)
+        {
+            var jsonData = JsonSerializer.Serialize(obj);
+            HashEntry[] entry =
+            {
+                new HashEntry(field, jsonData)
+            };
+            await redisFunc(key, entry, CommandFlags.None);
+        } 
 
         public static async Task SetRecordAsync<T>(this IDatabase cache,
             string recordId,
-            T data,
-            TimeSpan? absoluteExpireTime = null,
-            TimeSpan? unusedExpireTime = null)
+            T data)
         {
-            var options = new DistributedCacheEntryOptions();
-            options.AbsoluteExpirationRelativeToNow = absoluteExpireTime
-                                                      ?? TimeSpan.FromSeconds(60);
-            options.SlidingExpiration = unusedExpireTime;
-
             var jsonData = JsonSerializer.Serialize(data);
             await cache.StringSetAsync(recordId, jsonData);
         }

@@ -14,7 +14,7 @@ namespace SjonnieLoper.Services
         Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType);
         Task<IEnumerable<WhiskeyType>> GetAllTypes();
         Task<WhiskeyType> GetTypeById(int id);
-        Task<WhiskeyType> CreateType(string newWhiskeyType);
+        Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType);
         Whiskey Update(Whiskey updatedWhiskey);
         Task <Whiskey> Create(Whiskey newWhiskey);
         /*public IEnumerable<string> WhiskeyCategories();*/

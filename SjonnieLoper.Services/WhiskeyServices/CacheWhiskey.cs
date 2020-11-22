@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services.RedisExtensions;
 using StackExchange.Redis;
@@ -33,7 +35,7 @@ namespace SjonnieLoper.Services
 
         public async Task<Whiskey> GetById(int id)
         {
-            string prodKey = $"whiskey:{id.ToString()}";
+            string prodKey = $"product:whiskey:{id.ToString()}";
             return await _dbInstance.GetRecordAsync<Whiskey>(prodKey);
         }
 
@@ -44,14 +46,23 @@ namespace SjonnieLoper.Services
 
         public Task<IEnumerable<WhiskeyType>> GetAllTypes()
         {
-            throw new NotImplementedException();
+            var hKey = "products:WhiskeyTypes";
+            var k = _dbInstance.HashGetAll(hKey)
+                .Select(f => f);
+            foreach (var hashEntries in k)
+            {
+                var val = hashEntries.Value;
+                var strVal = val.ToString();
+                var it = "Foo";
+            }
+            return null;
         }
 
         public Task<WhiskeyType> GetTypeById(int id)
         {
             // TODO: Get id from whiskeyType hash set & inter
             
-            var rid = $"whiskey:{id.ToString()}";
+            var rid = $"product:whiskey:{id.ToString()}";
             
             /*await _dbInstance.SetRecordAsync(rid);
             var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
@@ -59,9 +70,22 @@ namespace SjonnieLoper.Services
             return null;
         }
 
-        public Task<WhiskeyType> CreateType(string newWhiskeyType)
+        public Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType)
         {
-            throw new NotImplementedException();
+            // TODO: serialize and add to hashmap
+            var hKey = "products:WhiskeyTypes";
+            string whiskeyType = newWhiskeyType.Name;
+            WhiskeyType typeObj = newWhiskeyType;
+            var tst = JsonConvert.SerializeObject(typeObj);
+            HashEntry[] typeH =
+            {
+                new HashEntry(whiskeyType, tst)
+            };
+            _dbInstance.HashSet(hKey, typeH);
+            var k = _dbInstance.HashGetAll(hKey);
+            
+            
+            return Task.FromResult(newWhiskeyType);
         }
 
         public Whiskey Update(Whiskey updatedWhiskey) => 
@@ -71,28 +95,39 @@ namespace SjonnieLoper.Services
         {
             // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)<-- NOT A HASHSET PLEASE!
             // TODO: Centralize keys.
-            string typeSetKey  = "whiskey:type";
+            string typeSetKey  = "product:whiskey:type";
             string whiskeyType = newWhiskey.WhiskeyType.Name;
             string prodId = newWhiskey.Id.ToString();
-            HashEntry[] typeH =
+            /*HashEntry[] typeH =
             {
                 new HashEntry(whiskeyType, prodId)
             };
-            await _dbInstance.HashSetAsync(typeSetKey, typeH);
+            await _dbInstance.HashSetAsync(typeSetKey, typeH);*/
+            // Add name of whiskey(field) type associated to the whiskey id(value)
+            // for search by type name of products later
+            await newWhiskey.WhiskeyType.SerializedHashAsync(_dbInstance.HashSetAsync,
+                whiskeyType,
+                prodId);
 
-            string nameSetKey = "whiskey:name";
+            string nameSetKey = "product:whiskey:name";
             string prodNameKey = newWhiskey.Name;
             string prodIdVal = newWhiskey.Id.ToString();
-            HashEntry[] nameH =
+            /*HashEntry[] nameH =
             {
                 new HashEntry(prodNameKey, prodIdVal)
             };
             await _dbInstance.HashSetAsync(nameSetKey, nameH);
-
+            */
+            // Add name of product associated to product id to hash field for
+            // search by name functionality.
+             await newWhiskey.SerializedHashAsync(_dbInstance.HashSetAsync,
+                prodNameKey,
+                  prodIdVal);
+            
             var typeSet = _dbInstance.HashGetAll(typeSetKey);
             var nameSet = _dbInstance.HashGetAll(nameSetKey);
 
-            var rid = $"whiskey:{newWhiskey.Id.ToString()}";
+            var rid = $"product:whiskey:{newWhiskey.Id.ToString()}";
             
             _ = _dbInstance.SetRecordAsync(rid, newWhiskey);
             return newWhiskey;
