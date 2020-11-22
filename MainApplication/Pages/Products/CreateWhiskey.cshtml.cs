@@ -92,7 +92,6 @@ namespace SjonnieLoper.Pages.Products
                 }
                 TempData["Message"] = "Added a new Whiskey product";
 
-                //TODO check if this redirect is necessary
                 if ((inputModel.NewWhiskeyType, int.Parse(inputModel.productTypeId)) is (null, 0))
                 {
                     Page();
@@ -104,10 +103,9 @@ namespace SjonnieLoper.Pages.Products
                     _ => _whiskeysDb.CreateType(new WhiskeyType() {Name = inputModel.NewWhiskeyType})
                 });
                 
-                //TODO: serialize and add whiskey type to cache.                
                 Whiskey prod = await _whiskeysDb.Create(Whiskey);
                 var t1 = _whiskeyCache.CreateType(prod.WhiskeyType);
-                var t2 = _whiskeysDb.Commit();
+                var t2 = _whiskeysDb.Commit(prod.Id);
                 await Task.WhenAll(t1, t2);
                 
                 

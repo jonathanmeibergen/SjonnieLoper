@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.Services.RedisExtensions;
 using StackExchange.Redis;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SjonnieLoper.Services
 {
@@ -98,11 +102,7 @@ namespace SjonnieLoper.Services
             string typeSetKey  = "product:whiskey:type";
             string whiskeyType = newWhiskey.WhiskeyType.Name;
             string prodId = newWhiskey.Id.ToString();
-            /*HashEntry[] typeH =
-            {
-                new HashEntry(whiskeyType, prodId)
-            };
-            await _dbInstance.HashSetAsync(typeSetKey, typeH);*/
+
             // Add name of whiskey(field) type associated to the whiskey id(value)
             // for search by type name of products later
             await newWhiskey.WhiskeyType.SerializedHashAsync(_dbInstance.HashSetAsync,
@@ -112,13 +112,8 @@ namespace SjonnieLoper.Services
             string nameSetKey = "product:whiskey:name";
             string prodNameKey = newWhiskey.Name;
             string prodIdVal = newWhiskey.Id.ToString();
-            /*HashEntry[] nameH =
-            {
-                new HashEntry(prodNameKey, prodIdVal)
-            };
-            await _dbInstance.HashSetAsync(nameSetKey, nameH);
-            */
-            // Add name of product associated to product id to hash field for
+
+            // Add name of product(field) associated to product id(value) to hash field for
             // search by name functionality.
              await newWhiskey.SerializedHashAsync(_dbInstance.HashSetAsync,
                 prodNameKey,
@@ -133,15 +128,34 @@ namespace SjonnieLoper.Services
             return newWhiskey;
         }
 
-        public Task<int> Commit()
+        public Task<int> Commit(int id)
         {
-            // Used for logging in redis.
-            throw new System.NotImplementedException();
+            // TODO: Add timespan comparison to mirror EF functionality.
+            // Fetch expire time of key, can be used to check
+            // for commit alongside EF commit functionality.
+            var rid = $"product:whiskey:{id.ToString()}";
+            _dbInstance.StringGetWithExpiryAsync(rid);
         }
 
-        public Task<Whiskey> Delete(int id)
+        public async Task<Whiskey> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var rid = $"product:whiskey:{id.ToString()}";
+             await _dbInstance.KeyDeleteAsync(rid, CommandFlags.FireAndForget);
+             return null;
+        }
+
+        public Task UpdateWhiskeySet(IEnumerable<Whiskey> whiskeys)
+        {
+            // Maintain a set of all keys to whiskeys.
+            // Update whiskey entries.
+            RedisValue[] batchObj = 
+            _dbInstance.SetAdd("ProdSetKey", orders);
+            return null;
+        }
+
+        public Task UpdateTypeOfWhiskey(IEnumerable<WhiskeyType> types)
+        {
+            throw new NotImplementedException();
         }
     }
 }

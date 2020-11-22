@@ -17,8 +17,7 @@ namespace SjonnieLoper.Services
         Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType);
         Whiskey Update(Whiskey updatedWhiskey);
         Task <Whiskey> Create(Whiskey newWhiskey);
-        /*public IEnumerable<string> WhiskeyCategories();*/
-        Task<int> Commit();
+        Task<int> Commit(int id);
         Task<Whiskey> Delete(int id);
     }
 }
