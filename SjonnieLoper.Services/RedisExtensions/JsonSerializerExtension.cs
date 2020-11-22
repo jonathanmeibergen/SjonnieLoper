@@ -35,12 +35,19 @@ namespace SjonnieLoper.Services.RedisExtensions
         public static async Task<T> GetRecordAsync<T>(this IDatabase cache,
             string recordId)
         {
-            var jsonData = await cache.StringGetAsync(recordId);
-            if (jsonData == "nil" )
+            /*var jsonData = await cache.StringGetAsync(recordId);
+            if (jsonData == null )
             {
                 return default(T);
             }
 
+            return JsonSerializer.Deserialize<T>(jsonData);*/
+            var jsonData = await cache.StringGetAsync(recordId);
+            if (jsonData.IsNull)
+            {
+                return default(T);
+            }
+            
             return JsonSerializer.Deserialize<T>(jsonData);
         }
         

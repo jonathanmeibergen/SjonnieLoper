@@ -92,6 +92,7 @@ namespace SjonnieLoper.Pages.Products
 
                 await _whiskeysDb.Create(Whiskey);
                 await _whiskeysDb.Commit();
+                //TODO: Resolve race condition redis vs sql unit of work.
             }
             return RedirectToPage("DetailsWhiskey",
                 new { productId = Whiskey.Id });

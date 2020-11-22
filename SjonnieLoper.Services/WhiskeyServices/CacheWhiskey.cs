@@ -33,10 +33,8 @@ namespace SjonnieLoper.Services
 
         public async Task<Whiskey> GetById(int id)
         {
-            string prodKey = $"product:{id.ToString()}";
-            var a  = await _dbInstance.GetRecordAsync<Whiskey>(prodKey);
-            Console.WriteLine(a);
-            return null;
+            string prodKey = $"whiskey:{id.ToString()}";
+            return await _dbInstance.GetRecordAsync<Whiskey>(prodKey);
         }
 
         public Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType)
@@ -51,7 +49,14 @@ namespace SjonnieLoper.Services
 
         public Task<WhiskeyType> GetTypeById(int id)
         {
-            throw new NotImplementedException();
+            // TODO: Get id from whiskeyType hash set & inter
+            
+            var rid = $"whiskey:{id.ToString()}";
+            
+            /*await _dbInstance.SetRecordAsync(rid);
+            var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
+            Console.WriteLine(a);*/
+            return null;
         }
 
         public Task<WhiskeyType> CreateType(string newWhiskeyType)
@@ -66,7 +71,7 @@ namespace SjonnieLoper.Services
 
         public async Task<Whiskey> Create(Whiskey newWhiskey)
         {
-            // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)
+            // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)<-- NOT A HASHSET PLEASE!
             // TODO: Create/check SADD -> WhiskeyName(k:productName, v: id)
             // TODO: Create/update objects serialized SET -> (K:whiskey:prodId V:obj serialized)
             string typeSetKey  = "whiskey:type";
