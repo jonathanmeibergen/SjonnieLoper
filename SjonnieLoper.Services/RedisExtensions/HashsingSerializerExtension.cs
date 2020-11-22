@@ -26,5 +26,11 @@ namespace SjonnieLoper.Services.RedisExtensions
                     }
                 ).ToArray();
         }
+        
+        public static T HashToObject<T>(this string hashedObj)
+        {
+            return JsonConvert.DeserializeObject<T>(hashedObj);
+        }
+        
     }
 }
