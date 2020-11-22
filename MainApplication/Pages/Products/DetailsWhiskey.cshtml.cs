@@ -23,15 +23,8 @@ namespace SjonnieLoper.Pages.Products
 
         public async Task<IActionResult> OnGet(int productId)
         {
-            Whiskey foo = new Whiskey();
-            foo.Age = 50;
-            foo.Id = productId;
-            foo.Name = "Juice";
-            foo.AlcoholPercentage = 40;
-            foo.WhiskeyType = new WhiskeyType(){ Name = "fakeType"};
-
-            var enterProduct = _whiskeyCache.Create(foo);
-            var cWhiskey = _whiskeyCache.GetById(productId);
+            // TODO: Tie in get from cache an coalesce local Whiskey to db.
+            var a = _whiskeyCache.GetById(productId);
             Whiskey = await _whiskeysDb.GetById(productId);
             if (Whiskey == null)
                 return RedirectToPage("./NotFound");

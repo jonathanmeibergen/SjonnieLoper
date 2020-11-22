@@ -14,7 +14,6 @@ namespace SjonnieLoper.Services
         public CacheWhiskey(IConnectionMultiplexer cacheDb)
         {
             _dbInstance = cacheDb.GetDatabase();
-            var inst = "Life!!";
         }
 
         public Task<IEnumerable<Whiskey>> GetAll()
@@ -67,8 +66,32 @@ namespace SjonnieLoper.Services
 
         public async Task<Whiskey> Create(Whiskey newWhiskey)
         {
-            // TODO: Change to create.
-            var rid = "product:"+newWhiskey.Id.ToString();
+            // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)
+            // TODO: Create/check SADD -> WhiskeyName(k:productName, v: id)
+            // TODO: Create/update objects serialized SET -> (K:whiskey:prodId V:obj serialized)
+            string typeSetKey  = "whiskey:type";
+            string whiskeyType = newWhiskey.WhiskeyType.Name;
+            string prodId = newWhiskey.Id.ToString();
+            HashEntry[] typeH =
+            {
+                new HashEntry(whiskeyType, prodId)
+            };
+            _dbInstance.HashSet(typeSetKey, typeH);
+
+            string nameSetKey = "whiskey:name";
+            string prodNameKey = newWhiskey.Name;
+            string prodIdVal = newWhiskey.Id.ToString();
+            HashEntry[] nameH =
+            {
+                new HashEntry(prodNameKey, prodIdVal)
+            };
+            _dbInstance.HashSet(nameSetKey, nameH);
+
+            var typeSet = _dbInstance.HashGetAll(typeSetKey);
+            var nameSet = _dbInstance.HashGetAll(nameSetKey);
+
+            var rid = $"whiskey:{newWhiskey.Id.ToString()}";
+            
             await _dbInstance.SetRecordAsync(rid, newWhiskey);
             var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
             Console.WriteLine(a);
