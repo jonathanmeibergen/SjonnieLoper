@@ -51,7 +51,6 @@ namespace SjonnieLoper.Pages.Products
             Whiskey = new Whiskey();
             RegisteredWhiskeyTypes = _whiskeysDb
                 .GetAllTypes()
-                .Result
                 .GetWhiskeyTypesSelectList();
 
             var cachedTypes = _whiskeyCache.GetAllTypes();
@@ -63,7 +62,6 @@ namespace SjonnieLoper.Pages.Products
             if (!ModelState.IsValid)
             {
                 RegisteredWhiskeyTypes = _whiskeysDb.GetAllTypes()
-                    .Result
                     .GetWhiskeyTypesSelectList();
                 return Page();
             }
@@ -96,14 +94,24 @@ namespace SjonnieLoper.Pages.Products
                 {
                     Page();
                 }
-                
-                Whiskey.WhiskeyType = await (inputModel.NewWhiskeyType switch
+
+                if (inputModel.NewWhiskeyType is null)
                 {
-                    null =>  _whiskeysDb.GetTypeById(int.Parse(inputModel.productTypeId)),
-                    _ => _whiskeysDb.CreateType(new WhiskeyType() {Name = inputModel.NewWhiskeyType})
-                });
+                    Whiskey.WhiskeyType = _whiskeyCache.GetTypeById(int.Parse(inputModel.productTypeId))
+                                          ?? _whiskeysDb.GetTypeById(int.Parse(inputModel.productTypeId));
+                }
+                else
+                {
+                   Whiskey.WhiskeyType = await _whiskeysDb.CreateType(
+                       new WhiskeyType()
+                       {
+                           Name = inputModel.NewWhiskeyType
+                       });
+                   
+                   _ = _whiskeyCache.CreateType(Whiskey.WhiskeyType);
+                }
                 
-                Whiskey prod = await _whiskeysDb.Create(Whiskey);
+                Whiskey prod = _whiskeysDb.Create(Whiskey);
                 await _whiskeyCache.CreateType(prod.WhiskeyType);
                 _whiskeysDb.Commit(prod.Id);
                 

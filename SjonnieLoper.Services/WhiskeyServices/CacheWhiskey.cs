@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,74 +49,64 @@ namespace SjonnieLoper.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<WhiskeyType>> GetAllTypes()
+        public IEnumerable<WhiskeyType> GetAllTypes()
         {
             var hKey = "products:WhiskeyTypes";
             var k = _dbInstance.HashGetAll(hKey)
-                .Select(f => f);
-            foreach (var hashEntries in k)
-            {
-                var val = hashEntries.Value;
-                var strVal = val.ToString();
-                var it = "Foo";
-            }
-            return null;
+                .Select(f => JsonSerializer.Deserialize<WhiskeyType>(f.Value));
+
+            return !k.Any() ? null : k;
         }
 
-        public Task<WhiskeyType> GetTypeById(int id)
+        public WhiskeyType GetTypeById(int id)
         {
             // TODO: Get id from whiskeyType hash set & inter
             
-            var rid = $"product:whiskey:{id.ToString()}";
-            
-            /*await _dbInstance.SetSingleStringObjAsync(rid);
-            var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
-            Console.WriteLine(a);*/
+            var rid = "product:WhiskeyTypes";
+            var result =_dbInstance.HashGet(rid, id);
+            return result.DeserializeBasic<WhiskeyType>();
             return null;
         }
 
         public Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType)
         {
-            // TODO: serialize and add to hashmap
+            // Save a a hash set with id of type as field and object as value
+            // for reference and retrieve.
             var hKey = "products:WhiskeyTypes";
-            string whiskeyType = newWhiskeyType.Name;
+            var whiskeyTypeId = newWhiskeyType.Id;
             WhiskeyType typeObj = newWhiskeyType;
             var tst = JsonConvert.SerializeObject(typeObj);
             HashEntry[] typeH =
             {
-                new HashEntry(whiskeyType, tst)
+                new HashEntry(whiskeyTypeId, tst)
             };
             _dbInstance.HashSet(hKey, typeH);
             var k = _dbInstance.HashGetAll(hKey);
             
-            
             return Task.FromResult(newWhiskeyType);
         }
 
-        public Whiskey Update(Whiskey updatedWhiskey) => 
-            Create(updatedWhiskey).Result;
+        public Whiskey Update(Whiskey updatedWhiskey) =>
+            Create(updatedWhiskey);
 
-        public async Task<Whiskey> Create(Whiskey newWhiskey)
+        public Whiskey Create(Whiskey newWhiskey)
         {
             // TODO: Create/check SADD -> WhiskeyType(k:typename, V:id)<-- NOT A HASHSET PLEASE!
-            // TODO: Centralize keys.
-            string typeSetKey  = "product:whiskey:type";
+            string typeSetKey  = $"product:WhiskeyTypes:{newWhiskey.WhiskeyType.Id}";
             string whiskeyType = newWhiskey.WhiskeyType.Name;
             string prodId = newWhiskey.Id.ToString();
 
-            // Add name of whiskey(field) type associated to the whiskey id(value)
-            // for search by type name of products later
-            await newWhiskey.WhiskeyType.SerializedHashAsync(_dbInstance.HashSetAsync,
-                whiskeyType,
+            // Set per whiskey type holding associated product ids.
+            newWhiskey.WhiskeyType.SerializedSetTypes(_dbInstance.SetAdd,
+                typeSetKey,
                 prodId);
 
             string nameSetKey = "product:whiskey:name";
             string prodNameKey = newWhiskey.Name;
             string prodIdVal = newWhiskey.Id.ToString();
-
             // Add name of product(field) associated to product id(value) to hash field for
             // search by name functionality.
-             await newWhiskey.SerializedHashAsync(_dbInstance.HashSetAsync,
+             newWhiskey.SerializedHashAsync(_dbInstance.HashSetAsync,
                 prodNameKey,
                   prodIdVal);
             
@@ -165,7 +156,7 @@ namespace SjonnieLoper.Services
 
         public Task UpdateTypeOfWhiskey(IEnumerable<WhiskeyType> types)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

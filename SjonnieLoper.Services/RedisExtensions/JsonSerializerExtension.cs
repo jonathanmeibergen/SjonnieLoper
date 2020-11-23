@@ -61,7 +61,7 @@ namespace SjonnieLoper.Services.RedisExtensions
             return orders;
         }
 
-        public static async Task SerializedHashAsync<T>(this T obj,
+        public static void SerializedHashAsync<T>(this T obj,
             Func<RedisKey, HashEntry[], CommandFlags, Task> redisFunc,
             string field,
             string key)
@@ -71,7 +71,16 @@ namespace SjonnieLoper.Services.RedisExtensions
             {
                 new HashEntry(field, jsonData)
             };
-            await redisFunc(key, entry, CommandFlags.None);
+            redisFunc(key, entry, CommandFlags.None);
+        }
+        
+        public static void SerializedSetTypes<T>(this T obj,
+            Func<RedisKey, RedisValue, CommandFlags, bool> redisFunc,
+            string setname,
+            string element)
+        {
+            var jsonData = JsonSerializer.Serialize(element);
+            redisFunc(setname, jsonData, CommandFlags.None);
         }
 
         public static async Task SetSingleStringObjAsync<T>(this IDatabase cache,
@@ -92,6 +101,11 @@ namespace SjonnieLoper.Services.RedisExtensions
             }
 
             return JsonSerializer.Deserialize<T>(jsonData);
+        }
+        
+        public static T DeserializeBasic<T>(this RedisValue obj)
+        {
+            return JsonSerializer.Deserialize<T>(obj);
         }
 
         #endregion

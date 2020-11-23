@@ -12,11 +12,11 @@ namespace SjonnieLoper.Services
         Task<IEnumerable<Whiskey>> GetByName(string name);
         Task<Whiskey> GetById(int id);
         Task<IEnumerable<Whiskey>> GetByType(WhiskeyType whiskeyType);
-        Task<IEnumerable<WhiskeyType>> GetAllTypes();
-        Task<WhiskeyType> GetTypeById(int id);
+        IEnumerable<WhiskeyType> GetAllTypes();
+        WhiskeyType GetTypeById(int id);
         Task<WhiskeyType> CreateType(WhiskeyType newWhiskeyType);
         Whiskey Update(Whiskey updatedWhiskey);
-        Task <Whiskey> Create(Whiskey newWhiskey);
+        Whiskey Create(Whiskey newWhiskey);
         void Commit(int id);
         Task<Whiskey> Delete(int id);
     }

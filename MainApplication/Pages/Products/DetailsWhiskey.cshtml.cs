@@ -30,7 +30,7 @@ namespace SjonnieLoper.Pages.Products
                 Whiskey = await _whiskeysDb.GetById(productId);
                 if(Whiskey is null)
                     return RedirectToPage("./NotFound");
-                await _whiskeyCache.Create(Whiskey);
+                _whiskeyCache.Create(Whiskey);
             }
             return Page();
         }
@@ -41,12 +41,11 @@ namespace SjonnieLoper.Pages.Products
             {
                 TempData["Message"] = "Created a new whiskey.";
                 // In the context of redis 'Update' does the same as 'Create',
-                // Apply Update(create) here to mirror EF binding status service side.
-                // TODO: use update for concurrency or lifetime expire settings.
+                // in addition TOUCH lifetime of cached item if present.
                 _whiskeyCache.Update(Whiskey);
-                
                 _whiskeysDb.Update(Whiskey);
                 _whiskeysDb.Commit(Whiskey.Id);
+                
                 return RedirectToPage("DetailsWhiskey", 
                     new { productId = Whiskey.Id });
             }

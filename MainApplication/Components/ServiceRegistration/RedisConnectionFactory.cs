@@ -46,7 +46,7 @@ namespace SjonnieLoper.Core.ServiceRegistration
             _connections.Add(name, connection);
         }
 
-        public IEnumerable<System.Lazy<ConnectionMultiplexer>> GetConnection()
+        public IEnumerable<Lazy<ConnectionMultiplexer>> GetConnection()
         {
             foreach (var connection in _connections)
             {
