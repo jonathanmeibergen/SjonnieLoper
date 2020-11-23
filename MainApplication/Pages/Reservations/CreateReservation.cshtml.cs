@@ -56,7 +56,7 @@ namespace SjonnieLoper.Pages.Reservations
                 Reservation = _reservationsDb.Create(Reservation);
                 _reservationsDb.Commit();
             }
-            return RedirectToPage("Reservations/DetailsReservation",
+            return RedirectToPage("DetailsReservation",
                 new {reservationId = Reservation.Id});
         }
     }
