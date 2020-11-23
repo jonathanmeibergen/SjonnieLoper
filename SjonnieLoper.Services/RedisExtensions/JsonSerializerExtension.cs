@@ -1,26 +1,60 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
+using SjonnieLoper.Core.Models;
 using StackExchange.Redis;
 using static Microsoft.Extensions.DependencyInjection.IServiceCollection;
 
 namespace SjonnieLoper.Services.RedisExtensions
 {
-    public static partial class DistributedCacheExtensions
+    public static partial class SjonnieRedisUtils
     {
         #region Serializers
 
-        public static async Task<RedisValue[]> BatchSetSerializerAsync<T>(IEnumerable<T> obj)
+        public static void BatchAddStringWhiskey(this IDatabase db,
+            IEnumerable<Whiskey> items,
+            string keyRoot)
+        {
+            int iCount = items.Count();
+            KeyValuePair<RedisKey, RedisValue>[] entries = 
+                new KeyValuePair<RedisKey, RedisValue>[iCount];
+            
+            for (int i = 0; i < iCount; i++)
+            {
+                var jsonData = JsonSerializer.Serialize(items.ElementAt(i));
+                entries[i] = new KeyValuePair<RedisKey, RedisValue>
+                    ($"{keyRoot}:{items.ElementAt(i)}" ,jsonData);
+            }
+            
+            db.StringSet(entries);
+        }
+        
+        public static RedisValue[] BatchRedisArraySerializer<T>(IEnumerable<T> obj)
+        {
+            var orders = new List<RedisValue>();
+         
+            foreach(var whiskey in obj)
+            {
+                var jsonData = JsonSerializer.Serialize(whiskey);
+                orders.Add(jsonData);
+            }
+            return orders.ToArray();
+        }
+        
+        [Obsolete]
+        public static async Task<RedisValue[]> NopeSetSerializerAsync<T>(IEnumerable<T> obj)
         {
             var valueTasks = new List<Task>();
             RedisValue[] orders = new RedisValue[] { };
             foreach(var whiskey in obj)
             {
-                var jsonData = JsonSerializer.SerializeAsync(new MemoryStream(), whiskey);
+                var jsonData = JsonSerializer.SerializeAsync(
+                    new MemoryStream(), whiskey);
                 valueTasks.Add(jsonData);
             }
             await Task.WhenAll(valueTasks);
@@ -40,7 +74,7 @@ namespace SjonnieLoper.Services.RedisExtensions
             await redisFunc(key, entry, CommandFlags.None);
         }
 
-        public static async Task SetRecordAsync<T>(this IDatabase cache,
+        public static async Task SetSingleStringObjAsync<T>(this IDatabase cache,
             string recordId,
             T data)
         {

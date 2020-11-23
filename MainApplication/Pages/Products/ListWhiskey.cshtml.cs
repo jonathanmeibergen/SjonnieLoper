@@ -38,6 +38,21 @@ namespace SjonnieLoper.Pages.Products
             RetrievedWhiskeys = String.IsNullOrEmpty(SearchValue)
                 ? await _whiskeyDb.GetAll()
                 : await _whiskeyDb.GetByName(SearchValue);
+            if (String.IsNullOrEmpty(SearchValue))
+            {
+                RetrievedWhiskeys = await _whiskeyCache.GetAll();
+                if (RetrievedWhiskeys is null)
+                {
+                    RetrievedWhiskeys = await _whiskeyDb.GetAll();
+                    await _whiskeyCache.UpdateWhiskeySet(RetrievedWhiskeys);
+                }
+            }
+            else
+            {
+                RetrievedWhiskeys = await (_whiskeyCache.GetByName(SearchValue) 
+                                           ?? _whiskeyDb.GetByName(SearchValue));
+            }
+            
             return Page();
         }
         

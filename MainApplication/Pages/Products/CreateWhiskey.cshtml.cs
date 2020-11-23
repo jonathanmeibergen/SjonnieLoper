@@ -104,9 +104,8 @@ namespace SjonnieLoper.Pages.Products
                 });
                 
                 Whiskey prod = await _whiskeysDb.Create(Whiskey);
-                var t1 = _whiskeyCache.CreateType(prod.WhiskeyType);
-                var t2 = _whiskeysDb.Commit(prod.Id);
-                await Task.WhenAll(t1, t2);
+                await _whiskeyCache.CreateType(prod.WhiskeyType);
+                _whiskeysDb.Commit(prod.Id);
                 
                 
             }

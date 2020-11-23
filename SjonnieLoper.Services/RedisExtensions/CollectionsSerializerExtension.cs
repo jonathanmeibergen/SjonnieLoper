@@ -9,7 +9,7 @@ using StackExchange.Redis;
 
 namespace SjonnieLoper.Services.RedisExtensions
 {
-    public static partial class DistributedCacheExtensions
+    public static partial class SjonnieRedisUtils
     {
         public static HashEntry[] ObjectToHash<T>(this T obj)
         {
@@ -29,8 +29,10 @@ namespace SjonnieLoper.Services.RedisExtensions
                 ).ToArray();
         }
         
+        [Obsolete]
         public static T HashToObject<T>(this string hashedObj)
         {
+            // TODO: Add collection deserialization.
             return JsonConvert.DeserializeObject<T>(hashedObj);
         }
         

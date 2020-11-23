@@ -31,13 +31,13 @@ namespace SjonnieLoper.Pages.Products
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "Created a new reservation.";
                 _whiskeysDb.Update(Product);
-                await _whiskeysDb.Commit(Product.Id);
+                _whiskeysDb.Commit(Product.Id);
                 return RedirectToPage("Products/Details", 
                     new { whiskeyId = Product.Id });
             }

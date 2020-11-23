@@ -24,7 +24,7 @@ namespace SjonnieLoper.Services
 
         public Task<IEnumerable<Whiskey>> GetAll()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public async Task<IEnumerable<Whiskey>> GetByName(string name)
@@ -33,7 +33,7 @@ namespace SjonnieLoper.Services
             var result = _dbInstance
                 .GetRecordAsync<Whiskey>(recordkey);
                 // TODO: Call create
-            await _dbInstance.SetRecordAsync(recordkey, result);
+            await _dbInstance.SetSingleStringObjAsync(recordkey, result);
             return null;
         }
 
@@ -68,7 +68,7 @@ namespace SjonnieLoper.Services
             
             var rid = $"product:whiskey:{id.ToString()}";
             
-            /*await _dbInstance.SetRecordAsync(rid);
+            /*await _dbInstance.SetSingleStringObjAsync(rid);
             var a  = await _dbInstance.GetRecordAsync<Whiskey>(rid);
             Console.WriteLine(a);*/
             return null;
@@ -124,17 +124,17 @@ namespace SjonnieLoper.Services
 
             var rid = $"product:whiskey:{newWhiskey.Id.ToString()}";
             
-            _ = _dbInstance.SetRecordAsync(rid, newWhiskey);
+            _ = _dbInstance.SetSingleStringObjAsync(rid, newWhiskey);
             return newWhiskey;
         }
 
-        public Task<int> Commit(int id)
+        public void Commit(int id)
         {
             // TODO: Add timespan comparison to mirror EF functionality.
             // Fetch expire time of key, can be used to check
             // for commit alongside EF commit functionality.
             var rid = $"product:whiskey:{id.ToString()}";
-            _dbInstance.StringGetWithExpiryAsync(rid);
+             _dbInstance.StringGetWithExpiryAsync(rid);
         }
 
         public async Task<Whiskey> Delete(int id)
@@ -144,13 +144,23 @@ namespace SjonnieLoper.Services
              return null;
         }
 
-        public Task UpdateWhiskeySet(IEnumerable<Whiskey> whiskeys)
+        public async Task UpdateWhiskeySet(IEnumerable<Whiskey> whiskeys)
         {
-            // Maintain a set of all keys to whiskeys.
             // Update whiskey entries.
-            RedisValue[] batchObj = 
-            _dbInstance.SetAdd("ProdSetKey", orders);
-            return null;
+            // Maintain a set of all keys to whiskeys.
+            
+            var keyProd = "products:whiskey";
+            var keyProdIdHash = "products:allWhiskey";
+            // Serialize all objects and add in one roundtrip as array of KvP.
+            _dbInstance.BatchAddStringWhiskey(whiskeys, keyProd);
+            
+            // Save EF id's as values in a set:
+            var prodIds = whiskeys.Select(v => v.Id);
+            RedisValue[] batchIds = SjonnieRedisUtils
+                .BatchRedisArraySerializer(prodIds);
+            await _dbInstance.SetAddAsync(keyProdIdHash , batchIds);
+            
+            var a = _dbInstance.SetMembers(keyProdIdHash);
         }
 
         public Task UpdateTypeOfWhiskey(IEnumerable<WhiskeyType> types)

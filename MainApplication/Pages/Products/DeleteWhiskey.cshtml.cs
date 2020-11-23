@@ -34,7 +34,7 @@ namespace SjonnieLoper.Pages.Products
             {
                 return RedirectToPage("./NotFound");
             }
-            await _whiskeyDb.Commit();
+            _whiskeyDb.Commit(productId);
             return RedirectToPage("./ListWhiskey");
         }
     }

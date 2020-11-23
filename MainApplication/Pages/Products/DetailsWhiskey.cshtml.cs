@@ -46,7 +46,7 @@ namespace SjonnieLoper.Pages.Products
                 _whiskeyCache.Update(Whiskey);
                 
                 _whiskeysDb.Update(Whiskey);
-                await _whiskeysDb.Commit();
+                _whiskeysDb.Commit(Whiskey.Id);
                 return RedirectToPage("DetailsWhiskey", 
                     new { productId = Whiskey.Id });
             }

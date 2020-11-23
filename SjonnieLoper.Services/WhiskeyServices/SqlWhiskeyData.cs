@@ -51,7 +51,7 @@ namespace SjonnieLoper.Services
             return newWhiskey;
         }
 
-        public Task<int> Commit() => _db.SaveChangesAsync();
+        public void Commit(int id) => _db.SaveChangesAsync();
 
         public async Task<Whiskey> Delete(int id)
         {
@@ -60,7 +60,7 @@ namespace SjonnieLoper.Services
             if (whiskey != null)
             {
                 _db.Whiskeys.Remove(whiskey);
-                await Commit();
+                Commit(id);
             }
             return whiskey;
         }
