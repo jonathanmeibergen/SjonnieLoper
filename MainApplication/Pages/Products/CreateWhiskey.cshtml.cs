@@ -20,6 +20,8 @@ namespace SjonnieLoper.Pages.Products
         private readonly IWhiskeys _whiskeysDb;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
+        // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
+        // otherwise the values inside the custom validation attribute are empty
         public PageViewModels.InputModel InputModel { get; set; }
 
         public CreateModel(IWhiskeys whiskeysDb, IWebHostEnvironment webHostEnvironment)
@@ -39,8 +41,6 @@ namespace SjonnieLoper.Pages.Products
             public string WhiskeyType { get; set; }
             [BindProperty] public Whiskey Whiskey { get; set; }
 
-        // .net core 3.1 wants a wrapper or inputmodel for custom validation (attribute) to work
-        // otherwise the values inside the custom validation attribute are empty
 
         public IActionResult OnGet()
         {

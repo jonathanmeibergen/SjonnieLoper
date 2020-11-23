@@ -10,8 +10,8 @@ using SjonnieLoper.Services;
 namespace SjonnieLoper.Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201119142713_model")]
-    partial class model
+    [Migration("20201123093657_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,7 +101,7 @@ namespace SjonnieLoper.Services.Migrations
                             Id = 1,
                             ClaimType = "Role",
                             ClaimValue = "Admin",
-                            UserId = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d"
+                            UserId = "2ecfb07f-962e-459d-9d73-3c0d15b7a2c7"
                         });
                 });
 
@@ -232,17 +232,17 @@ namespace SjonnieLoper.Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d",
+                            Id = "2ecfb07f-962e-459d-9d73-3c0d15b7a2c7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6da53abf-fe80-43c5-b14f-db5e8feaa157",
+                            ConcurrencyStamp = "50a62ba0-8299-42ef-ba8f-a4f32cd63fd8",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFRhHUGpuga7v9pq3yBahJ5jXOlK483RPnP9A3Q93sDTJgY7ddhdLEvDjxClBS6Upw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKvRtQxO+TT3F4A/20Wg3gbnO/9p26kcofNilRECT848YjDQJPZ2ojv2rBbqFKrxNg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3a4399f0-0653-4b05-bc4d-36e8c3e1c0aa",
+                            SecurityStamp = "d39f53ce-06ff-4923-a508-7d4749b4f721",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

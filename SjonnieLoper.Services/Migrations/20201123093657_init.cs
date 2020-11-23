@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.Services.Migrations
 {
-    public partial class model : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -240,7 +240,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d", 0, "6da53abf-fe80-43c5-b14f-db5e8feaa157", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEFRhHUGpuga7v9pq3yBahJ5jXOlK483RPnP9A3Q93sDTJgY7ddhdLEvDjxClBS6Upw==", null, false, "3a4399f0-0653-4b05-bc4d-36e8c3e1c0aa", false, "admin@admin.com" });
+                values: new object[] { "2ecfb07f-962e-459d-9d73-3c0d15b7a2c7", 0, "50a62ba0-8299-42ef-ba8f-a4f32cd63fd8", "admin@admin.com", true, true, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKvRtQxO+TT3F4A/20Wg3gbnO/9p26kcofNilRECT848YjDQJPZ2ojv2rBbqFKrxNg==", null, false, "d39f53ce-06ff-4923-a508-7d4749b4f721", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "WhiskeyTypes",
@@ -257,7 +257,7 @@ namespace SjonnieLoper.Services.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
-                values: new object[] { 1, "Role", "Admin", "fcf5d5cc-c99a-4ec1-bdb9-64d003a8e13d" });
+                values: new object[] { 1, "Role", "Admin", "2ecfb07f-962e-459d-9d73-3c0d15b7a2c7" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
