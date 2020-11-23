@@ -25,7 +25,9 @@ namespace SjonnieLoper.Services
 
         public Task<IEnumerable<Whiskey>> GetAll()
         {
-            return null;
+            // Call set and get all string objects of members:
+            var keyProdIdHash = "products:allWhiskey";
+            _dbInstance.StringGet(ALLMEMBERSOFPRODSET)
         }
 
         public async Task<IEnumerable<Whiskey>> GetByName(string name)
